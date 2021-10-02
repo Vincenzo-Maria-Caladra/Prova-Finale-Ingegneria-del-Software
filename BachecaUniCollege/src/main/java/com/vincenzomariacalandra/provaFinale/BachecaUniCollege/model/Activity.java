@@ -2,6 +2,7 @@ package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -9,10 +10,12 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.Activity_credits;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.Activity_type;
+
 
 @Entity
 @Table(name = "Activities")
@@ -34,10 +37,22 @@ public class Activity {
     
     private Time activity_end_time;
     
+    @OneToMany(mappedBy = "activity")
+    private List<UserActivity> userActivities;
+    
     @Enumerated(EnumType.STRING)
     private Activity_type activity_type;
     
     private Activity_credits activity_credits;
+    
+
+	public List<UserActivity> getUserActivities() {
+		return userActivities;
+	}
+
+	public void setUserActivities(List<UserActivity> userActivities) {
+		this.userActivities = userActivities;
+	}
 
 	public long getActivity_id() {
 		return activity_id;
@@ -110,10 +125,12 @@ public class Activity {
 	public void setActivity_credits(Activity_credits activity_credits) {
 		this.activity_credits = activity_credits;
 	}
+	
+	
 
-	public Activity(long activity_id, String activity_title, boolean activity_state, Date activity_start_date,
-			Date activity_end_date, Time activity_start_time, Time activity_end_time, Activity_type activity_type,
-			Activity_credits activity_credits) {
+	protected Activity(long activity_id, String activity_title, boolean activity_state, Date activity_start_date,
+			Date activity_end_date, Time activity_start_time, Time activity_end_time, List<UserActivity> userActivities,
+			Activity_type activity_type, Activity_credits activity_credits) {
 		super();
 		this.activity_id = activity_id;
 		this.activity_title = activity_title;
@@ -122,6 +139,7 @@ public class Activity {
 		this.activity_end_date = activity_end_date;
 		this.activity_start_time = activity_start_time;
 		this.activity_end_time = activity_end_time;
+		this.userActivities = userActivities;
 		this.activity_type = activity_type;
 		this.activity_credits = activity_credits;
 	}

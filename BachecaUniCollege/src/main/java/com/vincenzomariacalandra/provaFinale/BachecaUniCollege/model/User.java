@@ -1,11 +1,12 @@
 package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model;
 
-import java.util.Objects;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -23,6 +24,18 @@ public class User {
     private String user_email;
     
     private String user_password;
+    
+    @OneToMany(mappedBy = "user")
+    private List<UserActivity> usersActivities; 
+    
+
+	public List<UserActivity> getUsersActivities() {
+		return usersActivities;
+	}
+
+	public void setUsersActivities(List<UserActivity> usersActivities) {
+		this.usersActivities = usersActivities;
+	}
 
 	public long getUser_id() {
 		return user_id;
@@ -63,14 +76,16 @@ public class User {
 	public void setUser_password(String user_password) {
 		this.user_password = user_password;
 	}
-
-	public User(long user_id, String user_name, String user_surname, String user_email, String user_password) {
+	
+	protected User(long user_id, String user_name, String user_surname, String user_email, String user_password,
+			List<UserActivity> usersActivities) {
 		super();
 		this.user_id = user_id;
 		this.user_name = user_name;
 		this.user_surname = user_surname;
 		this.user_email = user_email;
 		this.user_password = user_password;
+		this.usersActivities = usersActivities;
 	}
 
 	protected User() {
@@ -79,22 +94,10 @@ public class User {
 	}
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(user_email, user_id, user_name, user_password, user_surname);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		return Objects.equals(user_email, other.user_email) && user_id == other.user_id
-				&& Objects.equals(user_name, other.user_name) && Objects.equals(user_password, other.user_password)
-				&& Objects.equals(user_surname, other.user_surname);
+	public String toString() {
+		return "User [user_id=" + user_id + ", user_name=" + user_name + ", user_surname=" + user_surname
+				+ ", user_email=" + user_email + ", user_password=" + user_password + ", usersActivities="
+				+ usersActivities + "]";
 	}
 	
 }
