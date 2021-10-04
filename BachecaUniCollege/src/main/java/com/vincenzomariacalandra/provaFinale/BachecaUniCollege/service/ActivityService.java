@@ -1,6 +1,7 @@
 package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,28 @@ public class ActivityService {
 	
 	public Iterable<Activity> getActivities() {
 		return activityRepository.findAll();
+	}
+
+	public boolean addNewActivity(Activity activity) {
+		
+		Optional<Activity> activityOptional =
+				activityRepository.findById(activity.getActivity);
+		
+		if (activityOptional.isPresent()) {
+			throw new IllegalStateException("Utente già presente!");
+		}
+		
+		activityRepository.save(activity);
+		
+		return true;
+	}
+
+	public boolean deleteActivity(long id) {
+		
+		Optional<Activity> activityOptional =
+				activityRepository.findById(activity);
+		
+		return false;
 	}
 	
 	
