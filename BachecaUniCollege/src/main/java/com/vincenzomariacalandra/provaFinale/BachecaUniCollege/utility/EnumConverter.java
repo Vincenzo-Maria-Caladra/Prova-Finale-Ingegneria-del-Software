@@ -6,10 +6,10 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
 @Converter(autoApply = true)
-public class EnumConverter implements AttributeConverter<Activity_credits, Double> {
+public class EnumConverter implements AttributeConverter<ActivityCredits, Double> {
  
     @Override
-    public Double convertToDatabaseColumn(Activity_credits activity_credits) {
+    public Double convertToDatabaseColumn(ActivityCredits activity_credits) {
         if (activity_credits == null) {
             return null;
         }
@@ -17,12 +17,12 @@ public class EnumConverter implements AttributeConverter<Activity_credits, Doubl
     }
 
     @Override
-    public Activity_credits convertToEntityAttribute(Double val) {
+    public ActivityCredits convertToEntityAttribute(Double val) {
         if (val == null) {
             return null;
         }
 
-        return Stream.of(Activity_credits.values())
+        return Stream.of(ActivityCredits.values())
           .filter(c -> c.getVal() == val)
           .findFirst()
           .orElseThrow(IllegalArgumentException::new);

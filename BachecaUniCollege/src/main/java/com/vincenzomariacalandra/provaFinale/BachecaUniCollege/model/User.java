@@ -3,11 +3,15 @@ package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.UserType;
 
 @Entity
 @Table(name = "Users")
@@ -15,19 +19,76 @@ public class User {
 	
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long user_id;
+	private long id;
     
-    private String user_name;
+    private String name;
     
-    private String user_surname;
+    private String surname;
     
-    private String user_email;
+    private String email;
     
-    private String user_password;
+    private String password;
+    
+    private long tutorId;
+    
+    @Enumerated(EnumType.STRING)
+    private UserType userType;
     
     @OneToMany(mappedBy = "user")
-    private List<UserActivity> usersActivities; 
-    
+    private List<UserActivity> usersActivities;
+
+	protected User() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public UserType getUserType() {
+		return userType;
+	}
+
+	public void setUserType(UserType userType) {
+		this.userType = userType;
+	}
 
 	public List<UserActivity> getUsersActivities() {
 		return usersActivities;
@@ -37,67 +98,18 @@ public class User {
 		this.usersActivities = usersActivities;
 	}
 
-	public long getUser_id() {
-		return user_id;
-	}
+	public User(String name, String surname, String email, String password, UserType userType,
+			List<UserActivity> usersActivities, long tutorId) {
+		super();
 
-	public void setUser_id(long user_id) {
-		this.user_id = user_id;
-	}
-
-	public String getUser_name() {
-		return user_name;
-	}
-
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
-	}
-
-	public String getUser_surname() {
-		return user_surname;
-	}
-
-	public void setUser_surname(String user_surname) {
-		this.user_surname = user_surname;
-	}
-
-	public String getUser_email() {
-		return user_email;
-	}
-
-	public void setUser_email(String user_email) {
-		this.user_email = user_email;
-	}
-
-	public String getUser_password() {
-		return user_password;
-	}
-
-	public void setUser_password(String user_password) {
-		this.user_password = user_password;
+		this.name = name;
+		this.surname = surname;
+		this.email = email;
+		this.password = password;
+		this.userType = userType;
+		this.usersActivities = usersActivities;
+		this.tutorId = tutorId;
 	}
 	
-	protected User(long user_id, String user_name, String user_surname, String user_email, String user_password,
-			List<UserActivity> usersActivities) {
-		super();
-		this.user_id = user_id;
-		this.user_name = user_name;
-		this.user_surname = user_surname;
-		this.user_email = user_email;
-		this.user_password = user_password;
-		this.usersActivities = usersActivities;
-	}
-
-	protected User() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	@Override
-	public String toString() {
-		return "User [user_id=" + user_id + ", user_name=" + user_name + ", user_surname=" + user_surname
-				+ ", user_email=" + user_email + ", user_password=" + user_password + ", usersActivities="
-				+ usersActivities + "]";
-	}
 	
 }

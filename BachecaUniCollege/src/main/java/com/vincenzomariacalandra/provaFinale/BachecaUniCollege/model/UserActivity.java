@@ -19,11 +19,11 @@ public class UserActivity implements Serializable {
 	private long id;
 	
 	@ManyToOne
-	@JoinColumn(name="Users_user_id")
+	@JoinColumn(name="Users_id")
 	private User user;
 	
 	@ManyToOne
-	@JoinColumn(name="Activities_activity_id")
+	@JoinColumn(name="Activities_id")
 	private Activity activity;
 	
 	private boolean organizer;

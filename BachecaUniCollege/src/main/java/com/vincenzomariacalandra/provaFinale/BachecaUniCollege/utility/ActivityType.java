@@ -1,6 +1,6 @@
 package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility;
 
-public enum Activity_type {
+public enum ActivityType {
 
 	VOLONTARIATO, 
 	
