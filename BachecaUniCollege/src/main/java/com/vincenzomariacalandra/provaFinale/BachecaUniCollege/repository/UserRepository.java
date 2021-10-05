@@ -12,16 +12,18 @@ import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.UserType;
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
 	
-	Optional<List<User>> findByName(String name);
-	
-	Optional<List<User>> findBySurname(String surname);
-	
-	Optional<User> findById(Long id);
-	
-	Optional<User> findByEmail(String email);
-	
-	Optional<List<User>> findByTutor(long id);
-	
-	Optional<List<User>> findByUserType(UserType type);
+	/*
+	 * Optional<List<User>> findByName(String name);
+	 * 
+	 * Optional<List<User>> findBySurname(String surname);
+	 * 
+	 * Optional<User> findById(Long id);
+	 * 
+	 * Optional<User> findByEmail(String email);
+	 * 
+	 * Optional<List<User>> findByTutor(long id);
+	 * 
+	 * Optional<List<User>> findByUserType(UserType type);
+	 */
  	
 }
