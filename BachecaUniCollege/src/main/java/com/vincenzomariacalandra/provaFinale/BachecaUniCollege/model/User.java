@@ -98,8 +98,7 @@ public class User {
 		this.usersActivities = usersActivities;
 	}
 
-	public User(String name, String surname, String email, String password, UserType userType,
-			List<UserActivity> usersActivities, long tutorId) {
+	public User(String name, String surname, String email, String password, UserType userType) {
 		super();
 
 		this.name = name;
@@ -107,8 +106,6 @@ public class User {
 		this.email = email;
 		this.password = password;
 		this.userType = userType;
-		this.usersActivities = usersActivities;
-		this.tutorId = tutorId;
 	}
 	
 	

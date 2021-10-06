@@ -14,7 +14,4 @@ public interface ActivityRepository extends CrudRepository<Activity, Long> {
 	Optional<Activity> findById(long id);
 	
 	List<Optional<Activity>> findByTitle(String title);
-	
-	
-	
 }

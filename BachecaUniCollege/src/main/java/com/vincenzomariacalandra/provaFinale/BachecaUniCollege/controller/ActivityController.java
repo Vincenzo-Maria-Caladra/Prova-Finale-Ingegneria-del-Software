@@ -39,17 +39,17 @@ public class ActivityController {
 	}
 	
 	@PostMapping
-	public boolean registerNewActivity(@RequestBody Activity activity) {
+	public Activity registerNewActivity(@RequestBody Activity activity) {
 		return activityService.addNewActivity(activity);
 	}
 	
 	@DeleteMapping(path = "/{activityId}")
-	public boolean deleteActivity(@PathVariable("activityId") long activityId) {
-		return activityService.deleteActivity(activityId);
+	public void deleteActivity(@PathVariable("activityId") long activityId) {
+		activityService.deleteActivity(activityId);
 	}
 	
 	@PutMapping(path = "/{activityId}")
-	public boolean updateActivity(@PathVariable("activityId") long activityId,
+	public Activity updateActivity(@PathVariable("activityId") long activityId,
 			@RequestParam(required = false) String title,
 			@RequestParam(required = false) boolean state,
 			@RequestParam(required = false) Date startDate,
@@ -64,7 +64,7 @@ public class ActivityController {
 	}
 	
 	@RequestMapping(method =RequestMethod.POST, path = "/test")
-	public void addExampleActivity () {
-		activityService.createExampleActivity();
+	public Activity addExampleActivity () {
+		return activityService.createExampleActivity();
 	}
 }

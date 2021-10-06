@@ -30,7 +30,7 @@ public class ActivityService {
 		return activityRepository.findAll();
 	}
 
-	public boolean addNewActivity(Activity activity) {
+	public Activity addNewActivity(Activity activity) {
 		
 		Optional<Activity> activityOptional =
 				activityRepository.findById(activity.getId());
@@ -40,35 +40,32 @@ public class ActivityService {
 		}
 		
 		activityRepository.save(activity);
-		return true;
+		return activity;
 	}
 
-	public boolean deleteActivity(long id) {
+	public void deleteActivity(long id) {
 		
 		Optional<Activity> activityOptional =
 				activityRepository.findById(id);
 		
 		if (activityOptional.isPresent()) {
 			activityRepository.deleteById(id);
-			return true;
 			
 		} else {
 			throw new IllegalStateException("Utente non presente");
 		}
 	}
 	
-	public void createExampleActivity () {
-		
-		
+	public Activity createExampleActivity () {
 		
 		Activity activity = new Activity("Titolo", false, Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.of(2021, 11, 11)), 
 				Time.valueOf(LocalTime.now()) , Time.valueOf(LocalTime.of(10, 10)), ActivityType.VOLONTARIATO, ActivityCredits.TWO);
 		
-		activityRepository.save(activity);
+		return activityRepository.save(activity);
 	}
 
 	@Transactional
-	public boolean updateActivity(long activityId, String title, Boolean state, Date startDate, Date endDate, Time startTime,
+	public Activity updateActivity(long activityId, String title, Boolean state, Date startDate, Date endDate, Time startTime,
 			Time endTime, ActivityType activityType, ActivityCredits activityCredits) {
 		
 		Activity activity = activityRepository.findById(activityId).orElseThrow( () -> new IllegalStateException(
@@ -135,7 +132,7 @@ public class ActivityService {
 			activity.setActivityCredits(activityCredits);
 		}
 		
-		return true;
+		return activity;
 	}
 	
 	
