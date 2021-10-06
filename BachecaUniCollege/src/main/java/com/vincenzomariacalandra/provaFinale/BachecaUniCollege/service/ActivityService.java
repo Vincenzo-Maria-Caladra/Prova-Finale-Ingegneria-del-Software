@@ -5,10 +5,12 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.zone.ZoneOffsetTransitionRule.TimeDefinition;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.data.convert.JodaTimeConverters.DateTimeToDateConverter;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.Activity;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.repository.ActivityRepository;
@@ -63,6 +65,77 @@ public class ActivityService {
 				Time.valueOf(LocalTime.now()) , Time.valueOf(LocalTime.of(10, 10)), ActivityType.VOLONTARIATO, ActivityCredits.TWO);
 		
 		activityRepository.save(activity);
+	}
+
+	@Transactional
+	public boolean updateActivity(long activityId, String title, Boolean state, Date startDate, Date endDate, Time startTime,
+			Time endTime, ActivityType activityType, ActivityCredits activityCredits) {
+		
+		Activity activity = activityRepository.findById(activityId).orElseThrow( () -> new IllegalStateException(
+				"Activity with id:" + activityId + " not found!"));
+		
+		if (title != null &&
+				title.length() > 0 &&
+				!Objects.equals(activity.getTitle(), title)){
+					activity.setTitle(title);
+				}
+		
+		if (state != null &&
+				!Objects.equals(activity.isState(), state)) {
+			activity.setState(state);
+		}
+		
+		if ( startDate != null && endDate == null &&
+				! startDate.before(Date.valueOf(LocalDate.now())) &&
+				! startDate.after(activity.getEndDate())) {
+			activity.setStartDate(startDate);
+		}
+		
+		if ( endDate != null && startDate == null &&
+				! endDate.before(Date.valueOf(LocalDate.now())) &&
+		        ! endDate.before(activity.getStartDate())) {
+			activity.setEndDate(endDate);
+		}
+		
+		if (startDate != null && endDate != null &&
+				! startDate.before(Date.valueOf(LocalDate.now())) &&
+				! endDate.before(Date.valueOf(LocalDate.now())) &&
+				startDate.before(endDate)) {
+			activity.setStartTime(startTime);
+			activity.setEndDate(endDate);
+		}
+		
+		if (startTime != null && endTime == null &&
+				! startTime.before(Time.valueOf(LocalTime.now())) &&
+				! startTime.after(activity.getEndTime())) {
+			activity.setStartTime(startTime);
+		}
+		
+		if (endTime != null && startTime == null &&
+				! endTime.before(Time.valueOf(LocalTime.now())) &&
+				! endTime.before(activity.getStartTime())) {
+			activity.setEndTime(endTime);
+		}
+		
+		if (startTime != null && endTime != null &&
+				! startTime.before(Time.valueOf(LocalTime.now())) &&
+				! endTime.before(Time.valueOf(LocalTime.now())) &&
+				! startTime.before(endTime)) {
+			activity.setStartTime(startTime);
+			activity.setEndTime(endTime);
+		}
+		
+		if (activityType != null &&
+				! Objects.equals(activityType, activity.getActivityType())) {
+			activity.setActivityType(activityType);
+		}
+		
+		if (activityCredits != null &&
+				! Objects.equals(activityCredits, activity.getActivityCredits())) {
+			activity.setActivityCredits(activityCredits);
+		}
+		
+		return true;
 	}
 	
 	
