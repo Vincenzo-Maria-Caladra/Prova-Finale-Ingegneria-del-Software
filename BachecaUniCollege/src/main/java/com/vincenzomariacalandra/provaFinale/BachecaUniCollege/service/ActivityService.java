@@ -30,15 +30,7 @@ public class ActivityService {
 		return activityRepository.findAll();
 	}
 
-	public Activity addNewActivity(Activity activity) {
-		
-		Optional<Activity> activityOptional =
-				activityRepository.findById(activity.getId());
-		
-		if (activityOptional.isPresent()) {
-			throw new IllegalStateException("Utente già presente!");
-		}
-		
+	public Activity addNewActivity(Activity activity) {		
 		activityRepository.save(activity);
 		return activity;
 	}
@@ -52,7 +44,7 @@ public class ActivityService {
 			activityRepository.deleteById(id);
 			
 		} else {
-			throw new IllegalStateException("Utente non presente");
+			throw new IllegalStateException("Activity does not exist!");
 		}
 	}
 	

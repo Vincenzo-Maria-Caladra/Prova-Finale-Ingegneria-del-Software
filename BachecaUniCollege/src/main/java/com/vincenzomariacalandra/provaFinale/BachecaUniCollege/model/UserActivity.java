@@ -20,7 +20,7 @@ public class UserActivity implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name="Users_id")
-	private User user;
+	private AppUser user;
 	
 	@ManyToOne
 	@JoinColumn(name="Activities_id")
@@ -36,11 +36,11 @@ public class UserActivity implements Serializable {
 		this.id = id;
 	}
 
-	public User getUser() {
+	public AppUser getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(AppUser user) {
 		this.user = user;
 	}
 
@@ -65,7 +65,7 @@ public class UserActivity implements Serializable {
 		return "UserActivity [user=" + user + ", activity=" + activity + ", organizer=" + organizer + "]";
 	}
 
-	public UserActivity(User user, Activity activity, boolean organizer) {
+	public UserActivity(AppUser user, Activity activity, boolean organizer) {
 		super();
 		this.user = user;
 		this.activity = activity;

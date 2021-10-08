@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.User;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.AppUser;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service.UserService;
 
 @RestController
@@ -29,14 +29,14 @@ public class UserController {
 	}
 
 	@GetMapping
-	public Iterable<User> listAllUsers () {
+	public Iterable<AppUser> listAllUsers () {
 		return userService.getUsers();
 	}
 	
-	@PostMapping
-	public User registerNewUser (@RequestBody User user) {
-		return userService.addUser(user);
-	}
+//	@PostMapping
+//	public AppUser registerNewUser (@RequestBody AppUser user) {
+//		return userService.addUser(user);
+//	}
 	
 	@DeleteMapping(path = "/{userId}")
 	public void deleteUser(@PathVariable("userId") long userId) {
@@ -44,7 +44,7 @@ public class UserController {
 	}
 	
 	@PutMapping(path = "/{userId}")
-	public User updateUser (@PathVariable("userId") long userId, 
+	public AppUser updateUser (@PathVariable("userId") long userId, 
 			@RequestParam(required = false) String name,
 			@RequestParam(required = false) String surname,
 			@RequestParam(required = false) String email) {
@@ -54,7 +54,7 @@ public class UserController {
 	
 	
 	@RequestMapping(method =RequestMethod.POST, path = "/test" )
-	public User addUserExample () {
+	public AppUser addUserExample () {
 		return userService.addUserExample();
 	}
 }

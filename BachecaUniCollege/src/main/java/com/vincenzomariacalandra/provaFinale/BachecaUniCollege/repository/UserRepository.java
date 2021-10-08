@@ -3,24 +3,35 @@ package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.repository;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.User;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.AppUser;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.UserType;
 
 @Repository
-public interface UserRepository extends CrudRepository<User, Long> {
+@Transactional(readOnly = true)
+public interface UserRepository extends JpaRepository<AppUser, Long> {
 	
 	
-	  Optional<List<User>> findByName(String name);
+	  Optional<List<AppUser>> findByName(String name);
 	  
-	  Optional<List<User>> findBySurname(String surname);
+	  Optional<List<AppUser>> findBySurname(String surname);
 	  
-	  Optional<User> findById(Long id);
+	  Optional<AppUser> findById(Long id);
 	  
-	  Optional<User> findByEmail(String email);
+	  Optional<AppUser> findByEmail(String email);
 	  
-	  Optional<List<User>> findByUserType(UserType type);
+	  Optional<List<AppUser>> findByUserType(UserType type);
 	  
+	  Optional<AppUser> findByUsername(String username);
+	  
+	    @Transactional
+	    @Modifying
+	    @Query("UPDATE AppUser a " +
+	            "SET a.enabled = TRUE WHERE a.email = ?1")
+	    int enableAppUser(String email);
 }
