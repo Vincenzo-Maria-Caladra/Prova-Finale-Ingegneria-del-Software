@@ -1,7 +1,5 @@
 package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name= "Users_Activities")
-public class UserActivity implements Serializable {
+public class UserActivity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
