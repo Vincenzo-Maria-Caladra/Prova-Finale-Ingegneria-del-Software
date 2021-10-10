@@ -38,16 +38,6 @@ public class UserService implements UserDetailsService{
 		return userRepository.findAll();
 	}
 
-//	public AppUser addUser(AppUser user) {
-//		Optional<AppUser> optionalUser = userRepository.findByEmail(user.getEmail());
-//		
-//		if (optionalUser.isPresent()) {
-//			throw new IllegalStateException("Email already in use! " + user.getEmail());
-//		}
-//		
-//		return userRepository.save(user);
-//	}
-
 	public void removeUser(long userId) {
 		
 		Optional<AppUser> userOptional = userRepository.findById(userId);
@@ -98,17 +88,6 @@ public class UserService implements UserDetailsService{
 		return optionalUser.get();
 	}
 
-	public AppUser addUserExample() {
-		
-		Random r = new Random();
-		
-		int random = (r.nextInt());
-		
-		AppUser user = new AppUser("Name" + random, "Surname" + random, random + "@gmail.com", random+"", UserType.STUDENTE);
-		
-		return userRepository.save(user);
-	}
-
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		return userRepository.findByEmail(email)
@@ -121,6 +100,11 @@ public class UserService implements UserDetailsService{
 		Optional<AppUser> optionalUser = userRepository.findByEmail(user.getEmail());
 		
 		if (optionalUser.isPresent()) {
+			
+			if (!optionalUser.get().isEnabled()) {
+				throw new IllegalStateException("Confirm the token sent to: " + user.getEmail());
+			}
+			
 			throw new IllegalStateException("Email already in use! " + user.getEmail());
 		}
 		

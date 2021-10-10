@@ -21,6 +21,7 @@ public class EmailService implements EmailSender {
 	
 	private final JavaMailSender javaMailsender;
 	
+	
 	@Autowired
 	public EmailService(JavaMailSender javaMailsender) {
 		super();

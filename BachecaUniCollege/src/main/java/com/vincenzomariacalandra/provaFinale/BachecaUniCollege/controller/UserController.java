@@ -33,11 +33,6 @@ public class UserController {
 		return userService.getUsers();
 	}
 	
-//	@PostMapping
-//	public AppUser registerNewUser (@RequestBody AppUser user) {
-//		return userService.addUser(user);
-//	}
-	
 	@DeleteMapping(path = "/{userId}")
 	public void deleteUser(@PathVariable("userId") long userId) {
 		userService.removeUser(userId);
@@ -50,11 +45,5 @@ public class UserController {
 			@RequestParam(required = false) String email) {
 		
 		return userService.updateUser(userId, name, surname, email);
-	}
-	
-	
-	@RequestMapping(method =RequestMethod.POST, path = "/test" )
-	public AppUser addUserExample () {
-		return userService.addUserExample();
 	}
 }
