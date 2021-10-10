@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -47,8 +48,11 @@ public class AppUser implements UserDetails{
     @Enumerated(EnumType.STRING)
     private UserType userType;
     
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade= {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<UserActivity> usersActivities;
+    
+    @OneToMany(mappedBy = "appUser", cascade= {CascadeType.PERSIST, CascadeType.REMOVE} )
+    private List<ConfirmationToken> confirmationTokens;
 
 	protected AppUser() {
 		super();
