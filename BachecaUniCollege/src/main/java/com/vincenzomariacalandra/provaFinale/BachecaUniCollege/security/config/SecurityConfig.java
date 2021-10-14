@@ -32,11 +32,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 		.csrf().disable()
 			.authorizeRequests()
-				.antMatchers("/api/v*/registration/**")
+				.antMatchers("/registration/**", "/login/**", "/error/**", "/", "/confirmationPage/**")
 					.permitAll()
 			.anyRequest()
 				.authenticated().and()
-				.formLogin();
+				.formLogin()
+				.loginPage("/login")
+				.defaultSuccessUrl("/homePage", true)
+		        .failureUrl("/login?error=true")
+		      .and()
+		        .logout();
 	}
 
 	@Override

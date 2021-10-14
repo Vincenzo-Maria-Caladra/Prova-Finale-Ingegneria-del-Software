@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Home Page</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+  <body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <ul class="nav nav-tabs container-fluid">
+                <li class="nav-item">
+                  <a class="nav-link active" href="#">Bacheca</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/creaAttività">Crea Attività</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Creditometro</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link disabled">Disabled</a>
+                </li>
+              </ul>
+        </div>
+
+        <div class="alert alert-primary m-2 row" role="alert" th:if="${msg != null}">
+          <p th:text="${msg}">Example text for confirmation page</p>
+        </div>
+
+        <div class="container row m-3 justify-content-center">
+
+            <div th:if="${activities.empty}">
+                <p>No Activities</p>
+            </div>
+
+            <div th:each="activity : ${activities}">
+                <div class="card m-3" style="width: 18rem;">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title" th:text="${activity.title}">Card title</h5>
+                        <p class="card-text">
+                            <p>Type:<span style="color:blue" th:text="${activity.activityType}">TYPE</span></p>
+                            <p>Credits:<span style="color:blue" th:text="${activity.activityCredits}">CREDITS</span></p>
+                            <p>Date:<span style="color:blue" th:text="${activity.startDate}">Date</span>-<span style="color:blue" th:text="${activity.endDate}">CREDITS</span></p>
+                            <p>Time:<span style="color:blue" th:text="${activity.startTime}">Time</span>-<span style="color:blue" th:text="${activity.endTime}">CREDITS</span></p>
+                        </p>
+                      <a href="#" class="btn btn-primary">Dettaglio Attività</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+      
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>

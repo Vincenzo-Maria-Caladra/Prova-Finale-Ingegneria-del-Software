@@ -45,7 +45,7 @@ public class Activity {
     
     private ActivityCredits activityCredits;
 
-	protected Activity() {
+	public Activity() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -142,5 +142,13 @@ public class Activity {
 	public void setActivityCredits(ActivityCredits activityCredits) {
 		this.activityCredits = activityCredits;
 	}
+
+	@Override
+	public String toString() {
+		return "Activity [id=" + id + ", title=" + title + ", state=" + state + ", startDate=" + startDate
+				+ ", endDate=" + endDate + ", startTime=" + startTime + ", endTime=" + endTime + ", userActivities="
+				+ userActivities + ", activityType=" + activityType + ", activityCredits=" + activityCredits + "]";
+	}
+	
     
 }

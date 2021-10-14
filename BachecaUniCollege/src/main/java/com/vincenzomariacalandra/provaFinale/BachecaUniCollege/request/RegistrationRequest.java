@@ -2,20 +2,21 @@ package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.request;
 
 import java.util.Objects;
 
-
+/**
+ * @author CalandraVM
+ *
+ */
 public class RegistrationRequest {
 	
-	private final String name;
-	private final String surname;
-	private final String email;
-	private final String password;
+	private String name;
+	private String surname;
+	private String email;
+	private String password;
 	
 	
-	public RegistrationRequest(String name, String surname, String email, String password) {
-		this.name = name;
-		this.surname = surname;
-		this.email = email;
-		this.password = password;
+	public RegistrationRequest() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
@@ -40,6 +41,22 @@ public class RegistrationRequest {
 		RegistrationRequest other = (RegistrationRequest) obj;
 		return Objects.equals(email, other.email) && Objects.equals(name, other.name)
 				&& Objects.equals(password, other.password) && Objects.equals(surname, other.surname);
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getName() {

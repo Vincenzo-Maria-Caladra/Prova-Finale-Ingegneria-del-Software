@@ -26,6 +26,8 @@ public class UserActivity {
 	
 	private boolean organizer;
 	
+	private boolean approved;
+	
 	public long getId() {
 		return id;
 	}
@@ -56,6 +58,15 @@ public class UserActivity {
 
 	public void setOrganizer(boolean organizer) {
 		this.organizer = organizer;
+	}
+	
+	
+	public boolean isApproved() {
+		return approved;
+	}
+
+	public void setApproved(boolean approved) {
+		this.approved = approved;
 	}
 
 	@Override

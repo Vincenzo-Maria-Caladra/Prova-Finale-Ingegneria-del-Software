@@ -4,11 +4,9 @@ import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.zone.ZoneOffsetTransitionRule.TimeDefinition;
 import java.util.Objects;
 import java.util.Optional;
 
-import org.springframework.data.convert.JodaTimeConverters.DateTimeToDateConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,14 +44,6 @@ public class ActivityService {
 		} else {
 			throw new IllegalStateException("Activity does not exist!");
 		}
-	}
-	
-	public Activity createExampleActivity () {
-		
-		Activity activity = new Activity("Titolo", false, Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.of(2021, 11, 11)), 
-				Time.valueOf(LocalTime.now()) , Time.valueOf(LocalTime.of(10, 10)), ActivityType.VOLONTARIATO, ActivityCredits.TWO);
-		
-		return activityRepository.save(activity);
 	}
 
 	@Transactional
