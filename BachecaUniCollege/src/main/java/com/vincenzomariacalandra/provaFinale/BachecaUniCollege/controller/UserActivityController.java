@@ -38,7 +38,7 @@ public class UserActivityController {
 	
 	@DeleteMapping("/{idUserActivity}")
 	public UserActivity deleteUserActivity (@PathVariable("idUserActivity") long idUserActivity) {
-		return userActivityService.deleteUserActivity(idUserActivity);
+		return userActivityService.deleteUserActivityById(idUserActivity);
 	}
 	
 }

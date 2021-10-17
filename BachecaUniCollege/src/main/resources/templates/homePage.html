@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <head>
     <title>Home Page</title>
     <!-- Required meta tags -->
@@ -14,18 +14,23 @@
     <div class="container-fluid">
         <div class="row">
             <ul class="nav nav-tabs container-fluid">
+
                 <li class="nav-item">
-                  <a class="nav-link active" href="#">Bacheca</a>
+                  <a class="nav-link active" href="/homePage">Bacheca</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/creaAttività">Crea Attività</a>
+                  <a class="nav-link" href="/nuovaAttivita">Crea Attività</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Creditometro</a>
+                  <a class="nav-link" href="/creditometro">Creditometro</a>
                 </li>
+
                 <li class="nav-item">
-                  <a class="nav-link disabled">Disabled</a>
+                  <div>
+                    <a class="nav-link col-12" href="#" th:text ="${#authentication.getPrincipal().getEmail()}">Utente</a>
+                  </div>
                 </li>
+
               </ul>
         </div>
 
@@ -34,11 +39,6 @@
         </div>
 
         <div class="container row m-3 justify-content-center">
-
-            <div th:if="${activities.empty}">
-                <p>No Activities</p>
-            </div>
-
             <div th:each="activity : ${activities}">
                 <div class="card m-3" style="width: 18rem;">
                     <img src="..." class="card-img-top" alt="...">
@@ -50,7 +50,7 @@
                             <p>Date:<span style="color:blue" th:text="${activity.startDate}">Date</span>-<span style="color:blue" th:text="${activity.endDate}">CREDITS</span></p>
                             <p>Time:<span style="color:blue" th:text="${activity.startTime}">Time</span>-<span style="color:blue" th:text="${activity.endTime}">CREDITS</span></p>
                         </p>
-                      <a href="#" class="btn btn-primary">Dettaglio Attività</a>
+                      <a th:href="@{/dettaglioAttivita?id=}+${activity.id}" class="btn btn-primary">Dettaglio Attività</a>
                     </div>
                 </div>
             </div>

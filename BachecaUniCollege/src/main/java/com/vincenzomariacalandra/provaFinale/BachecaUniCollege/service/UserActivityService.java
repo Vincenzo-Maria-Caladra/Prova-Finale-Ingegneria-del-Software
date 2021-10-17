@@ -58,7 +58,7 @@ public class UserActivityService {
 		return userActivity;
 	}
 
-	public UserActivity deleteUserActivity(long idUserActivity) {
+	public UserActivity deleteUserActivityById(long idUserActivity) {
 
 		Optional<UserActivity> userActivityOptional = userActivityRepository.findById(Long.valueOf(idUserActivity));
 
@@ -72,9 +72,26 @@ public class UserActivityService {
 	}
 	
 	
+	public void deleteUserActivityByActivityId(AppUser appUser, Activity activity) {
+		
+		Optional<UserActivity> userActivityOptional = userActivityRepository.findByUserAndActivity(appUser, activity);
+		
+		userActivityRepository.delete(userActivityOptional.get());  
+	}
+	
 	public List<UserActivity> listAllUserActivities() {
 		return userActivityRepository.findAll();
 	}
 	
+	public List<UserActivity> listAllUserOfOneActivity(Activity activity){
+		return userActivityRepository.findByActivity(activity);
+	}
+	
+	public Optional<UserActivity> getUserActivity(String user, long activityId) {
+		Optional<AppUser> userOptional = userRepository.findByEmail(user);
+		Optional<Activity> activityOptional = activityRepository.findById(activityId);
+		
+		return userActivityRepository.findByUserAndActivity(userOptional.get(), activityOptional.get());
+	}
 	
 }

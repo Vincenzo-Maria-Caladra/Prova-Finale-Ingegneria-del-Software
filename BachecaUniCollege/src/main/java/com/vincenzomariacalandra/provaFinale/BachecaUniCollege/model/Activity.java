@@ -2,6 +2,7 @@ package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalTime;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -27,6 +28,8 @@ public class Activity {
     
     private String title;
     
+    private String descrizione;
+    
     private boolean state;
     
     private Date startDate;
@@ -47,13 +50,13 @@ public class Activity {
 
 	public Activity() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	public Activity(String title, boolean state, Date startDate, Date endDate, Time startTime, Time endTime,
+	public Activity(String title, String descrizione, boolean state, Date startDate, Date endDate, Time startTime, Time endTime,
 			ActivityType activityType, ActivityCredits activityCredits) {
 		super();
 		this.title = title;
+		this.descrizione = descrizione;
 		this.state = state;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -107,16 +110,17 @@ public class Activity {
 		return startTime;
 	}
 
-	public void setStartTime(Time startTime) {
-		this.startTime = startTime;
+	public void setStartTime(String startTime) {
+		System.out.println("SOno Qui");
+		this.startTime = Time.valueOf(LocalTime.parse(startTime));
 	}
 
 	public Time getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(Time endTime) {
-		this.endTime = endTime;
+	public void setEndTime(String endTime) {
+		this.endTime = Time.valueOf(LocalTime.parse(endTime));
 	}
 
 	public List<UserActivity> getUserActivities() {
@@ -143,12 +147,23 @@ public class Activity {
 		this.activityCredits = activityCredits;
 	}
 
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
+	}
+
 	@Override
 	public String toString() {
-		return "Activity [id=" + id + ", title=" + title + ", state=" + state + ", startDate=" + startDate
-				+ ", endDate=" + endDate + ", startTime=" + startTime + ", endTime=" + endTime + ", userActivities="
-				+ userActivities + ", activityType=" + activityType + ", activityCredits=" + activityCredits + "]";
+		return "Activity [id=" + id + ", title=" + title + ", descrizione=" + descrizione + ", state=" + state
+				+ ", startDate=" + startDate + ", endDate=" + endDate + ", startTime=" + startTime + ", endTime="
+				+ endTime + ", userActivities=" + userActivities + ", activityType=" + activityType
+				+ ", activityCredits=" + activityCredits + "]";
 	}
+	
+	
 	
     
 }

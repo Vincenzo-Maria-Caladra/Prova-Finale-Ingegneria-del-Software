@@ -27,9 +27,18 @@ public class ActivityService {
 	public Iterable<Activity> getActivities() {
 		return activityRepository.findAll();
 	}
+	
+	public Optional<Activity> findActivityById(Long id) {
+		
+		return activityRepository.findById(id);
+	}
 
-	public Activity addNewActivity(Activity activity) {		
+	public Activity addNewActivity(Activity activity) {
+		
+		activity.setState(false);
+		
 		activityRepository.save(activity);
+		
 		return activity;
 	}
 
@@ -47,8 +56,11 @@ public class ActivityService {
 	}
 
 	@Transactional
-	public Activity updateActivity(long activityId, String title, Boolean state, Date startDate, Date endDate, Time startTime,
-			Time endTime, ActivityType activityType, ActivityCredits activityCredits) {
+	public Activity updateActivity(long activityId, String title, Boolean state, Date startDate, Date endDate, String startTimeS,
+			String endTimeS, ActivityType activityType, ActivityCredits activityCredits) {
+		
+		Time startTime = Time.valueOf(LocalTime.parse(startTimeS));
+		Time endTime = Time.valueOf(LocalTime.parse(endTimeS));
 		
 		Activity activity = activityRepository.findById(activityId).orElseThrow( () -> new IllegalStateException(
 				"Activity with id:" + activityId + " not found!"));
@@ -80,28 +92,28 @@ public class ActivityService {
 				! startDate.before(Date.valueOf(LocalDate.now())) &&
 				! endDate.before(Date.valueOf(LocalDate.now())) &&
 				startDate.before(endDate)) {
-			activity.setStartTime(startTime);
+			activity.setStartTime(startTimeS);
 			activity.setEndDate(endDate);
 		}
 		
 		if (startTime != null && endTime == null &&
 				! startTime.before(Time.valueOf(LocalTime.now())) &&
 				! startTime.after(activity.getEndTime())) {
-			activity.setStartTime(startTime);
+			activity.setStartTime(startTimeS);
 		}
 		
 		if (endTime != null && startTime == null &&
 				! endTime.before(Time.valueOf(LocalTime.now())) &&
 				! endTime.before(activity.getStartTime())) {
-			activity.setEndTime(endTime);
+			activity.setEndTime(endTimeS);
 		}
 		
 		if (startTime != null && endTime != null &&
 				! startTime.before(Time.valueOf(LocalTime.now())) &&
 				! endTime.before(Time.valueOf(LocalTime.now())) &&
 				! startTime.before(endTime)) {
-			activity.setStartTime(startTime);
-			activity.setEndTime(endTime);
+			activity.setStartTime(startTimeS);
+			activity.setEndTime(endTimeS);
 		}
 		
 		if (activityType != null &&

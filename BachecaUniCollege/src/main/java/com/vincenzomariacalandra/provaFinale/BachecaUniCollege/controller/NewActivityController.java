@@ -1,56 +1,44 @@
 package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.controller;
 
 import java.sql.Date;
-import java.sql.Time;
-import java.util.ArrayList;
 
-import javax.websocket.server.PathParam;
+import java.util.ArrayList;
+import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
+
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.Activity;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.AppUser;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service.ActivityService;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service.UserActivityService;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service.UserService;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.ActivityCredits;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.ActivityType;
 
 @Controller
-public class ActivityController {
+public class NewActivityController {
 	
 	private final ActivityService activityService;
+	private final UserActivityService userActivityService;
+	private final UserService userService;
 	
 	@Autowired
-	public ActivityController(ActivityService activityService) {
+	public NewActivityController(ActivityService activityService, UserActivityService userActivityService, UserService userService) {
 		this.activityService = activityService;
-	}
-	
-	@RequestMapping(path = "/homePage", method = RequestMethod.GET)
-	public String listAllActivities(Model model) {
-		
-		ArrayList<Activity> list = new ArrayList<>();
-		
-		activityService.getActivities().iterator().forEachRemaining(list::add);
-		
-		model.addAttribute("activities",list);
-		
-		return "homePage";
-	}
-	
-
-	public Activity registerNewActivity(@RequestBody Activity activity) {
-		return activityService.addNewActivity(activity);
+		this.userActivityService = userActivityService;
+		this.userService = userService;
 	}
 	
 	//@DeleteMapping(path = "/{activityId}")
@@ -64,8 +52,8 @@ public class ActivityController {
 			@RequestParam(required = false) boolean state,
 			@RequestParam(required = false) Date startDate,
 			@RequestParam(required = false) Date endDate,
-			@RequestParam(required = false) Time startTime,
-			@RequestParam(required = false) Time endTime,
+			@RequestParam(required = false) String startTime,
+			@RequestParam(required = false) String endTime,
 			@RequestParam(required = false) ActivityType activityType,
 			@RequestParam(required = false) ActivityCredits activityCredits) {
 		
@@ -73,16 +61,31 @@ public class ActivityController {
 				startTime,endTime, activityType, activityCredits);
 	}
 	
-	@RequestMapping(path = "/homePage/nuovaAttivita", method = RequestMethod.GET)
+	@RequestMapping(path = "/nuovaAttivita", method = RequestMethod.GET)
 	public String creaNuovaAttivitaPage (Model model) {
 		model.addAttribute("newActivity", new Activity());
 		return "creaAttivita";
 	}
 	
-	@RequestMapping(method =RequestMethod.POST, path = "/homePage/nuovaAttivita")
-	public String addExampleActivity (@ModelAttribute Activity activity, Model model) {
+	@RequestMapping(path = "/nuovaAttivita", method = RequestMethod.POST)
+	public String addActivity (@ModelAttribute Activity activity, Model model, HttpServletRequest request) {
+		
 		activityService.addNewActivity(activity);
-		model.addAttribute("msg", "Attivit√† aggiunta con successo! Attendi che venga approvata");
+		
+		String user = request.getUserPrincipal().getName();
+		
+		Optional<AppUser> optionalUser = userService.getUser(user);
+		
+		userActivityService.insertNewUserActivity(optionalUser.get().getId(), activity.getId(), true);
+		
+		model.addAttribute("msg", "Attivit‡† aggiunta con successo! Attendi che venga approvata!");
+		
+		ArrayList<Activity> list = new ArrayList<>();
+		
+		activityService.getActivities().iterator().forEachRemaining(list::add);
+		
+		model.addAttribute("activities", list);
+		
 		return "homePage";
 	}
 }
