@@ -57,24 +57,11 @@ public class UserActivityService {
 		
 		return userActivity;
 	}
-
-	public UserActivity deleteUserActivityById(long idUserActivity) {
-
-		Optional<UserActivity> userActivityOptional = userActivityRepository.findById(Long.valueOf(idUserActivity));
-
-		if (userActivityOptional.isPresent()) {
-			userActivityRepository.delete(userActivityOptional.get());
-		} else {
-			throw new IllegalStateException("Unknow user activity with id:" + idUserActivity);
-		}
-		
-		return userActivityOptional.get();
-	}
 	
 	
 	public void deleteUserActivityByActivityId(AppUser appUser, Activity activity) {
 		
-		Optional<UserActivity> userActivityOptional = userActivityRepository.findByUserAndActivity(appUser, activity);
+		Optional<UserActivity> userActivityOptional = userActivityRepository.findByUserAndActivityAndOrganizer(appUser, activity, false);
 		
 		userActivityRepository.delete(userActivityOptional.get());  
 	}
@@ -87,11 +74,11 @@ public class UserActivityService {
 		return userActivityRepository.findByActivity(activity);
 	}
 	
-	public Optional<UserActivity> getUserActivity(String user, long activityId) {
+	public Optional<UserActivity> getUserActivityByUserAndActivityAndOrganizer(String user, long activityId, boolean organizer) {
 		Optional<AppUser> userOptional = userRepository.findByEmail(user);
 		Optional<Activity> activityOptional = activityRepository.findById(activityId);
 		
-		return userActivityRepository.findByUserAndActivity(userOptional.get(), activityOptional.get());
+		return userActivityRepository.findByUserAndActivityAndOrganizer(userOptional.get(), activityOptional.get(), organizer);
 	}
 	
 }

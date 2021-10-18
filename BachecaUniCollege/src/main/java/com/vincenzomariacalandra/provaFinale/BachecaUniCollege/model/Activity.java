@@ -5,6 +5,7 @@ import java.sql.Time;
 import java.time.LocalTime;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -40,7 +41,7 @@ public class Activity {
     
     private Time endTime;
     
-    @OneToMany(mappedBy = "activity")
+    @OneToMany(mappedBy = "activity", cascade= {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<UserActivity> userActivities;
     
     @Enumerated(EnumType.STRING)
@@ -111,7 +112,6 @@ public class Activity {
 	}
 
 	public void setStartTime(String startTime) {
-		System.out.println("SOno Qui");
 		this.startTime = Time.valueOf(LocalTime.parse(startTime));
 	}
 

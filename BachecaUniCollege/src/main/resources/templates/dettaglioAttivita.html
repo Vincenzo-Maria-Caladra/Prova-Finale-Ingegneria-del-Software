@@ -20,27 +20,51 @@
         </div>
 
         <div class="row m-3">
-            <div class="col-2">
-                Azione:
-                <form action="#" th:if="${!iscritto}"  th:action="@{/dettaglioAttivita/subscribe?id=}+${activity.id}" method="post">
+
+            <div class="col-2 float-left w-auto">
+                <form action="#" th:if="${!iscritto}" th:action="@{/dettaglioAttivita/subscribe?id=}+${activity.id}"
+                    method="post">
                     <button type="submit" class="btn btn-primary">Iscriviti</button>
                 </form>
 
-                <form action="#" th:if="${iscritto}"  th:action="@{/dettaglioAttivita/unsubscribe?id=}+${activity.id}" method="post">
+                <form action="#" th:if="${iscritto}" th:action="@{/dettaglioAttivita/unsubscribe?id=}+${activity.id}"
+                    method="post">
                     <button type="submit" class="btn btn-primary">Cancellati</button>
                 </form>
 
             </div>
 
             <div class="col-3  float-right">
-                <div class="alert alert-primary row w-auto" role="alert" th:if="${msg != null}">
+                <div class="alert alert-primary" role="alert" th:if="${msg != null}">
                     <p th:text="${msg}">Example text for confirmation page</p>
+                </div>
+            </div>
+
+            <div class="col-5 m-3">
+                <div class="row">
+
+                    <div class="col-6">
+                        <div th:if="${msg1 != null}">
+                            <p th:text="${msg1}">Example text for confirmation page</p>
+                        </div>
+                    </div>
+
+                    <div class="col-6 float-right">
+
+
+                        <form action="#" th:if="${organizer}"
+                            th:action="@{/dettaglioAttivita/deleteActivity?id=}+${activity.id}" method="post">
+                            <button type="submit" class="btn btn-danger">Cancella Attività</button>
+                        </form>
+
+                    </div>
+
                 </div>
             </div>
         </div>
 
         <div class="row m-3">
-            <table class="table table-primary table-striped table-hover m-2 col-5">
+            <table class="table table-primary table-striped table-hover col-5">
 
                 <caption>List of users</caption>
 
@@ -86,7 +110,9 @@
             </table>
 
             <div class="col-5 m-3">
-                <p th:text="${activity.descrizione}">Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse incidunt cumque nostrum dolorum saepe? Aliquid dignissimos, similique hic assumenda corporis, quibusdam maiores nulla eligendi beatae optio aut perferendis provident possimus.</p>
+                <p th:text="${activity.descrizione}">Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse
+                    incidunt cumque nostrum dolorum saepe? Aliquid dignissimos, similique hic assumenda corporis,
+                    quibusdam maiores nulla eligendi beatae optio aut perferendis provident possimus.</p>
             </div>
         </div>
     </div>

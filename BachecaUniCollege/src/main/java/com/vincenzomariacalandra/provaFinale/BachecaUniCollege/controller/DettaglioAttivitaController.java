@@ -1,6 +1,7 @@
 package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,7 +44,21 @@ public class DettaglioAttivitaController {
 		
 		String user = request.getUserPrincipal().getName();
 		
-		Optional<UserActivity> userActivityOptional = userActivityService.getUserActivity(user, id);
+		Optional<UserActivity> userOrganizerOptional = userActivityService.getUserActivityByUserAndActivityAndOrganizer(user, id, true);
+		Optional<UserActivity> userActivityOptional = userActivityService.getUserActivityByUserAndActivityAndOrganizer(user, id, false);
+
+		
+		if(userOrganizerOptional.isPresent()) {
+			
+			if(userOrganizerOptional.get().isOrganizer()) {
+				model.addAttribute("msg1", "Sei l'organizzatore");
+				model.addAttribute("organizer", Boolean.TRUE);
+			} else {
+				model.addAttribute("organizer", Boolean.FALSE);
+			}
+		} else {
+			model.addAttribute("organizer", Boolean.FALSE);
+		}
 		
 		
 		if (activityOptional.isPresent()) {
@@ -56,8 +71,10 @@ public class DettaglioAttivitaController {
 			
 			if(userActivityOptional.isPresent()) {
 				model.addAttribute("iscritto", Boolean.TRUE);
+				model.addAttribute("msg", "Sei iscritto a questa attività!");
 			} else {
 				model.addAttribute("iscritto", Boolean.FALSE);
+				model.addAttribute("msg", "Non sei iscritto a questa attività!");
 			}
 			
 			model.addAttribute("userOfActivities", list);
@@ -76,7 +93,7 @@ public class DettaglioAttivitaController {
 		
 		Optional<AppUser> userOptional = userService.getUser(user);
 		
-		Optional<UserActivity> userActivityOptional = userActivityService.getUserActivity(user, id);
+		Optional<UserActivity> userActivityOptional = userActivityService.getUserActivityByUserAndActivityAndOrganizer(user, id, false);
 		
 		if (userActivityOptional.isPresent()) {
 			
@@ -111,8 +128,6 @@ public class DettaglioAttivitaController {
 			
 		}
 		
-		model.addAttribute("msg", "Ti sei iscritto all'attività!");
-		
 		return "redirect:/dettaglioAttivita?id="+id;
 	}
 	
@@ -121,7 +136,7 @@ public class DettaglioAttivitaController {
 		
 		String user = request.getUserPrincipal().getName();
 		
-		Optional<UserActivity> userActivityOptional = userActivityService.getUserActivity(user, id);
+		Optional<UserActivity> userActivityOptional = userActivityService.getUserActivityByUserAndActivityAndOrganizer(user, id, false);
 				
 		if (userActivityOptional.isPresent()) {
 			
@@ -139,9 +154,16 @@ public class DettaglioAttivitaController {
 			
 		}
 		
-		model.addAttribute("msg", "Ti sei cancellato dall'attività!");
-		
 		return "redirect:/dettaglioAttivita?id="+id;
+	}
+	
+	
+	@RequestMapping(path = "/deleteActivity", method = RequestMethod.POST )
+	public String activityDelete(@RequestParam("id") Long id) {
+		
+		activityService.deleteActivity(id);
+		
+		return "redirect:/homePage";
 	}
 	
 }
