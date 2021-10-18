@@ -1,5 +1,11 @@
 package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.Date;
 
 import java.util.ArrayList;
@@ -11,13 +17,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.Activity;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.AppUser;
@@ -68,10 +75,38 @@ public class NewActivityController {
 	}
 	
 	@RequestMapping(path = "/nuovaAttivita", method = RequestMethod.POST)
-	public String addActivity (@ModelAttribute Activity activity, Model model, HttpServletRequest request) {
+	public String addActivity (@ModelAttribute Activity activity, @RequestParam("fileImage") MultipartFile multipartFile, Model model, HttpServletRequest request)
+	throws IOException {
 		
-		activityService.addNewActivity(activity);
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        
+        System.out.println(fileName+": " + fileName);
+        
+        activity.setPhoto(fileName);
+        
+        Activity savedActivity = activityService.addNewActivity(activity);
+ 
+        String uploadDir = "/activity-photos/" + savedActivity.getId();
+ 
+        Path uploadPath = Paths.get(uploadDir);
+        
+        System.out.println(uploadPath.toFile().getPath());
+        
+        if (!Files.exists(uploadPath)) {
+        	Files.createDirectory(uploadPath);
+        }
+        
+        try (InputStream inputStream = multipartFile.getInputStream()) {
+        	
+        	Path filePath = uploadPath.resolve(fileName);
+        	
+        	Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
 		
+        } catch (IOException ioe) {
+			throw new IOException("Could not save the file!");
+		}
+        
+        
 		String user = request.getUserPrincipal().getName();
 		
 		Optional<AppUser> optionalUser = userService.getUser(user);
@@ -86,6 +121,6 @@ public class NewActivityController {
 		
 		model.addAttribute("activities", list);
 		
-		return "homePage";
+		return "redirect:/homePage";
 	}
 }

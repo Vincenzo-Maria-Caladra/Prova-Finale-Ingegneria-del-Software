@@ -41,7 +41,7 @@
         <div class="container row m-3 justify-content-center">
             <div th:each="activity : ${activities}">
                 <div class="card m-3" style="width: 18rem;">
-                    <img src="..." class="card-img-top" alt="...">
+                    <img th:src="${activity.photosImagePath}" class="card-img-top" alt="...">
                     <div class="card-body">
                       <h5 class="card-title" th:text="${activity.title}">Card title</h5>
                         <p class="card-text">

@@ -47,7 +47,7 @@
         <div class="tab-content">
           <div id="ATTIVITA_GENERICA" class="tab-pane fade">
 
-            <form action="#" th:action="@{/nuovaAttivita}" th:object="${newActivity}" method="post">
+            <form action="#" th:action="@{/nuovaAttivita}" th:object="${newActivity}" method="post" enctype="multipart/form-data">
               <div class="font-weight-bold">
                 <h5>Attività Generica</h5>
               </div>
@@ -112,6 +112,12 @@
                   <option value="VISITA_CULTURALE">VISITA CULTURALE</option>
                 </select>
               </div>
+
+              <div class="form-group">
+                <label for="fileImage">Foto per bacheca</label>
+                <input class="form-control" id="fileImage" name="fileImage" type="file" accept="image/png, image/jpeg" required></input>
+              </div>
+
               <button type="submit" class="btn btn-primary">Submit</button>
             </form>
           </div>

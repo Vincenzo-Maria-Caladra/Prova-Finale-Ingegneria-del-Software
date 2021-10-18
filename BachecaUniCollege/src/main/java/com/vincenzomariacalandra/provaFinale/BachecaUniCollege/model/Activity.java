@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -14,6 +15,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.ActivityCredits;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.ActivityType;
@@ -41,6 +45,9 @@ public class Activity {
     
     private Time endTime;
     
+    @Column(nullable = true, length = 64)
+    private String photo;
+    
     @OneToMany(mappedBy = "activity", cascade= {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<UserActivity> userActivities;
     
@@ -54,7 +61,7 @@ public class Activity {
 	}
 
 	public Activity(String title, String descrizione, boolean state, Date startDate, Date endDate, Time startTime, Time endTime,
-			ActivityType activityType, ActivityCredits activityCredits) {
+			ActivityType activityType, ActivityCredits activityCredits, String photo) {
 		super();
 		this.title = title;
 		this.descrizione = descrizione;
@@ -65,6 +72,7 @@ public class Activity {
 		this.endTime = endTime;
 		this.activityType = activityType;
 		this.activityCredits = activityCredits;
+		this.photo = photo;
 	}
 
 	public long getId() {
@@ -154,6 +162,22 @@ public class Activity {
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
 	}
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+	
+    @Transient
+    public String getPhotosImagePath() {
+        if (photo == null) {
+        	return null;
+        }
+        return "/activity-photos/" + id + "/" + photo;
+    }
 
 	@Override
 	public String toString() {
