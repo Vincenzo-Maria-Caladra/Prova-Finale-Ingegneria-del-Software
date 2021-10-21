@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title>Home Page</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <ul class="nav nav-tabs container-fluid">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/homePage">Bacheca</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/nuovaAttivita">Crea Attività</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/creditometro">Creditometro</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="/gestioneAttivita">Gestione Attività</a>
+                </li>
+
+                <li class="nav-item">
+                    <div>
+                        <a class="nav-link col-12" href="#"
+                            th:text="${#authentication.getPrincipal().getEmail()}">Utente</a>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="row m-3">
+            <table class="table table-primary table-striped table-hover col-5">
+
+                <caption>List of Activities</caption>
+
+                <thead>
+
+                    <tr>
+                        <th scope="col">
+                            <p>#</p>
+                        </th>
+
+                        <th scope="col">
+                            <p>Title</p>
+                        </th>
+
+                        <th scope="col">
+                            <p>Credits</p>
+                        </th>
+
+                        <th scope="col">
+                            <p>Type</p>
+                        </th>
+
+                        <th scope="col">
+                            <p>Date</p>
+                        </th>
+
+                        <th scope="col">
+                            <p>Actions</p>
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+                    <div th:each="activity : ${activities}">
+
+                        <tr>
+                            <th scope="row">#</th>
+                            <td>
+                                <a th:text="${activity.title}" th:href="@{/dettaglioAttivita?id=}+${activity.id}">Tb
+                                    data</a>
+                            </td>
+                            <td th:text="${activity.activityCredits}">Tb data</td>
+                            <td th:text="${activity.activityType}">Tb data</td>
+                            <td th:text="${activity.startDate}">Tb data</td>
+
+                            <td class="justify-content-center">
+
+                                <form class="m-2" action="#"
+                                    th:action="@{/gestioneAttivita/acceptActivity?id=}+${activity.id}" method="post">
+                                    <button type="submit" class="btn btn-success">Accetta</button>
+                                </form>
+
+                                <form class="m-2" action="#"
+                                    th:action="@{/gestioneAttivita/deleteActivity?id=}+${activity.id}" method="post">
+                                    <button type="submit" class="btn btn-danger">Rifiuta </button>
+                                </form>
+
+                            </td>
+                        </tr>
+
+                    </div>
+                </tbody>
+
+
+            </table>
+        </div>
+
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

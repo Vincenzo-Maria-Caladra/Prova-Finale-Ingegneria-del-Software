@@ -12,8 +12,7 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
     	
     	registry.addResourceHandler("/activity-photos/**").addResourceLocations("file:/C:\\activity-photos/");
-    	
- 
+
     }    
     
 }

@@ -14,10 +14,15 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.request.RegistrationRequest;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service.RegistrationService;
 
+/**
+ * @author CalandraVM
+ * Classe Controller per la pagina registraione.html
+ */
 @Controller
 @SessionAttributes("registrationRequest")
 public class RegistrationController {
 	
+	// All Services required
 	private final RegistrationService registrationService;
 	
 	@Autowired

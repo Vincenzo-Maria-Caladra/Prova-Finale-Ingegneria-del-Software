@@ -22,10 +22,15 @@ import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service.ActivityS
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service.UserActivityService;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service.UserService;
 
+/**
+ * @author CalandraVM
+ * Classe Controller per la pagina dettaglioAttività.html
+ */
 @Controller
 @RequestMapping("/dettaglioAttivita")
 public class DettaglioAttivitaController {
 	
+	// All Services required
 	private final ActivityService activityService;
 	private final UserActivityService userActivityService;
 	private final UserService userService;
@@ -37,17 +42,20 @@ public class DettaglioAttivitaController {
 		this.userService = userService;
 	}
 	
+	//Inizializzazione della pagina dettaglioAttvita.html
 	@GetMapping
 	public String getDettaglioAttivita(@RequestParam("id") Long id, Model model, HttpServletRequest request) {
 		
-		Optional<Activity> activityOptional = activityService.findActivityById(id);
-		
+		//Retrive usefull information
 		String user = request.getUserPrincipal().getName();
 		
+		Optional<Activity> activityOptional = activityService.findActivityById(id);
 		Optional<UserActivity> userOrganizerOptional = userActivityService.getUserActivityByUserAndActivityAndOrganizer(user, id, true);
 		Optional<UserActivity> userActivityOptional = userActivityService.getUserActivityByUserAndActivityAndOrganizer(user, id, false);
-
 		
+		
+		//Checks if  the logged AppUser is the organizer of the Activity
+		//Set a boolean model attribute "organizer"
 		if(userOrganizerOptional.isPresent()) {
 			
 			if(userOrganizerOptional.get().isOrganizer()) {
@@ -60,15 +68,19 @@ public class DettaglioAttivitaController {
 			model.addAttribute("organizer", Boolean.FALSE);
 		}
 		
-		
+		//Added other usefull model attributes to the page
 		if (activityOptional.isPresent()) {
 			
+			//to get activity information
 			model.addAttribute("activity", activityOptional.get());
 			
+			//to get list of partecipats
 			ArrayList<UserActivity> list = new ArrayList<>();
-			
 			userActivityService.listAllUserOfOneActivity(activityOptional.get()).iterator().forEachRemaining(list::add);
+			model.addAttribute("userOfActivities", list);
 			
+			//Checks if the logged AppUser is subcribe to the actvitity
+			//This will be use to show the subscribe and unsubscribe buttons 
 			if(userActivityOptional.isPresent()) {
 				model.addAttribute("iscritto", Boolean.TRUE);
 				model.addAttribute("msg", "Sei iscritto a questa attività!");
@@ -76,8 +88,6 @@ public class DettaglioAttivitaController {
 				model.addAttribute("iscritto", Boolean.FALSE);
 				model.addAttribute("msg", "Non sei iscritto a questa attività!");
 			}
-			
-			model.addAttribute("userOfActivities", list);
 			
 		}
 		
@@ -97,35 +107,12 @@ public class DettaglioAttivitaController {
 		
 		if (userActivityOptional.isPresent()) {
 			
-			model.addAttribute("activity", activityOptional.get());
-			
-			ArrayList<UserActivity> list = new ArrayList<>();
-			
-			userActivityService.listAllUserOfOneActivity(activityOptional.get()).iterator().forEachRemaining(list::add);
-			
-			model.addAttribute("userOfActivities", list);
-			
-			model.addAttribute("iscritto", Boolean.TRUE);
-			
-			model.addAttribute("msg", "Sei già iscritto all'attività!");
-			
 			return "redirect:/dettaglioAttivita?id="+id;
 		}
 				
 		if (activityOptional.isPresent() && userOptional.isPresent()) {
 			
 			userActivityService.insertNewUserActivity(userOptional.get().getId(), activityOptional.get().getId(), false);
-			
-			model.addAttribute("activity", activityOptional.get());
-			
-			ArrayList<UserActivity> list = new ArrayList<>();
-			
-			userActivityService.listAllUserOfOneActivity(activityOptional.get()).iterator().forEachRemaining(list::add);
-			
-			model.addAttribute("iscritto", Boolean.TRUE);
-			
-			model.addAttribute("userOfActivities", list);
-			
 		}
 		
 		return "redirect:/dettaglioAttivita?id="+id;
@@ -141,16 +128,6 @@ public class DettaglioAttivitaController {
 		if (userActivityOptional.isPresent()) {
 			
 			userActivityService.deleteUserActivityByActivityId(userActivityOptional.get().getUser(), userActivityOptional.get().getActivity());
-			
-			model.addAttribute("activity", userActivityOptional.get().getActivity());
-			
-			ArrayList<UserActivity> list = new ArrayList<>();
-			
-			userActivityService.listAllUserOfOneActivity(userActivityOptional.get().getActivity()).iterator().forEachRemaining(list::add);
-			
-			model.addAttribute("userOfActivities", list);
-			
-			model.addAttribute("iscritto", Boolean.FALSE);
 			
 		}
 		

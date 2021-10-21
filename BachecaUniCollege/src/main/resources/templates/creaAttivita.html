@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
   <title>Bacheca UniCollege</title>
@@ -27,6 +27,17 @@
         <li class="nav-item">
           <a class="nav-link" href="/creditometro">Creditometro</a>
         </li>
+
+        <li class="nav-item">
+          <a class="nav-link active" href="/gestioneAttivita">Creditometro</a>
+        </li>
+
+        <li class="nav-item">
+          <div>
+            <a class="nav-link col-12" href="#" th:text="${#authentication.getPrincipal().getEmail()}">Utente</a>
+          </div>
+        </li>
+
       </ul>
     </div>
 
@@ -47,7 +58,8 @@
         <div class="tab-content">
           <div id="ATTIVITA_GENERICA" class="tab-pane fade">
 
-            <form action="#" th:action="@{/nuovaAttivita}" th:object="${newActivity}" method="post" enctype="multipart/form-data">
+            <form action="#" th:action="@{/nuovaAttivita}" th:object="${newActivity}" method="post"
+              enctype="multipart/form-data">
               <div class="font-weight-bold">
                 <h5>Attività Generica</h5>
               </div>
@@ -115,7 +127,8 @@
 
               <div class="form-group">
                 <label for="fileImage">Foto per bacheca</label>
-                <input class="form-control" id="fileImage" name="fileImage" type="file" accept="image/png, image/jpeg" required></input>
+                <input class="form-control" id="fileImage" name="fileImage" type="file" accept="image/png, image/jpeg"
+                  required></input>
               </div>
 
               <button type="submit" class="btn btn-primary">Submit</button>
@@ -123,7 +136,8 @@
           </div>
 
           <div id="TERTULIA_A_TEMA" class="tab-pane fade">
-            <form action="#" th:action="@{/nuovaAttivita}" th:object="${newActivity}" method="post">
+            <form action="#" th:action="@{/nuovaAttivita}" th:object="${newActivity}" method="post"
+              enctype="multipart/form-data">
               <div class="font-weight-bold">
                 <h5>Tertulia a tema</h5>
               </div>
@@ -150,11 +164,10 @@
                   </p>
                 </div>
 
-
                 <div class="row">
                   <div class="form-group col-6">
-                    <label for="startDate">Data Attività</label>
-                    <input type="date hidden" class="form-control" id="startDate" th:field="*{startDate}"
+                    <label for="startDate">Inizio Attività</label>
+                    <input type="date" class="form-control" id="startDate" th:field="*{startDate}"
                       placeholder="YYYY-MM-DD" required>
 
                   </div>
@@ -189,6 +202,13 @@
                     <option value="TERTULIA_A_TEMA" selected>TERTULIA A TEMA</option>
                   </select>
                 </div>
+
+                <div class="form-group">
+                  <label for="fileImage">Foto per bacheca</label>
+                  <input class="form-control" id="fileImage" name="fileImage" type="file" accept="image/png, image/jpeg"
+                    required></input>
+                </div>
+
                 <button type="submit" class="btn btn-primary">Submit</button>
               </div>
             </form>

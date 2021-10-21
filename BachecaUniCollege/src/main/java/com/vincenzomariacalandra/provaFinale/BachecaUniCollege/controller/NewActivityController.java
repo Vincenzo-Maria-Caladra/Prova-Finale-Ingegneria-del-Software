@@ -34,9 +34,14 @@ import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service.UserServi
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.ActivityCredits;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.ActivityType;
 
+/**
+ * @author CalandraVM
+ * Classe Controller per la pagina newActivity.html
+ */
 @Controller
 public class NewActivityController {
 	
+	// All Services required
 	private final ActivityService activityService;
 	private final UserActivityService userActivityService;
 	private final UserService userService;
@@ -48,54 +53,42 @@ public class NewActivityController {
 		this.userService = userService;
 	}
 	
-	//@DeleteMapping(path = "/{activityId}")
-	public void deleteActivity(@PathVariable("activityId") long activityId) {
-		activityService.deleteActivity(activityId);
-	}
-	
-	//@PutMapping(path = "/{activityId}")
-	public Activity updateActivity(@PathVariable("activityId") long activityId,
-			@RequestParam(required = false) String title,
-			@RequestParam(required = false) boolean state,
-			@RequestParam(required = false) Date startDate,
-			@RequestParam(required = false) Date endDate,
-			@RequestParam(required = false) String startTime,
-			@RequestParam(required = false) String endTime,
-			@RequestParam(required = false) ActivityType activityType,
-			@RequestParam(required = false) ActivityCredits activityCredits) {
-		
-		return activityService.updateActivity(activityId, title, state, startDate, endDate,
-				startTime,endTime, activityType, activityCredits);
-	}
-	
+	// Inizzializzazione della pagina newActivity.html
 	@RequestMapping(path = "/nuovaAttivita", method = RequestMethod.GET)
 	public String creaNuovaAttivitaPage (Model model) {
 		model.addAttribute("newActivity", new Activity());
 		return "creaAttivita";
 	}
 	
+	//  Gestione dell'inserimento di una nuova attività tramite form
 	@RequestMapping(path = "/nuovaAttivita", method = RequestMethod.POST)
 	public String addActivity (@ModelAttribute Activity activity, @RequestParam("fileImage") MultipartFile multipartFile, Model model, HttpServletRequest request)
 	throws IOException {
 		
+		// Generazione del filename della foto caricata 
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+               
         
-        System.out.println(fileName+": " + fileName);
-        
+        // Inserimento del filename della foto nell'istanza dell'Activity
+        // generata via form
         activity.setPhoto(fileName);
         
+        
+        // Salvataggio dell'activity nel DB
         Activity savedActivity = activityService.addNewActivity(activity);
  
+        
+        // Generazione del path alla directory in cui inserire la nuova foto caricata 
         String uploadDir = "/activity-photos/" + savedActivity.getId();
- 
         Path uploadPath = Paths.get(uploadDir);
         
-        System.out.println(uploadPath.toFile().getPath());
         
+        // Verifica dell'esistenza della cartella
         if (!Files.exists(uploadPath)) {
         	Files.createDirectory(uploadPath);
         }
         
+        // Scrittura del file nell'apposita directory
         try (InputStream inputStream = multipartFile.getInputStream()) {
         	
         	Path filePath = uploadPath.resolve(fileName);
@@ -107,19 +100,13 @@ public class NewActivityController {
 		}
         
         
+        // Inserimento del creatore dell'attività nella tabella userActivity come "organizer"
 		String user = request.getUserPrincipal().getName();
-		
 		Optional<AppUser> optionalUser = userService.getUser(user);
-		
 		userActivityService.insertNewUserActivity(optionalUser.get().getId(), activity.getId(), true);
 		
 		model.addAttribute("msg", "Attività  aggiunta con successo! Attendi che venga approvata!");
 		
-		ArrayList<Activity> list = new ArrayList<>();
-		
-		activityService.getActivities().iterator().forEachRemaining(list::add);
-		
-		model.addAttribute("activities", list);
 		
 		return "redirect:/homePage";
 	}

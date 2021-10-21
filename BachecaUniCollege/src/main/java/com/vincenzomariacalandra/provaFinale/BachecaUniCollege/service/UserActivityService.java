@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.Activity;
@@ -52,7 +53,8 @@ public class UserActivityService {
 		}
 
 		UserActivity userActivity = new UserActivity(userOptional.get(), activityOptional.get(), organizer);
-
+		userActivity.setApproved(false);
+		
 		userActivityRepository.save(userActivity);
 		
 		return userActivity;
@@ -72,6 +74,13 @@ public class UserActivityService {
 	
 	public List<UserActivity> listAllUserOfOneActivity(Activity activity){
 		return userActivityRepository.findByActivity(activity);
+	}
+	
+	public List<UserActivity> listAllActivitiesOfUser(String user) {
+		
+		Optional<AppUser> userOptional = userRepository.findByEmail(user);
+		return userActivityRepository.findByUser(userOptional.get());
+		
 	}
 	
 	public Optional<UserActivity> getUserActivityByUserAndActivityAndOrganizer(String user, long activityId, boolean organizer) {

@@ -129,5 +129,28 @@ public class ActivityService {
 		return activity;
 	}
 	
+	@Transactional
+	public Activity updateActivityState (Long id) {
+		
+		Optional<Activity> activityOptional = activityRepository.findById(id);
+		
+		if(activityOptional.isPresent()) {
+			activityOptional.get().setState(true);
+		}
+		
+		return activityOptional.get();
+		
+	}
+	
+	public Iterable<Activity> getActivitiesToApprove(){
+		
+		return activityRepository.findByState(false);
+	}
+	
+	public Iterable<Activity> getActivitiesApproved(){
+		
+		return activityRepository.findByState(true);
+	}
+	
 	
 }

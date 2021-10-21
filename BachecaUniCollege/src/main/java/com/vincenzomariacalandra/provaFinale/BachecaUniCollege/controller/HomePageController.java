@@ -11,24 +11,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.Activity;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service.ActivityService;
 
+/**
+ * @author CalandraVM
+ * Classe Controller per la homePage.html
+ */
 @Controller
 @RequestMapping("/homePage")
 public class HomePageController {
 	
+	// All Services required
 	private final ActivityService activityService;
-	
 	
 	@Autowired
 	public HomePageController(ActivityService activityService) {
 		this.activityService = activityService;
 	}
 	
+	// Inizializzazione della pagina homePage.html
 	@GetMapping
 	public String listAllActivities(Model model) {
 		
 		ArrayList<Activity> list = new ArrayList<>();
 		
-		activityService.getActivities().iterator().forEachRemaining(list::add);
+		activityService.getActivitiesApproved().iterator().forEachRemaining(list::add);
 		
 		model.addAttribute("activities", list);
 		

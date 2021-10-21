@@ -1,67 +1,84 @@
 <!doctype html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-  <head>
-    <title>Home Page</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  </head>
-  <body>
+<head>
+  <title>Home Page</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <div class="container-fluid">
-        <div class="row">
-            <ul class="nav nav-tabs container-fluid">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
 
-                <li class="nav-item">
-                  <a class="nav-link active" href="/homePage">Bacheca</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/nuovaAttivita">Crea Attività</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/creditometro">Creditometro</a>
-                </li>
+<body>
 
-                <li class="nav-item">
-                  <div>
-                    <a class="nav-link col-12" href="#" th:text ="${#authentication.getPrincipal().getEmail()}">Utente</a>
-                  </div>
-                </li>
+  <div class="container-fluid">
+    <div class="row">
+      <ul class="nav nav-tabs container-fluid">
 
-              </ul>
-        </div>
+        <li class="nav-item">
+          <a class="nav-link active" href="/homePage">Bacheca</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/nuovaAttivita">Crea Attività</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/creditometro">Creditometro</a>
+        </li>
 
-        <div class="alert alert-primary m-2 row" role="alert" th:if="${msg != null}">
-          <p th:text="${msg}">Example text for confirmation page</p>
-        </div>
+        <li class="nav-item">
+          <a class="nav-link" href="/gestioneAttivita">Gestione Attività</a>
+        </li>
 
-        <div class="container row m-3 justify-content-center">
-            <div th:each="activity : ${activities}">
-                <div class="card m-3" style="width: 18rem;">
-                    <img th:src="${activity.photosImagePath}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                      <h5 class="card-title" th:text="${activity.title}">Card title</h5>
-                        <p class="card-text">
-                            <p>Type:<span style="color:blue" th:text="${activity.activityType}">TYPE</span></p>
-                            <p>Credits:<span style="color:blue" th:text="${activity.activityCredits}">CREDITS</span></p>
-                            <p>Date:<span style="color:blue" th:text="${activity.startDate}">Date</span>-<span style="color:blue" th:text="${activity.endDate}">CREDITS</span></p>
-                            <p>Time:<span style="color:blue" th:text="${activity.startTime}">Time</span>-<span style="color:blue" th:text="${activity.endTime}">CREDITS</span></p>
-                        </p>
-                      <a th:href="@{/dettaglioAttivita?id=}+${activity.id}" class="btn btn-primary">Dettaglio Attività</a>
-                    </div>
-                </div>
-            </div>
+        <li class="nav-item">
+          <div>
+            <a class="nav-link col-12" href="#" th:text="${#authentication.getPrincipal().getEmail()}">Utente</a>
+          </div>
+        </li>
 
-        </div>
+      </ul>
     </div>
-      
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  </body>
+
+    <div class="alert alert-primary m-2 row" role="alert" th:if="${msg != null}">
+      <p th:text="${msg}">Example text for confirmation page</p>
+    </div>
+
+    <div class="container row m-3 justify-content-center">
+      <div th:each="activity : ${activities}">
+        <div class="card m-3" style="width: 18rem; height: 28rem;">
+          <img th:src="${activity.photosImagePath}" class="card-img-top"
+            style="width: 100%; height: 10rem !important; object-fit: cover;" alt="...">
+          <div class="card-body">
+            <h5 class="card-title" th:text="${activity.title}">Card title</h5>
+            <p class="card-text">
+            <p>Type:<span style="color:blue" th:text="${activity.activityType}">TYPE</span></p>
+            <p>Credits:<span style="color:blue" th:text="${activity.activityCredits}">CREDITS</span></p>
+            <p>Date:<span style="color:blue" th:text="${activity.startDate}">Date</span>-<span style="color:blue"
+                th:text="${activity.endDate}">CREDITS</span></p>
+            <p>Time:<span style="color:blue" th:text="${activity.startTime}">Time</span>-<span style="color:blue"
+                th:text="${activity.endTime}">CREDITS</span></p>
+            </p>
+            <a th:href="@{/dettaglioAttivita?id=}+${activity.id}" class="btn btn-primary">Dettaglio Attività</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+</body>
+
 </html>
