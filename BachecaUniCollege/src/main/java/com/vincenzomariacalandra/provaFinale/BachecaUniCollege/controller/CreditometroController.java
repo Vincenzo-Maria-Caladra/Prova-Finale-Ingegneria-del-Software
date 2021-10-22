@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,19 +26,15 @@ import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service.UserServi
 public class CreditometroController {
 	
 	// All Services required
-	private final ActivityService activityService;
 	private final UserActivityService userActivityService;
-	private final UserService userService;
 	
 	@Autowired
-	public CreditometroController(ActivityService activityService, UserActivityService userActivityService, UserService userService) {
-		this.activityService = activityService;
+	public CreditometroController(UserActivityService userActivityService) {
 		this.userActivityService = userActivityService;
-		this.userService = userService;
 	}
 	
 	@GetMapping
-	public String getCreditometro(Model model, HttpServletRequest request) {
+	public String getCreditometro(Model model, HttpServletRequest request, Authentication authentication) {
 		
 		String user = request.getUserPrincipal().getName();
 		
@@ -67,9 +65,6 @@ public class CreditometroController {
 				
 			}
 		}
-		
-		System.out.println(count1);
-		System.out.println(count2);
 		
 		count1 = (count1/4.5)*100;
 		count1 = (double) Math.round(count1 * 100) / 100;

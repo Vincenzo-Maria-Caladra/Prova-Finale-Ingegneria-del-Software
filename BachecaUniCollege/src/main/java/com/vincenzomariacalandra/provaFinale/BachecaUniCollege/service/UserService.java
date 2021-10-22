@@ -137,5 +137,7 @@ public class UserService implements UserDetailsService{
     public int enableAppUser(String email) {
         return userRepository.enableAppUser(email);
     }
+    
+    
 	
 }

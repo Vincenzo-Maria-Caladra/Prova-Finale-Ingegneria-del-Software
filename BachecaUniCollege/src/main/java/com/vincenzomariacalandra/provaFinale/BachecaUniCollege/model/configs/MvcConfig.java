@@ -1,4 +1,4 @@
-package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.config;
+package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.configs;
  
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;

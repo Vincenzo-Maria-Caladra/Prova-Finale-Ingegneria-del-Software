@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
   <title>Home Page</title>
@@ -28,13 +29,14 @@
           <a class="nav-link" href="/creditometro">Creditometro</a>
         </li>
 
-        <li class="nav-item">
+        <li th:if="${#authentication.getPrincipal().isDirettore()}" class=" nav-item">
           <a class="nav-link" href="/gestioneAttivita">Gestione Attività</a>
         </li>
 
         <li class="nav-item">
           <div>
-            <a class="nav-link col-12" href="#" th:text="${#authentication.getPrincipal().getEmail()}">Utente</a>
+            <a class="nav-link col-12" href="#"
+              th:text="${#authentication.principal.name} +' '+${#authentication.principal.surname}">Utente</a>
           </div>
         </li>
 

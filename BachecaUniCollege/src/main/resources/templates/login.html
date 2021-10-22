@@ -1,43 +1,54 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <title>Login Page</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <!-- Others Style sheet -->
+
+<head>
+  <title>Login Page</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!-- Others Style sheet -->
 </head>
-  <body class="text-center">
-      <div class="form-signin text-center d-inline-flex flex-column mt-5">
-        <div class"font-weight-bold">
-            <h3>Please Login</h3>
-        </div>  
-        
-        <div th:if="${param.error}">
-        	<div class="alert alert-warning" role="alert">Wrong Credentials</div>
-        </div>
-          <form action="login" method="post">
-              <div class="form-floating">
-                    <label for="username"></label>
-                    <input type="text" class="form-control" name="username" id="floatingInput" aria-describedby="emailHelpId" placeholder="your.email@example.com">
-              </div>
 
-            <div class="form-floating">
-                  <label for="password"></label>
-                  <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="password"> <br>
-            </div>
+<body class="text-center">
+  <div class="form-signin text-center d-inline-flex flex-column mt-5">
+    <div class="font-weight-bold">
+      <h3>Please Login</h3>
+    </div>
 
-            <input class="w-100 btn btn-lg btn-primary" type="submit" value="Log in" />
-		    <p class="mt-5 mb-3 text-muted">Powered by Vector Code</p>
-          </form>
+    <div th:if="${param.error}">
+      <div class="alert alert-warning" role="alert">Wrong Credentials</div>
+    </div>
+    <form action="login" method="post">
+      <div class="form-floating">
+        <label for="username"></label>
+        <input type="text" class="form-control" name="username" id="floatingInput" aria-describedby="emailHelpId"
+          placeholder="your.email@example.com">
       </div>
-      
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  </body>
+
+      <div class="form-floating">
+        <label for="password"></label>
+        <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="password"> <br>
+      </div>
+
+      <input class="w-100 btn btn-lg btn-primary" type="submit" value="Log in" />
+      <p class="mt-5 mb-3 text-muted">Powered by Vector Code</p>
+    </form>
+  </div>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+</body>
+
 </html>

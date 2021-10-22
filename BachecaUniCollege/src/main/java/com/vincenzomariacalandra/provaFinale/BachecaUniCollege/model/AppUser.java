@@ -212,4 +212,32 @@ public class AppUser implements UserDetails{
 		this.username = username;
 	}
 	
+	public boolean isDirettore() {
+		
+		if (userType.name().equals("DIRETTORE")) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean isTutor() {
+		
+		if (userType.name().equals("TUTOR")) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean isSegreteria() {
+		
+		if (userType.name().equals("SEGRETERIA")) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	
 }
