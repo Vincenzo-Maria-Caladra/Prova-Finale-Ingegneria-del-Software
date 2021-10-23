@@ -30,6 +30,7 @@ public class HomeSegreteria {
 	public String getHomeSegreteria(Model model) {
 		
 		model.addAttribute("userCreditsList", userService.getAllUsersCredits());
+		model.addAttribute("tertulieList", activityService.getAllTertulieToBeApproved());
 		
 		return "homeSegreteria";
 	}

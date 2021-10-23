@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -150,6 +151,11 @@ public class ActivityService {
 	public Iterable<Activity> getActivitiesApproved(){
 		
 		return activityRepository.findByState(true);
+	}
+
+	public List<Activity> getAllTertulieToBeApproved() {
+		
+		return activityRepository.findAllByActivityTypeAndState(ActivityType.TERTULIA_A_TEMA, Boolean.FALSE);
 	}
 	
 	

@@ -26,7 +26,8 @@
 				</li>
 				<li class="nav-item"><a class="nav-link" href="/nuovaAttivita">Crea
 						Attività</a></li>
-				<li class="nav-item"><a class="nav-link" href="/creditometro">Creditometro</a>
+				<li th:if="${#authentication.getPrincipal().isStudente()}"
+					class="nav-item"><a class="nav-link" href="/creditometro">Creditometro</a>
 				</li>
 
 				<li th:if="${#authentication.getPrincipal().isDirettore()}"
@@ -69,10 +70,9 @@
 					<div id="registroResidenti" class="tab-pane fade">
 
 						<div class="row m-3 col-10">
-							<table
-								class="table table-primary table-striped table-hover">
+							<table class="table table-primary table-striped table-hover">
 
-								<caption>List of Activities</caption>
+								<caption>List of Studenti</caption>
 
 								<thead>
 
@@ -136,8 +136,59 @@
 
 					</div>
 
-					<div id="#programmazioneTertulieATema" class="tab-pane fade">
+					<div id="programmazioneTertulieATema" class="tab-pane fade">
 
+						<div class="row m-3 col-10">
+							<table class="table table-primary table-striped table-hover">
+
+								<caption>List of Tertulie a tema to be approved</caption>
+
+								<thead>
+
+									<tr>
+
+										<th scope="col">
+											<p>Data</p>
+										</th>
+
+										<th scope="col">
+											<p>Ora</p>
+										</th>
+
+										<th scope="col">
+											<p>Titolo</p>
+										</th>
+
+										<th scope="col">
+											<p>Autore</p>
+										</th>
+
+
+									</tr>
+
+								</thead>
+
+
+								<tbody>
+									<div th:each="tertulia : ${tertulieList}">
+
+										<tr>
+											<td th:text="${tertulia.startDate}">Tb data</td>
+											<td th:text="${tertulia.startTime}">Tb data</td>
+											<td th:text="${tertulia.title}">Tb data</td>
+											<td
+												th:text="${tertulia.getUserActivities().get(0).getUser().getName()}">Tb
+												data</td>
+
+											<td class="justify-content-center"></td>
+										</tr>
+
+									</div>
+								</tbody>
+
+
+							</table>
+						</div>
 					</div>
 
 					<div id="registroResidenti" class="tab-pane fade"></div>
