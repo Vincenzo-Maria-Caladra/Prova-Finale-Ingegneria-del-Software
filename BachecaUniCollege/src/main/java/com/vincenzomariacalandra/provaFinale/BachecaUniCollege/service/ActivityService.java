@@ -2,12 +2,14 @@ package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import org.hibernate.internal.build.AllowSysOut;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -125,6 +127,30 @@ public class ActivityService {
 		if (activityCredits != null &&
 				! Objects.equals(activityCredits, activity.getActivityCredits())) {
 			activity.setActivityCredits(activityCredits);
+		}
+		
+		return activity;
+	}
+	
+	
+	@Transactional
+	public Activity updateActivity(long activityId, Date startDate, Time startTime, Time endTime) {
+				
+		Activity activity = activityRepository.findById(activityId).orElseThrow( () -> new IllegalStateException(
+				"Activity with id:" + activityId + " not found!"));
+		
+		if(startDate.before(Date.valueOf(LocalDate.now()))) {
+			System.out.println(startDate);
+			System.out.println(Date.valueOf(LocalDate.now()));
+			throw new IllegalStateException("Data inserita antecedente ad oggi!");
+		} else {
+			
+			if (startTime.after(endTime)) {
+				throw new IllegalStateException("Ora di inizio successiva all'ora di fine!");
+			}
+			
+			activity.setStartDate(startDate);
+			activity.setStartTime(startTime.toString());
 		}
 		
 		return activity;
