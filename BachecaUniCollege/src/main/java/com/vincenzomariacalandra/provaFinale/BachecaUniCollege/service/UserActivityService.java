@@ -3,6 +3,8 @@ package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
@@ -88,6 +90,24 @@ public class UserActivityService {
 		Optional<Activity> activityOptional = activityRepository.findById(activityId);
 		
 		return userActivityRepository.findByUserAndActivityAndOrganizer(userOptional.get(), activityOptional.get(), organizer);
+	}
+
+	public List<UserActivity> listAllUserActivitiesToApprove(Long userId) {
+		
+		return userActivityRepository.findByUserAndApproved(userRepository.findById(userId).get(), false);
+	}
+	
+	@Transactional
+	public void updateUserActivityState(Long userActivityId) {
+		
+		Optional<UserActivity> userActivityOptional = userActivityRepository.findById(userActivityId);
+		
+		if( userActivityOptional.isPresent()) {
+			userActivityOptional.get().setApproved(true);
+		} else {
+			throw new IllegalStateException("User Activity does not exist!");
+		}
+		
 	}
 	
 }

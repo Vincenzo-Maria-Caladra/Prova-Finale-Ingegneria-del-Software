@@ -1,15 +1,19 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-	<title>Home Page</title>
-	<!-- Required meta tags -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Home Page</title>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
 </head>
 
 <body>
@@ -24,19 +28,25 @@
 				<li class="nav-item"><a class="nav-link" href="/nuovaAttivita">Crea
 						Attività</a></li>
 
-				<li th:if="${#authentication.getPrincipal().isStudente()}" class="nav-item"><a class="nav-link"
-						href="/creditometro">Creditometro</a>
+				<li th:if="${#authentication.getPrincipal().isStudente()}"
+					class="nav-item"><a class="nav-link" href="/creditometro">Creditometro</a>
 				</li>
 
-				<li th:if="${#authentication.getPrincipal().isDirettore()}" class=" nav-item"><a class="nav-link active"
-						href="/gestioneAttivita">Gestione Attività</a></li>
+				<li th:if="${#authentication.getPrincipal().isDirettore()}"
+					class=" nav-item"><a class="nav-link active"
+					href="/gestioneAttivita">Gestione Attività</a></li>
 
-				<li th:if="${#authentication.getPrincipal().isSegreteria()}" class=" nav-item"><a class="nav-link"
-						href="/homeSegreteria">Home Segreteria</a></li>
+				<li th:if="${#authentication.getPrincipal().isSegreteria()}"
+					class=" nav-item"><a class="nav-link" href="/homeSegreteria">Home
+						Segreteria</a></li>
 
-				<li th:if="${#authentication.getPrincipal().isTutor()}" class=" nav-item"><a class="nav-link"
-						href="/homeTutor">Home
+				<li th:if="${#authentication.getPrincipal().isTutor()}"
+					class=" nav-item"><a class="nav-link" href="/homeTutor">Home
 						Tutor</a></li>
+
+				<li th:if="${#authentication.getPrincipal().isDirettore()}"
+					class=" nav-item"><a class="nav-link" href="/homeDirettore">Gestione
+						Tutorato</a></li>
 
 				<li class="nav-item">
 					<div>
@@ -90,8 +100,8 @@
 
 						<tr>
 							<th scope="row">#</th>
-							<td><a th:text="${activity.title}" th:href="@{/dettaglioAttivita?id=}+${activity.id}">Tb
-									data</a></td>
+							<td><a th:text="${activity.title}"
+								th:href="@{/dettaglioAttivita?id=}+${activity.id}">Tb data</a></td>
 							<td th:text="${activity.activityCredits}">Tb data</td>
 							<td th:text="${activity.activityType}">Tb data</td>
 							<td th:text="${activity.startDate}">Tb data</td>
@@ -99,12 +109,14 @@
 							<td class="justify-content-center">
 
 								<form class="m-2" action="#"
-									th:action="@{/gestioneAttivita/acceptActivity?id=}+${activity.id}" method="post">
+									th:action="@{/gestioneAttivita/acceptActivity?id=}+${activity.id}"
+									method="post">
 									<button type="submit" class="btn btn-success">Accetta</button>
 								</form>
 
 								<form class="m-2" action="#"
-									th:action="@{/gestioneAttivita/deleteActivity?id=}+${activity.id}" method="post">
+									th:action="@{/gestioneAttivita/deleteActivity?id=}+${activity.id}"
+									method="post">
 									<button type="submit" class="btn btn-danger">Rifiuta</button>
 								</form>
 
@@ -125,10 +137,12 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
 		crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
 		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
 		crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 		crossorigin="anonymous"></script>
 </body>

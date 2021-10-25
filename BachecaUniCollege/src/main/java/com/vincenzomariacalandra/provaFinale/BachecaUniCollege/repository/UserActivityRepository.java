@@ -19,7 +19,9 @@ public interface UserActivityRepository extends JpaRepository<UserActivity, Long
 	
 	Optional<UserActivity> findByUserAndActivityAndOrganizer(AppUser user, Activity activity, boolean orgaBoolean);
 
-	Optional<UserActivity> findByUserAndActivity(AppUser appUser, Activity activity);
+	Optional<UserActivity> findByUserAndActivity(AppUser user, Activity activity);
+
+	List<UserActivity> findByUserAndApproved(AppUser user, boolean approved);
 	
 	
 }

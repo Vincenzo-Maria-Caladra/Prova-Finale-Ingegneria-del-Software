@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.Activity;
@@ -42,6 +43,22 @@ public class HomeTutorController {
 		model.addAttribute("listOfUserCredits", userService.getAllMenteeCreditsByTutor(tutor));
 		
 		return "homeTutor";
+	}
+	
+	@RequestMapping(path = "/dettaglioMentee", method = RequestMethod.GET)
+	public String getDettaglioMentee(@RequestParam("id")Long id, Model model) {
+		
+		model.addAttribute("listOfActivitiesToApprove", userActivityService.listAllUserActivitiesToApprove(id));
+		
+		return "dettaglioMentee";
+	}
+	
+	@RequestMapping(path = "/dettaglioMentee", method = RequestMethod.POST)
+	public String updateMenteeActivityState(@RequestParam("id")Long userActivityId, Model model) {
+		
+		userActivityService.updateUserActivityState(userActivityId);
+		
+		return "redirect:/dettaglioMentee";
 	}
 	
 }
