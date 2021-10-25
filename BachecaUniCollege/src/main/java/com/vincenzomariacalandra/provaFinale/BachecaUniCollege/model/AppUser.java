@@ -239,5 +239,14 @@ public class AppUser implements UserDetails{
 		return false;
 	}
 	
+	public boolean isStudente() {
+		
+		if (userType.name().equals("STUDENTE")) {
+			return true;
+		}
+		
+		return false;
+	}
+	
 	
 }

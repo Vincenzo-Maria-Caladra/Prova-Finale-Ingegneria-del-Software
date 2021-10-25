@@ -1,6 +1,8 @@
 package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
@@ -16,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.AppUser;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.ConfirmationToken;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.StudentCredits;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.UserActivity;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.repository.UserRepository;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.UserType;
 
@@ -23,15 +27,17 @@ import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.UserType;
 public class UserService implements UserDetailsService{
 	
 	private final UserRepository userRepository;
+	private final UserActivityService userActivityService;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	private final ConfirmationTokenService confirmationTokenService;
 	
 	@Autowired
-	public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, ConfirmationTokenService confirmationTokenService) {
+	public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, ConfirmationTokenService confirmationTokenService, UserActivityService userActivityService) {
 		super();
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 		this.userRepository = userRepository;
 		this.confirmationTokenService = confirmationTokenService;
+		this.userActivityService = userActivityService;
 	}
 	
 	public Iterable<AppUser> getUsers() {
@@ -138,6 +144,68 @@ public class UserService implements UserDetailsService{
         return userRepository.enableAppUser(email);
     }
     
+    
+    public List<AppUser> getAllAppUserStudenti(){
+    	
+    	return userRepository.findAllByUserType(UserType.STUDENTE).get();
+    }
+    
+    
+    public List<StudentCredits> getAllUsersCredits(){
+    	
+    	List<StudentCredits> usersCreditsList = new ArrayList<StudentCredits>();
+    	
+    	for (AppUser student : getAllAppUserStudenti()) {
+    		
+    		ArrayList<UserActivity> list = new ArrayList<>();
+    		
+    		userActivityService.listAllActivitiesOfUser(student.getEmail()).iterator().forEachRemaining(list::add);
+    		
+    		double count1 = 0;
+    		double count2 = 0;
+    		
+    		StudentCredits studentCredits = new StudentCredits();
+			studentCredits.setUser(student);
+    		
+    		for (UserActivity userActivity : list) {
+    			
+    			
+    			
+    			if (userActivity.isOrganizer()) {
+    				
+    				if (userActivity.isApproved()) {
+    					count1 = count1 + 0.2;
+    				} else {
+    					count2 = count2 + 0.2;
+    				}
+    				
+    			} else {
+    				
+    				if (userActivity.isApproved()) {
+    					count1 = count1 + userActivity.getActivity().getActivityCredits().getVal();
+    				} else {
+    					count2 = count2 + userActivity.getActivity().getActivityCredits().getVal();
+    				}
+    				
+    			}
+    		}
+    		
+    		
+    		
+    		count1 = (count1/4.5)*100;
+    		count1 = (double) Math.round(count1 * 100) / 100;
+    		studentCredits.setApprovedCredits(count1);
+    		
+    		count2 = (count2/4.5)*100;
+    		count2 = (double) Math.round(count2 * 100) / 100;
+    		studentCredits.setNotApprovedCredits(count2);
+    		
+    		usersCreditsList.add(studentCredits);
+    	}
+    	
+    	return usersCreditsList;
+    	
+    }
     
 	
 }

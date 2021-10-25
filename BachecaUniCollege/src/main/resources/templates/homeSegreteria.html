@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+<title>Home Page</title>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+</head>
+
+<body>
+
+	<div class="container-fluid">
+		<div class="row">
+			<ul class="nav nav-tabs container-fluid">
+
+				<li class="nav-item"><a class="nav-link" href="/homePage">Bacheca</a>
+				</li>
+				<li class="nav-item"><a class="nav-link" href="/nuovaAttivita">Crea
+						Attività</a></li>
+				<li th:if="${#authentication.getPrincipal().isStudente()}"
+					class="nav-item"><a class="nav-link" href="/creditometro">Creditometro</a>
+				</li>
+
+				<li th:if="${#authentication.getPrincipal().isDirettore()}"
+					class=" nav-item"><a class="nav-link" href="/gestioneAttivita">Gestione
+						Attività</a></li>
+
+				<li th:if="${#authentication.getPrincipal().isSegreteria()}"
+					class=" nav-item"><a class="nav-link active"
+					href="/homeSegreteria">Home Segreteria</a></li>
+
+				<li class="nav-item">
+					<div>
+						<a class="nav-link col-12" href="#"
+							th:text="${#authentication.principal.name} +' '+${#authentication.principal.surname}">Utente</a>
+					</div>
+				</li>
+
+			</ul>
+		</div>
+
+		<div class="row container-fluid">
+
+			<div class="text-left d-inline-flex flex-column mt-5 w-100">
+
+				<div class="font-weight-bold">
+					<h3>Home Page Segreteria Residenza</h3>
+				</div>
+
+				<ul class="nav nav-tabs">
+					<li class="m-2"><a data-toggle="tab" href="#registroResidenti">Registro
+							Residenti</a></li>
+					<li class="m-2"><a data-toggle="tab"
+						href="#programmazioneTertulieATema">Programmazione Tertulia a
+							tema</a></li>
+				</ul>
+
+				<div class="tab-content">
+
+					<div id="registroResidenti" class="tab-pane fade">
+
+						<div class="row m-3 col-10">
+							<table class="table table-primary table-striped table-hover">
+
+								<caption>List of Studenti</caption>
+
+								<thead>
+
+									<tr>
+
+										<th scope="col">
+											<p>Nome</p>
+										</th>
+
+										<th scope="col">
+											<p>Cognome</p>
+										</th>
+
+										<th scope="col">
+											<p>Crediti</p>
+										</th>
+
+									</tr>
+
+								</thead>
+
+
+								<tbody>
+									<div th:each="userCredits : ${userCreditsList}">
+
+										<tr>
+											<td th:text="${userCredits.user.name}">Tb data</td>
+											<td th:text="${userCredits.user.surname}">Tb data</td>
+
+											<td class="justify-content-center">
+
+												<div class="m-3">
+
+													<div class="progress m-1">
+														<div class="progress-bar" role="progressbar"
+															th:style="'width:'+ ${userCredits.approvedCredits} +'%'"
+															aria-valuemin="0" aria-valuemax="100"
+															th:text="${userCredits.approvedCredits}+'%'">25%</div>
+													</div>
+
+													<div class="progress m-1">
+														<div class="progress-bar bg-warning" role="progressbar"
+															th:style="'width:'+ ${userCredits.notApprovedCredits} +'%'"
+															aria-valuemin="0" aria-valuemax="100"
+															th:text="${userCredits.notApprovedCredits}+'%'">25%</div>
+													</div>
+
+
+												</div>
+
+
+											</td>
+										</tr>
+
+									</div>
+								</tbody>
+
+
+							</table>
+						</div>
+
+					</div>
+
+					<div id="programmazioneTertulieATema"
+						class="tab-pane fade display-flex">
+
+						<div class="m-3 col-6">
+							<table class="table table-primary table-striped table-hover">
+
+								<caption>List of Tertulie a tema to be approved</caption>
+
+								<thead>
+
+									<tr>
+
+										<th scope="col">
+											<p>Data</p>
+										</th>
+
+										<th scope="col">
+											<p>Ora</p>
+										</th>
+
+										<th scope="col">
+											<p>Titolo</p>
+										</th>
+
+										<th scope="col">
+											<p>Autore</p>
+										</th>
+
+
+									</tr>
+
+								</thead>
+
+
+								<tbody>
+									<div th:each="tertulia : ${tertulieList}">
+
+										<tr>
+											<td th:text="${tertulia.startDate}">Tb data</td>
+											<td th:text="${tertulia.startTime}">Tb data</td>
+											<td th:text="${tertulia.title}">Tb data</td>
+											<td
+												th:text="${tertulia.getUserActivities().get(0).getUser().getName()}">Tb
+												data</td>
+
+											<td class="justify-content-center">
+												<form class="m-2" action="#"
+													th:action="@{/homeSegreteria/acceptTertulia?id=}+${tertulia.id}"
+													method="post">
+													<button type="submit" class="btn btn-success">Accetta</button>
+												</form>
+
+												<form class="m-2" action="#"
+													th:action="@{/homeSegreteria/deleteTertulia?id=}+${tertulia.id}"
+													method="post">
+													<button type="submit" class="btn btn-danger">Rifiuta</button>
+												</form> 
+												<a class="btn btn-warning m-2"
+												th:href="@{/homeSegreteria/updateTertulia?id=}+${tertulia.id}">Update</a>
+
+											</td>
+										</tr>
+
+									</div>
+								</tbody>
+
+
+							</table>
+
+						</div>
+
+						<div th:if="${form}" class="col-4 m-3">
+							<form action="#" th:action="@{/homeSegreteria/updateTertulia?id=} + ${param.id}"
+								th:object="${updatedActivity}" method="post">
+								<div class="row">
+									<div class="form-group col-6">
+										<label for="startDate">Giorno Attività</label> <input
+											type="date" class="form-control" id="startDate"
+											th:field="*{startDate}" placeholder="YYYY-MM-DD" required>
+
+									</div>
+								</div>
+
+								<div class="row">
+
+									<div class="form-group col-6">
+										<label for="startTime">Ora inizio Attività</label> <input
+											type="time" class="form-control" id="startTime"
+											th:field="*{startTime}" placeholder="hh:mm" required>
+
+									</div>
+
+									<div class="form-group col-6">
+										<label for="endTime">Ora fine Attività</label> <input
+											type="time" class="form-control" id="endTime"
+											th:field="*{endTime}" placeholder="hh:mm" required>
+
+									</div>
+
+
+								</div>
+
+								<button type="submit" class="btn btn-primary">Submit</button>
+
+
+							</form>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>

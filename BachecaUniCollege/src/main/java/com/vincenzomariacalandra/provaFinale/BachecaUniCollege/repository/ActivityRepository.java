@@ -7,6 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.Activity;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.ActivityType;
 
 @Repository
 public interface ActivityRepository extends CrudRepository<Activity, Long> {
@@ -16,4 +17,6 @@ public interface ActivityRepository extends CrudRepository<Activity, Long> {
 	List<Optional<Activity>> findByTitle(String title);
 	
 	Iterable<Activity> findByState(boolean state);
+
+	List<Activity> findAllByActivityTypeAndState(ActivityType tertuliaATema, Boolean state);
 }
