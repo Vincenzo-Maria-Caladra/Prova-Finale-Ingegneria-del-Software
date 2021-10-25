@@ -1,4 +1,4 @@
-package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.request;
+package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model;
 
 import java.util.Objects;
 
