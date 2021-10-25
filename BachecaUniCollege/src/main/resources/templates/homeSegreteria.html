@@ -1,19 +1,15 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-<title>Home Page</title>
-<!-- Required meta tags -->
-<meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Home Page</title>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<!-- Bootstrap CSS -->
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-	crossorigin="anonymous">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
@@ -26,17 +22,20 @@
 				</li>
 				<li class="nav-item"><a class="nav-link" href="/nuovaAttivita">Crea
 						Attività</a></li>
-				<li th:if="${#authentication.getPrincipal().isStudente()}"
-					class="nav-item"><a class="nav-link" href="/creditometro">Creditometro</a>
+				<li th:if="${#authentication.getPrincipal().isStudente()}" class="nav-item"><a class="nav-link"
+						href="/creditometro">Creditometro</a>
 				</li>
 
-				<li th:if="${#authentication.getPrincipal().isDirettore()}"
-					class=" nav-item"><a class="nav-link" href="/gestioneAttivita">Gestione
+				<li th:if="${#authentication.getPrincipal().isDirettore()}" class=" nav-item"><a class="nav-link"
+						href="/gestioneAttivita">Gestione
 						Attività</a></li>
 
-				<li th:if="${#authentication.getPrincipal().isSegreteria()}"
-					class=" nav-item"><a class="nav-link active"
-					href="/homeSegreteria">Home Segreteria</a></li>
+				<li th:if="${#authentication.getPrincipal().isSegreteria()}" class=" nav-item"><a
+						class="nav-link active" href="/homeSegreteria">Home Segreteria</a></li>
+
+				<li th:if="${#authentication.getPrincipal().isTutor()}" class=" nav-item"><a class="nav-link"
+						href="/homeTutor">Home
+						Tutor</a></li>
 
 				<li class="nav-item">
 					<div>
@@ -59,8 +58,7 @@
 				<ul class="nav nav-tabs">
 					<li class="m-2"><a data-toggle="tab" href="#registroResidenti">Registro
 							Residenti</a></li>
-					<li class="m-2"><a data-toggle="tab"
-						href="#programmazioneTertulieATema">Programmazione Tertulia a
+					<li class="m-2"><a data-toggle="tab" href="#programmazioneTertulieATema">Programmazione Tertulia a
 							tema</a></li>
 				</ul>
 
@@ -135,8 +133,7 @@
 
 					</div>
 
-					<div id="programmazioneTertulieATema"
-						class="tab-pane fade display-flex">
+					<div id="programmazioneTertulieATema" class="tab-pane fade display-flex">
 
 						<div class="m-3 col-6">
 							<table class="table table-primary table-striped table-hover">
@@ -176,8 +173,7 @@
 											<td th:text="${tertulia.startDate}">Tb data</td>
 											<td th:text="${tertulia.startTime}">Tb data</td>
 											<td th:text="${tertulia.title}">Tb data</td>
-											<td
-												th:text="${tertulia.getUserActivities().get(0).getUser().getName()}">Tb
+											<td th:text="${tertulia.getUserActivities().get(0).getUser().getName()}">Tb
 												data</td>
 
 											<td class="justify-content-center">
@@ -191,9 +187,9 @@
 													th:action="@{/homeSegreteria/deleteTertulia?id=}+${tertulia.id}"
 													method="post">
 													<button type="submit" class="btn btn-danger">Rifiuta</button>
-												</form> 
+												</form>
 												<a class="btn btn-warning m-2"
-												th:href="@{/homeSegreteria/updateTertulia?id=}+${tertulia.id}">Update</a>
+													th:href="@{/homeSegreteria/updateTertulia?id=}+${tertulia.id}">Update</a>
 
 											</td>
 										</tr>
@@ -211,9 +207,9 @@
 								th:object="${updatedActivity}" method="post">
 								<div class="row">
 									<div class="form-group col-6">
-										<label for="startDate">Giorno Attività</label> <input
-											type="date" class="form-control" id="startDate"
-											th:field="*{startDate}" placeholder="YYYY-MM-DD" required>
+										<label for="startDate">Giorno Attività</label> <input type="date"
+											class="form-control" id="startDate" th:field="*{startDate}"
+											placeholder="YYYY-MM-DD" required>
 
 									</div>
 								</div>
@@ -221,16 +217,16 @@
 								<div class="row">
 
 									<div class="form-group col-6">
-										<label for="startTime">Ora inizio Attività</label> <input
-											type="time" class="form-control" id="startTime"
-											th:field="*{startTime}" placeholder="hh:mm" required>
+										<label for="startTime">Ora inizio Attività</label> <input type="time"
+											class="form-control" id="startTime" th:field="*{startTime}"
+											placeholder="hh:mm" required>
 
 									</div>
 
 									<div class="form-group col-6">
-										<label for="endTime">Ora fine Attività</label> <input
-											type="time" class="form-control" id="endTime"
-											th:field="*{endTime}" placeholder="hh:mm" required>
+										<label for="endTime">Ora fine Attività</label> <input type="time"
+											class="form-control" id="endTime" th:field="*{endTime}" placeholder="hh:mm"
+											required>
 
 									</div>
 
@@ -256,12 +252,10 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
 		crossorigin="anonymous"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
 		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
 		crossorigin="anonymous"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 		crossorigin="anonymous"></script>
 </body>

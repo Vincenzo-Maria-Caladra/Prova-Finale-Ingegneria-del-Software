@@ -207,5 +207,67 @@ public class UserService implements UserDetailsService{
     	
     }
     
+    public List<AppUser> getAllMenteeByTutor(AppUser tutor){
+    	
+    	return userRepository.findAllByTutor(tutor).get();
+    }
+
+	public List<StudentCredits> getAllMenteeCreditsByTutor(AppUser tutor) {
+
+		
+    	List<StudentCredits> usersCreditsList = new ArrayList<StudentCredits>();
+    	
+    	for (AppUser student : getAllMenteeByTutor(tutor)) {
+    		
+    		ArrayList<UserActivity> list = new ArrayList<>();
+    		
+    		userActivityService.listAllActivitiesOfUser(student.getEmail()).iterator().forEachRemaining(list::add);
+    		
+    		double count1 = 0;
+    		double count2 = 0;
+    		
+    		StudentCredits studentCredits = new StudentCredits();
+			studentCredits.setUser(student);
+    		
+    		for (UserActivity userActivity : list) {
+    			
+    			
+    			
+    			if (userActivity.isOrganizer()) {
+    				
+    				if (userActivity.isApproved()) {
+    					count1 = count1 + 0.2;
+    				} else {
+    					count2 = count2 + 0.2;
+    				}
+    				
+    			} else {
+    				
+    				if (userActivity.isApproved()) {
+    					count1 = count1 + userActivity.getActivity().getActivityCredits().getVal();
+    				} else {
+    					count2 = count2 + userActivity.getActivity().getActivityCredits().getVal();
+    				}
+    				
+    			}
+    		}
+    		
+    		
+    		
+    		count1 = (count1/4.5)*100;
+    		count1 = (double) Math.round(count1 * 100) / 100;
+    		studentCredits.setApprovedCredits(count1);
+    		
+    		count2 = (count2/4.5)*100;
+    		count2 = (double) Math.round(count2 * 100) / 100;
+    		studentCredits.setNotApprovedCredits(count2);
+    		
+    		usersCreditsList.add(studentCredits);
+    	}
+    	
+    	return usersCreditsList;
+    	
+	}
+    
 	
 }

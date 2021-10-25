@@ -1,48 +1,47 @@
 package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.controller;
 
-import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.Activity;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.AppUser;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service.ActivityService;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service.UserActivityService;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service.UserService;
 
-/**
- * @author CalandraVM
- * Classe Controller per la homePage.html
- */
 @Controller
-@RequestMapping("/homePage")
-public class HomePageController {
+@RequestMapping("/homeTutor")
+public class HomeTutorController {
+	
 	
 	// All Services required
 	private final ActivityService activityService;
+	private final UserActivityService userActivityService;
+	private final UserService userService;
 	
 	@Autowired
-	public HomePageController(ActivityService activityService) {
+	public HomeTutorController(ActivityService activityService, UserActivityService userActivityService, UserService userService) {
 		this.activityService = activityService;
+		this.userActivityService = userActivityService;
+		this.userService = userService;
 	}
 	
-	// Inizializzazione della pagina homePage.html
 	@GetMapping
-	public String listAllActivities(Model model) {
+	public String getHomeTutor(Model model) {
 		
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		AppUser tutor = ((AppUser)principal);
+
+		model.addAttribute("listOfMentee", userService.getAllMenteeByTutor(tutor));
+		model.addAttribute("listOfUserCredits", userService.getAllMenteeCreditsByTutor(tutor));
 		
-		ArrayList<Activity> list = new ArrayList<>();
-		
-		activityService.getActivitiesApproved().iterator().forEachRemaining(list::add);
-		
-		model.addAttribute("activities", list);
-		
-		return "homePage";
+		return "homeTutor";
 	}
 	
 }
