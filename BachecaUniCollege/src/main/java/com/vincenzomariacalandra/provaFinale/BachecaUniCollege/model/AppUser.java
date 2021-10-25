@@ -9,12 +9,18 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ManyToAny;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -39,7 +45,8 @@ public class AppUser implements UserDetails{
     
     private String password;
     
-    private long tutorId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private AppUser tutor;
     
     private boolean locked;
     
@@ -68,35 +75,6 @@ public class AppUser implements UserDetails{
 		this.userType = userType;
 		this.enabled = false;
 		this.locked = false;
-	}
-	
-	@Override
-	public String toString() {
-		return "AppUser [id=" + id + ", name=" + name + ", surname=" + surname + ", username=" + username + ", email="
-				+ email + ", password=" + password + ", tutorId=" + tutorId + ", locked=" + locked + ", enabled="
-				+ enabled + ", userType=" + userType + ", usersActivities=" + usersActivities + "]";
-	}
-	
-	@Override
-	public int hashCode() {
-		return Objects.hash(email, enabled, id, locked, name, password, surname, tutorId, userType, username,
-				usersActivities);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		AppUser other = (AppUser) obj;
-		return Objects.equals(email, other.email) && enabled == other.enabled && id == other.id
-				&& locked == other.locked && Objects.equals(name, other.name)
-				&& Objects.equals(password, other.password) && Objects.equals(surname, other.surname)
-				&& tutorId == other.tutorId && userType == other.userType && Objects.equals(username, other.username)
-				&& Objects.equals(usersActivities, other.usersActivities);
 	}
 
 	public long getId() {
@@ -149,14 +127,6 @@ public class AppUser implements UserDetails{
 
 	public void setUsersActivities(List<UserActivity> usersActivities) {
 		this.usersActivities = usersActivities;
-	}
-
-	public long getTutorId() {
-		return tutorId;
-	}
-
-	public void setTutorId(long tutorId) {
-		this.tutorId = tutorId;
 	}
 
 	public boolean isLocked() {
@@ -246,6 +216,14 @@ public class AppUser implements UserDetails{
 		}
 		
 		return false;
+	}
+
+	public AppUser getTutor() {
+		return tutor;
+	}
+
+	public void setTutor(AppUser tutor) {
+		this.tutor = tutor;
 	}
 	
 	
