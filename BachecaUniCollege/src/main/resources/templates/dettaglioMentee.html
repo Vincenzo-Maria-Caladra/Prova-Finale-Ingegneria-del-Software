@@ -79,63 +79,62 @@
 		</div>
 
 		<div class="row m-3">
-			<table class="table table-primary table-striped table-hover">
+			<table class="table table-primary table-striped table-hover col-5">
 
-				<caption>List of Studenti</caption>
+				<caption>List of Activities</caption>
 
 				<thead>
 
 					<tr>
-
 						<th scope="col">
-							<p>Nome</p>
+							<p>#</p>
 						</th>
 
 						<th scope="col">
-							<p>Cognome</p>
+							<p>Title</p>
 						</th>
 
 						<th scope="col">
-							<p>Crediti</p>
+							<p>Credits</p>
 						</th>
 
+						<th scope="col">
+							<p>Type</p>
+						</th>
+
+						<th scope="col">
+							<p>Date</p>
+						</th>
+
+						<th scope="col">
+							<p>Organizer</p>
+						</th>
+
+						<th scope="col">
+							<p>Actions</p>
+						</th>
 					</tr>
 
 				</thead>
 
 
 				<tbody>
-					<div th:each="userCredits : ${listOfUserCredits}">
+					<div th:each="userActivity : ${listOfActivitiesToApprove}">
 
 						<tr>
-							<td><a
-								class="btn btn-warning m-2"
-								th:text="${userCredits.user.name}"
-								th:href="@{/homeTutor/dettaglioMentee?id=}+${userCredits.user.id}">Update</a></td>
-							<td th:text="${userCredits.user.surname}">Tb data</td>
-
-							<td class="justify-content-center">
-
-								<div class="m-3">
-
-									<div class="progress m-1">
-										<div class="progress-bar" role="progressbar"
-											th:style="'width:'+ ${userCredits.approvedCredits} +'%'"
-											aria-valuemin="0" aria-valuemax="100"
-											th:text="${userCredits.approvedCredits}+'%'">25%</div>
-									</div>
-
-									<div class="progress m-1">
-										<div class="progress-bar bg-warning" role="progressbar"
-											th:style="'width:'+ ${userCredits.notApprovedCredits} +'%'"
-											aria-valuemin="0" aria-valuemax="100"
-											th:text="${userCredits.notApprovedCredits}+'%'">25%</div>
-									</div>
-
-
-								</div>
-
-
+							<th scope="row">#</th>
+							<td th:text="${userActivity.activity.title}">Tb data</td>
+							<td th:text="${userActivity.activity.activityCredits}">Tb
+								data</td>
+							<td th:text="${userActivity.activity.activityType}">Tb data</td>
+							<td th:text="${userActivity.activity.startDate}">Tb data</td>
+							<td th:if="${userActivity.organizer}">*</td>
+							<td>
+								<form class="m-2" action="#"
+									th:action="@{/homeTutor/dettaglioMentee/approvedActivity?id=}+${userActivity.id}"
+									method="post">
+									<button type="submit" class="btn btn-success">Accetta</button>
+								</form>
 							</td>
 						</tr>
 

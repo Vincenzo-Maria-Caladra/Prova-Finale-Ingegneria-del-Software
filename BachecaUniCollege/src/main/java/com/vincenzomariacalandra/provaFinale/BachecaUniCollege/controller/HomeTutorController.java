@@ -39,7 +39,6 @@ public class HomeTutorController {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		AppUser tutor = ((AppUser)principal);
 
-		model.addAttribute("listOfMentee", userService.getAllMenteeByTutor(tutor));
 		model.addAttribute("listOfUserCredits", userService.getAllMenteeCreditsByTutor(tutor));
 		
 		return "homeTutor";
@@ -53,12 +52,12 @@ public class HomeTutorController {
 		return "dettaglioMentee";
 	}
 	
-	@RequestMapping(path = "/dettaglioMentee", method = RequestMethod.POST)
+	@RequestMapping(path = "/dettaglioMentee/approvedActivity", method = RequestMethod.POST)
 	public String updateMenteeActivityState(@RequestParam("id")Long userActivityId, Model model) {
 		
 		userActivityService.updateUserActivityState(userActivityId);
 		
-		return "redirect:/dettaglioMentee";
+		return "redirect:/homeTutor";
 	}
 	
 }

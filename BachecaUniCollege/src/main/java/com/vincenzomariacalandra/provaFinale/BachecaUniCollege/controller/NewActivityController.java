@@ -60,52 +60,56 @@ public class NewActivityController {
 		return "creaAttivita";
 	}
 	
-	//  Gestione dell'inserimento di una nuova attività tramite form
+	//  Gestione dell'inserimento di una nuova attivitï¿½ tramite form
 	@RequestMapping(path = "/nuovaAttivita", method = RequestMethod.POST)
-	public String addActivity (@ModelAttribute Activity activity, @RequestParam("fileImage") MultipartFile multipartFile, Model model, HttpServletRequest request)
+	public String addActivity (@ModelAttribute Activity activity, @RequestParam(name = "fileImage", required = false) MultipartFile multipartFile, Model model, HttpServletRequest request)
 	throws IOException {
 		
-		// Generazione del filename della foto caricata 
-        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-               
+		if (multipartFile != null) {
+			
+			// Generazione del filename della foto caricata 
+	        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+	               
+	        
+	        // Inserimento del filename della foto nell'istanza dell'Activity
+	        // generata via form
+	        activity.setPhoto(fileName);
         
-        // Inserimento del filename della foto nell'istanza dell'Activity
-        // generata via form
-        activity.setPhoto(fileName);
         
-        
-        // Salvataggio dell'activity nel DB
-        Activity savedActivity = activityService.addNewActivity(activity);
+        	// Salvataggio dell'activity nel DB
+        	Activity savedActivity = activityService.addNewActivity(activity);
  
-        
-        // Generazione del path alla directory in cui inserire la nuova foto caricata 
-        String uploadDir = "/activity-photos/" + savedActivity.getId();
-        Path uploadPath = Paths.get(uploadDir);
-        
-        
-        // Verifica dell'esistenza della cartella
-        if (!Files.exists(uploadPath)) {
-        	Files.createDirectory(uploadPath);
+            // Generazione del path alla directory in cui inserire la nuova foto caricata 
+            String uploadDir = "/activity-photos/" + savedActivity.getId();
+            Path uploadPath = Paths.get(uploadDir);
+            
+            
+            // Verifica dell'esistenza della cartella
+            if (!Files.exists(uploadPath)) {
+            	Files.createDirectory(uploadPath);
+            }
+            
+            // Scrittura del file nell'apposita directory
+            try (InputStream inputStream = multipartFile.getInputStream()) {
+            	
+            	Path filePath = uploadPath.resolve(fileName);
+            	
+            	Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+    		
+            } catch (IOException ioe) {
+    			throw new IOException("Could not save the file!");
+    		}
+        } else {
+        	activityService.addNewActivity(activity);
         }
         
-        // Scrittura del file nell'apposita directory
-        try (InputStream inputStream = multipartFile.getInputStream()) {
-        	
-        	Path filePath = uploadPath.resolve(fileName);
-        	
-        	Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-		
-        } catch (IOException ioe) {
-			throw new IOException("Could not save the file!");
-		}
         
-        
-        // Inserimento del creatore dell'attività nella tabella userActivity come "organizer"
+        // Inserimento del creatore dell'attivitï¿½ nella tabella userActivity come "organizer"
 		String user = request.getUserPrincipal().getName();
 		Optional<AppUser> optionalUser = userService.getUser(user);
 		userActivityService.insertNewUserActivity(optionalUser.get().getId(), activity.getId(), true);
 		
-		model.addAttribute("msg", "Attività  aggiunta con successo! Attendi che venga approvata!");
+		model.addAttribute("msg", "Attivitï¿½ aggiunta con successo! Attendi che venga approvata!");
 		
 		
 		return "redirect:/homePage";
