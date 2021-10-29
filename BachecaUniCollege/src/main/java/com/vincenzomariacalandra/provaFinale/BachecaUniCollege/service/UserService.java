@@ -150,6 +150,11 @@ public class UserService implements UserDetailsService{
     	return userRepository.findAllByUserType(UserType.STUDENTE).get();
     }
     
+    public List<AppUser> getAllAppUserTutor(){
+    	
+    	return userRepository.findAllByUserType(UserType.TUTOR).get();
+    }
+    
     
     public List<StudentCredits> getAllUsersCredits(){
     	
@@ -267,6 +272,16 @@ public class UserService implements UserDetailsService{
     	
     	return usersCreditsList;
     	
+	}
+	
+	@Transactional
+	public void updateUserTutor(Long userId, String tutorId) {
+		
+		Optional<AppUser> userOptional =  userRepository.findById(userId);
+		Optional<AppUser> userTutorOptional =  userRepository.findById(Long.valueOf(tutorId));
+		userOptional.get().setTutor(userTutorOptional.get());
+		
+		
 	}
     
 	

@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.AppUser;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.ConfirmationToken;
-import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.request.RegistrationRequest;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.RegistrationRequest;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.EmailSender;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.EmailValidator;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.UserType;

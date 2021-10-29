@@ -31,11 +31,16 @@
 						Attività</a></li>
 
 				<li th:if="${#authentication.getPrincipal().isSegreteria()}" class=" nav-item"><a class="nav-link"
-						href="/homeSegreteria">Home Segreteria</a></li>
+						href="/homeSegreteria">Home
+						Segreteria</a></li>
 
 				<li th:if="${#authentication.getPrincipal().isTutor()}" class=" nav-item"><a class="nav-link"
 						href="/homeTutor">Home
 						Tutor</a></li>
+
+				<li th:if="${#authentication.getPrincipal().isDirettore()}" class=" nav-item"><a class="nav-link"
+						href="/homeDirettore">Gestione
+						Tutorato</a></li>
 
 				<li class="nav-item">
 					<div>

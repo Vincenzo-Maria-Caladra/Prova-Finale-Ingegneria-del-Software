@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.request.RegistrationRequest;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.RegistrationRequest;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service.RegistrationService;
 
 /**

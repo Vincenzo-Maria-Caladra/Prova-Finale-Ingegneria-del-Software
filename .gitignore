@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+=======
+BachecaUniCollege/src/main/java/com/vincenzomariacalandra/provaFinale/BachecaUniCollege/controller/configs/MvcConfig.java
+>>>>>>> 755cfd15464cae1a4707d8d7332fc431d0cbd7ae

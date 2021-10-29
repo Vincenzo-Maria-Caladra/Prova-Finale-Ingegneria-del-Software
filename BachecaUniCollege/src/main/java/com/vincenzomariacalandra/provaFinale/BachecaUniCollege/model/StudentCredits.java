@@ -2,11 +2,11 @@ package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model;
 
 public class StudentCredits {
 	
-	AppUser user;
+	public AppUser user;
 	
-	double approvedCredits;
+	public double approvedCredits;
 	
-	double notApprovedCredits;
+	public double notApprovedCredits;
 
 	public AppUser getUser() {
 		return user;

@@ -28,12 +28,15 @@
 						Attività</a></li>
 
 				<li th:if="${#authentication.getPrincipal().isStudente()}"
-					class="nav-item"><a class="nav-link active"
-					href="/creditometro">Creditometro</a></li>
+					class="nav-item"><a class="nav-link" href="/creditometro">Creditometro</a></li>
 
 				<li th:if="${#authentication.getPrincipal().isDirettore()}"
 					class=" nav-item"><a class="nav-link" href="/gestioneAttivita">Gestione
 						Attività</a></li>
+
+				<li th:if="${#authentication.getPrincipal().isDirettore()}"
+					class=" nav-item"><a class="nav-link active"
+					href="/homeDirettore">Gestione Attività</a></li>
 
 				<li th:if="${#authentication.getPrincipal().isSegreteria()}"
 					class=" nav-item"><a class="nav-link" href="/homeSegreteria">Home
@@ -42,10 +45,11 @@
 				<li th:if="${#authentication.getPrincipal().isTutor()}"
 					class=" nav-item"><a class="nav-link" href="/homeTutor">Home
 						Tutor</a></li>
-						
+
 				<li th:if="${#authentication.getPrincipal().isDirettore()}"
 					class=" nav-item"><a class="nav-link" href="/homeDirettore">Gestione
 						Tutorato</a></li>
+
 				<li class="nav-item">
 					<div>
 						<a class="nav-link col-12" href="#"
@@ -74,10 +78,10 @@
 
 		</div>
 
-		<div class="row m-3 text-center">
+		<div class="row m-3">
 			<table class="table table-primary table-striped table-hover col-5">
 
-				<caption>Lista Attività</caption>
+				<caption>List of Activities</caption>
 
 				<thead>
 
@@ -87,23 +91,27 @@
 						</th>
 
 						<th scope="col">
-							<p>Titolo</p>
+							<p>Title</p>
 						</th>
 
 						<th scope="col">
-							<p>Crediti</p>
+							<p>Credits</p>
 						</th>
 
 						<th scope="col">
-							<p>Tipo</p>
+							<p>Type</p>
 						</th>
 
 						<th scope="col">
-							<p>Data</p>
+							<p>Date</p>
 						</th>
 
 						<th scope="col">
-							<p>Organizzatore</p>
+							<p>Organizer</p>
+						</th>
+
+						<th scope="col">
+							<p>Actions</p>
 						</th>
 					</tr>
 
@@ -111,7 +119,7 @@
 
 
 				<tbody>
-					<div th:each="userActivity : ${userActivities}">
+					<div th:each="userActivity : ${listOfActivitiesToApprove}">
 
 						<tr>
 							<th scope="row">#</th>
@@ -121,6 +129,13 @@
 							<td th:text="${userActivity.activity.activityType}">Tb data</td>
 							<td th:text="${userActivity.activity.startDate}">Tb data</td>
 							<td th:if="${userActivity.organizer}">*</td>
+							<td>
+								<form class="m-2" action="#"
+									th:action="@{/homeTutor/dettaglioMentee/approvedActivity?id=}+${userActivity.id}"
+									method="post">
+									<button type="submit" class="btn btn-success">Accetta</button>
+								</form>
+							</td>
 						</tr>
 
 					</div>
