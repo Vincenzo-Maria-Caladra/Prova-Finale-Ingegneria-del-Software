@@ -66,10 +66,10 @@
 
 					<div id="registroResidenti" class="tab-pane fade">
 
-						<div class="row m-3 col-10">
-							<table class="table table-primary table-striped table-hover">
+						<div class="row m-3 d-flex">
+							<table class="table table-primary table-striped table-hover text-center">
 
-								<caption>List of Studenti</caption>
+								<caption>Lista Studenti</caption>
 
 								<thead>
 
@@ -133,12 +133,13 @@
 
 					</div>
 
-					<div id="programmazioneTertulieATema" class="tab-pane fade display-flex">
+					<div id="programmazioneTertulieATema" class="tab-pane fade">
 
-						<div class="m-3 col-6">
-							<table class="table table-primary table-striped table-hover">
+						<div class="m-3 d-sm-flex d-md-flex d-lg-flex flex-lg-row flex-md-column flex-sm-column">
 
-								<caption>List of Tertulie a tema to be approved</caption>
+							<table class="table table-primary table-striped table-hover text-center">
+
+								<caption>Lista Tertulie a tema da approvare</caption>
 
 								<thead>
 
@@ -160,6 +161,9 @@
 											<p>Autore</p>
 										</th>
 
+										<th scope="col">
+											<p>Azione</p>
+										</th>
 
 									</tr>
 
@@ -177,20 +181,25 @@
 												data</td>
 
 											<td class="justify-content-center">
+
 												<form class="m-2" action="#"
 													th:action="@{/homeSegreteria/acceptTertulia?id=}+${tertulia.id}"
 													method="post">
-													<button type="submit" class="btn btn-success">Accetta</button>
+													<button type="submit"
+														class="btn btn-success btn-block">Accetta</button>
 												</form>
 
 												<form class="m-2" action="#"
 													th:action="@{/homeSegreteria/deleteTertulia?id=}+${tertulia.id}"
 													method="post">
-													<button type="submit" class="btn btn-danger">Rifiuta</button>
+													<button type="submit"
+														class="btn btn-danger btn-block">Rifiuta</button>
 												</form>
-												<a class="btn btn-warning m-2"
-													th:href="@{/homeSegreteria/updateTertulia?id=}+${tertulia.id}">Update</a>
 
+												<form class="m-2" action="#" method="get">
+													<a class="btn btn-warning btn-block"
+														th:href="@{/homeSegreteria/updateTertulia?id=}+${tertulia.id}">Aggiorna</a>
+												</form>
 											</td>
 										</tr>
 
@@ -200,43 +209,43 @@
 
 							</table>
 
-						</div>
+							<div th:if="${form}" class="m-3">
+								<form action="#" th:action="@{/homeSegreteria/updateTertulia?id=} + ${param.id}"
+									th:object="${updatedActivity}" method="post">
+									<div class="row">
+										<div class="form-group col-6">
+											<label for="startDate">Giorno Attività</label> <input type="date"
+												class="form-control" id="startDate" th:field="*{startDate}"
+												placeholder="YYYY-MM-DD" required>
 
-						<div th:if="${form}" class="col-4 m-3">
-							<form action="#" th:action="@{/homeSegreteria/updateTertulia?id=} + ${param.id}"
-								th:object="${updatedActivity}" method="post">
-								<div class="row">
-									<div class="form-group col-6">
-										<label for="startDate">Giorno Attività</label> <input type="date"
-											class="form-control" id="startDate" th:field="*{startDate}"
-											placeholder="YYYY-MM-DD" required>
-
-									</div>
-								</div>
-
-								<div class="row">
-
-									<div class="form-group col-6">
-										<label for="startTime">Ora inizio Attività</label> <input type="time"
-											class="form-control" id="startTime" th:field="*{startTime}"
-											placeholder="hh:mm" required>
-
+										</div>
 									</div>
 
-									<div class="form-group col-6">
-										<label for="endTime">Ora fine Attività</label> <input type="time"
-											class="form-control" id="endTime" th:field="*{endTime}" placeholder="hh:mm"
-											required>
+									<div class="row">
+
+										<div class="form-group col-6">
+											<label for="startTime">Ora inizio Attività</label> <input type="time"
+												class="form-control" id="startTime" th:field="*{startTime}"
+												placeholder="hh:mm" required>
+
+										</div>
+
+										<div class="form-group col-6">
+											<label for="endTime">Ora fine Attività</label> <input type="time"
+												class="form-control" id="endTime" th:field="*{endTime}"
+												placeholder="hh:mm" required>
+
+										</div>
+
 
 									</div>
 
-
-								</div>
-
-								<button type="submit" class="btn btn-primary">Submit</button>
+									<button type="submit" class="btn btn-primary">Submit</button>
 
 
-							</form>
+								</form>
+							</div>
+
 						</div>
 					</div>
 

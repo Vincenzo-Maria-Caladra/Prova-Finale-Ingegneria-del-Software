@@ -30,15 +30,11 @@
 						href="/gestioneAttivita">Gestione
 						Attività</a></li>
 
-				<li th:if="${#authentication.getPrincipal().isDirettore()}" class=" nav-item"><a class="nav-link active"
-						href="/homeDirettore">Gestione
-						Attività</a></li>
-
 				<li th:if="${#authentication.getPrincipal().isSegreteria()}" class=" nav-item"><a class="nav-link"
 						href="/homeSegreteria">Home
 						Segreteria</a></li>
 
-				<li th:if="${#authentication.getPrincipal().isTutor()}" class=" nav-item"><a class="nav-link"
+				<li th:if="${#authentication.getPrincipal().isTutor()}" class=" nav-item"><a class="nav-link active"
 						href="/homeTutor">Home
 						Tutor</a></li>
 
@@ -52,26 +48,11 @@
 			</ul>
 		</div>
 
+		<div class="d-lg-flex flex-lg-row d-md-flex flex-md-column d-sm-flex flex-sm-column m-3 text-center">
 
-		<div class="m-3">
+			<table class="table table-primary table-striped table-hover m-1">
 
-			<div class="progress m-1">
-				<div class="progress-bar" role="progressbar" th:style="'width:'+ ${count1} +'%'" aria-valuemin="0"
-					aria-valuemax="100" th:text="${count1}+'%'">25%</div>
-			</div>
-
-			<div class="progress m-1">
-				<div class="progress-bar bg-warning" role="progressbar" th:style="'width:'+ ${count2} +'%'"
-					aria-valuemin="0" aria-valuemax="100" th:text="${count2}+'%'">25%</div>
-			</div>
-
-
-		</div>
-
-		<div class="row m-3">
-			<table class="table table-primary table-striped table-hover">
-
-				<caption>List of Studenti</caption>
+				<caption>Lista Mentee</caption>
 
 				<thead>
 
@@ -127,9 +108,78 @@
 
 					</div>
 				</tbody>
-
-
 			</table>
+
+
+			<table class="table table-sm table-primary table-striped table-hover m-1">
+
+				<caption>Lista attivita mentee</caption>
+
+				<thead>
+
+					<tr>
+
+						<th scope="col">
+							<p>Attività</p>
+						</th>
+
+						<th scope="col">
+							<p>Giorno</p>
+						</th>
+
+						<th scope="col">
+							<p>Crediti</p>
+						</th>
+
+						<th scope="col">
+							<p>Organizzatore</p>
+						</th>
+
+						<th scope="col">
+							<p>Action</p>
+						</th>
+
+					</tr>
+
+				</thead>
+
+
+				<tbody>
+					<div th:each="userCredits : ${listOfMentee}">
+
+						<tr>
+							<td th:text="${userCredits.user.name}">Tb data</td>
+							<td th:text="${userCredits.user.surname}">Tb data</td>
+
+							<td class="justify-content-center">
+
+								<div class="m-3">
+
+									<div class="progress m-1">
+										<div class="progress-bar" role="progressbar"
+											th:style="'width:'+ ${userCredits.approvedCredits} +'%'" aria-valuemin="0"
+											aria-valuemax="100" th:text="${userCredits.approvedCredits}+'%'">25%</div>
+									</div>
+
+									<div class="progress m-1">
+										<div class="progress-bar bg-warning" role="progressbar"
+											th:style="'width:'+ ${userCredits.notApprovedCredits} +'%'"
+											aria-valuemin="0" aria-valuemax="100"
+											th:text="${userCredits.notApprovedCredits}+'%'">25%</div>
+									</div>
+
+
+								</div>
+
+
+							</td>
+						</tr>
+
+					</div>
+				</tbody>
+			</table>
+
+
 		</div>
 
 	</div>

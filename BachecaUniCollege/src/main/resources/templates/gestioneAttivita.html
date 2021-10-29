@@ -48,10 +48,10 @@
 			</ul>
 		</div>
 
-		<div class="row m-3">
+		<div class="row m-3 text-center">
 			<table class="table table-primary table-striped table-hover col-5">
 
-				<caption>List of Activities</caption>
+				<caption>Lista di attività da approvare</caption>
 
 				<thead>
 
@@ -100,12 +100,12 @@
 
 								<form class="m-2" action="#"
 									th:action="@{/gestioneAttivita/acceptActivity?id=}+${activity.id}" method="post">
-									<button type="submit" class="btn btn-success">Accetta</button>
+									<button type="submit" class="btn btn-success btn-block">Accetta</button>
 								</form>
 
 								<form class="m-2" action="#"
 									th:action="@{/gestioneAttivita/deleteActivity?id=}+${activity.id}" method="post">
-									<button type="submit" class="btn btn-danger">Rifiuta</button>
+									<button type="submit" class="btn btn-danger btn-block">Rifiuta</button>
 								</form>
 
 							</td>

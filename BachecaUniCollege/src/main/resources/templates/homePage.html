@@ -60,18 +60,18 @@
 						<h5 class="card-title" th:text="${activity.title}">Card title</h5>
 						<p class="card-text">
 						<p>
-							Type:<span style="color: blue" th:text="${activity.activityType}">TYPE</span>
+							Tipo: <span style="color: blue" th:text="${activity.activityType}">TYPE</span>
 						</p>
 						<p>
-							Credits:<span style="color: blue" th:text="${activity.activityCredits}">CREDITS</span>
+							Crediti: <span style="color: blue" th:text="${activity.activityCredits}">CREDITS</span>
 						</p>
 						<p>
-							Date:<span style="color: blue" th:text="${activity.startDate}">Date</span>-<span
-								style="color: blue" th:text="${activity.endDate}">CREDITS</span>
+							Giorno: <span style="color: blue" th:text="${activity.startDate}">start Date</span>-<span
+								style="color: blue" th:text="${activity.endDate}">end Date</span>
 						</p>
 						<p>
-							Time:<span style="color: blue" th:text="${activity.startTime}">Time</span>-<span
-								style="color: blue" th:text="${activity.endTime}">CREDITS</span>
+							Ora: <span style="color: blue" th:text="${activity.startTime}">start Time</span>-<span
+								style="color: blue" th:text="${activity.endTime}">end time</span>
 						</p>
 
 						<a th:href="@{/dettaglioAttivita?id=}+${activity.id}" class="btn btn-primary">Dettaglio

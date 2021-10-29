@@ -20,18 +20,18 @@
 		<form action="#" th:action="@{/registration}" th:object="${registrationRequest}" method="post">
 
 			<div class"font-weight-bold">
-				<h3>Bacheca UniCollege Registration</h3>
+				<h3>Registrazione Bacheca UniCollege</h3>
 			</div>
 
 			<div class="form-group">
-				<label for="name">Name</label>
+				<label for="name">Nome</label>
 				<input type="text" class="form-control" id="name" aria-describedby="emailHelp" th:field="*{name}"
 					required>
 
 			</div>
 
 			<div class="form-group">
-				<label for="surname">Surname</label>
+				<label for="surname">Cognome</label>
 				<input type="text" class="form-control" id="surname" aria-describedby="emailHelp" th:field="*{surname}"
 					required>
 
@@ -49,7 +49,7 @@
 				<input type="password" class="form-control" id="password" th:field="*{password}" required>
 			</div>
 
-			<button type="submit" class="btn btn-primary">Submit</button>
+			<button type="submit" class="btn btn-primary">Registrati</button>
 		</form>
 
 	</div>
