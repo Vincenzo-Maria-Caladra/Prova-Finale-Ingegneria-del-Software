@@ -16,7 +16,7 @@ public interface ActivityRepository extends CrudRepository<Activity, Long> {
 	
 	List<Optional<Activity>> findByTitle(String title);
 	
-	Iterable<Activity> findByState(boolean state);
+	Iterable<Activity> findByStateAndActivityTypeNot(boolean state, ActivityType activityType);
 
 	List<Activity> findAllByActivityTypeAndState(ActivityType tertuliaATema, Boolean state);
 }

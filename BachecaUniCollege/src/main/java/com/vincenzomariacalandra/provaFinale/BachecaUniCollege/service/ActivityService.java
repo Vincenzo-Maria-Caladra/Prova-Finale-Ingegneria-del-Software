@@ -171,12 +171,12 @@ public class ActivityService {
 	
 	public Iterable<Activity> getActivitiesToApprove(){
 		
-		return activityRepository.findByState(false);
+		return activityRepository.findByStateAndActivityTypeNot(false, ActivityType.LIBRO);
 	}
 	
 	public Iterable<Activity> getActivitiesApproved(){
 		
-		return activityRepository.findByState(true);
+		return activityRepository.findByStateAndActivityTypeNot(true, ActivityType.LIBRO);
 	}
 
 	public List<Activity> getAllTertulieToBeApproved() {

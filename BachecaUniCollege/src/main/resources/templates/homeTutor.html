@@ -80,10 +80,15 @@
 
 
 				<tbody>
-					<div th:each="userCredits : ${listOfMentee}">
+					<div th:each="userCredits : ${listOfUserCredits}">
 
 						<tr>
-							<td th:text="${userCredits.user.name}">Tb data</td>
+							<td>
+								<a th:href="@{/homeTutor/dettaglioMentee?mentee=}+${userCredits.user.id}"
+									th:text="${userCredits.user.name}">
+									data
+								</a>
+							</td>
 							<td th:text="${userCredits.user.surname}">Tb data</td>
 
 							<td class="justify-content-center">
@@ -115,7 +120,7 @@
 			</table>
 
 
-			<table class="table table-sm table-primary table-striped table-hover m-1">
+			<table th:if="${param.mentee != null}" class="table table-sm table-primary table-striped table-hover m-1">
 
 				<caption>Lista attivita mentee</caption>
 
@@ -149,33 +154,19 @@
 
 
 				<tbody>
-					<div th:each="userCredits : ${listOfUserCredits}">
+					<div th:each="userActivity : ${listOfActivitiesToApprove}">
 
 						<tr>
-							<td><a class="btn btn-warning m-2" th:text="${userCredits.user.name}"
-									th:href="@{/homeTutor/dettaglioMentee?id=}+${userCredits.user.id}">Update</a></td>
-							<td th:text="${userCredits.user.surname}">Tb data</td>
+							<td th:text="${userActivity.activity.title}">data</td>
+							<td th:text="${userActivity.activity.startDate}">data</td>
+							<td th:text="${userActivity.activity.activityCredits}">data</td>
+							<td th:text="${userActivity.organizer}">data</td>
+							<td>
 
-							<td class="justify-content-center">
-
-								<div class="m-3">
-
-									<div class="progress m-1">
-										<div class="progress-bar" role="progressbar"
-											th:style="'width:'+ ${userCredits.approvedCredits} +'%'" aria-valuemin="0"
-											aria-valuemax="100" th:text="${userCredits.approvedCredits}+'%'">25%</div>
-									</div>
-
-									<div class="progress m-1">
-										<div class="progress-bar bg-warning" role="progressbar"
-											th:style="'width:'+ ${userCredits.notApprovedCredits} +'%'"
-											aria-valuemin="0" aria-valuemax="100"
-											th:text="${userCredits.notApprovedCredits}+'%'">25%</div>
-									</div>
-
-
-								</div>
-
+								<form action="#" th:action="@{/homeTutor?userActivity=}+${userActivity.id}"
+									method="post">
+									<button type="submit" class="btn btn-warning btn-sm">Approva</button>
+								</form>
 
 							</td>
 						</tr>

@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,26 +35,28 @@ public class HomeTutorController {
 	}
 	
 	@GetMapping
-	public String getHomeTutor(Model model) {
+	public String getHomeTutor(@RequestParam(name = "mentee", required = false)Long id, Model model) {
 		
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		AppUser tutor = ((AppUser)principal);
 
 		model.addAttribute("listOfUserCredits", userService.getAllMenteeCreditsByTutor(tutor));
 		
+		if (id != null) {
+			model.addAttribute("listOfActivitiesToApprove", userActivityService.listAllUserActivitiesToApprove(id));
+		}
+		
 		return "homeTutor";
 	}
 	
 	@RequestMapping(path = "/dettaglioMentee", method = RequestMethod.GET)
-	public String getDettaglioMentee(@RequestParam("id")Long id, Model model) {
+	public String getDettaglioMentee(@RequestParam("mentee")Long id, Model model) {
 		
-		model.addAttribute("listOfActivitiesToApprove", userActivityService.listAllUserActivitiesToApprove(id));
-		
-		return "dettaglioMentee";
+		return "redirect:/homeTutor?mentee=" + id;
 	}
 	
-	@RequestMapping(path = "/dettaglioMentee/approvedActivity", method = RequestMethod.POST)
-	public String updateMenteeActivityState(@RequestParam("id")Long userActivityId, Model model) {
+	@PostMapping
+	public String updateMenteeActivityState(@RequestParam("userActivity")Long userActivityId, Model model) {
 		
 		userActivityService.updateUserActivityState(userActivityId);
 		

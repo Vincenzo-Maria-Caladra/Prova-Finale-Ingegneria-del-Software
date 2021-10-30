@@ -90,24 +90,24 @@
                             <tr>
                                 <td th:text="${user.name}">Tb data</td>
                                 <td th:text="${user.surname}">Tb data</td>
-                                <td th:text="${user.tutor.surname} + ' ' + ${user.tutor.surname}">Tb data</td>
+                                <td th:text="${user.tutor} ? ${user.tutor.surname} : '*'">*</td>
 
                                 <td class="justify-content-center d-inline-block">
 
                                     <div class="m-3">
 
                                         <form class="m-2" action="#"
-                                            th:action="@{/homeDirettore/deleteUser?id=}+${user.id}" method="post">
+                                            th:action="@{/homeDirettore/deleteUser?userId=}+${user.id}" method="post">
                                             <button type="submit" class="btn btn-danger btn-block">Rimuovi
                                                 Studente</button>
                                         </form>
 
                                         <form class="m-2" action="#"
-                                            th:action="@{/homeDirettore/updateTutor?id=}+${user.id}" method="post">
+                                            th:action="@{/homeDirettore/updateTutor?userId=}+${user.id}" method="post">
 
                                             <div class="form-group d-flex">
-                                                <select class="form-control" aria-label=".form-select-sm example"
-                                                    required>
+                                                <select class="form-control" id="tutor" name="tutor" type="file"
+                                                    aria-label=".form-select-sm example" required>
 
                                                     <div th:each="tutor : ${listOfTutor}">
                                                         <option th:value="${tutor.id}"

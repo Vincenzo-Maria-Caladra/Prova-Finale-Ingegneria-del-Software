@@ -40,7 +40,7 @@ public class HomeDirettoreController {
 	}
 	
 	@RequestMapping(path = "/deleteUser" , method = RequestMethod.POST)
-	public String deleteStudente (@RequestParam Long userId, Model model) {
+	public String deleteStudente (@RequestParam("userId") Long userId, Model model) {
 		
 		userService.removeUser(userId);
 		
@@ -48,7 +48,7 @@ public class HomeDirettoreController {
 	}
 	
 	@RequestMapping(path = "/updateTutor", method = RequestMethod.POST)
-	public String updateTutorStudente (@RequestParam Long userId, @RequestParam("tutor") String tutorId, Model model) {
+	public String updateTutorStudente (@RequestParam("userId") Long userId, @RequestParam("tutor") String tutorId, Model model) {
 		
 		userService.updateUserTutor(userId, tutorId);
 		
