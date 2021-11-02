@@ -6,9 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.sql.Date;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,12 +28,10 @@ import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.AppUser;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service.ActivityService;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service.UserActivityService;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service.UserService;
-import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.ActivityCredits;
-import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.ActivityType;
 
 /**
- * @author CalandraVM
- * Classe Controller per la pagina newActivity.html
+ * @author VectorCode
+ *
  */
 @Controller
 public class NewActivityController {
@@ -53,52 +48,20 @@ public class NewActivityController {
 		this.userService = userService;
 	}
 	
-	// Inizzializzazione della pagina newActivity.html
+	// Initialization newActivity page
 	@RequestMapping(path = "/nuovaAttivita", method = RequestMethod.GET)
 	public String creaNuovaAttivitaPage (Model model) {
 		model.addAttribute("newActivity", new Activity());
 		return "creaAttivita";
 	}
 	
-	//  Gestione dell'inserimento di una nuova attivit� tramite form
+	//Nuova Attività  handler
 	@RequestMapping(path = "/nuovaAttivita", method = RequestMethod.POST)
 	public String addActivity (@ModelAttribute Activity activity, @RequestParam(name = "fileImage", required = false) MultipartFile multipartFile, Model model, HttpServletRequest request)
 	throws IOException {
 		
 		if (multipartFile != null) {
-			
-			// Generazione del filename della foto caricata 
-	        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-	               
-	        
-	        // Inserimento del filename della foto nell'istanza dell'Activity
-	        // generata via form
-	        activity.setPhoto(fileName);
-        
-        
-        	// Salvataggio dell'activity nel DB
-        	Activity savedActivity = activityService.addNewActivity(activity);
- 
-            // Generazione del path alla directory in cui inserire la nuova foto caricata 
-            String uploadDir = "/activity-photos/" + savedActivity.getId();
-            Path uploadPath = Paths.get(uploadDir);
-            
-            
-            // Verifica dell'esistenza della cartella
-            if (!Files.exists(uploadPath)) {
-            	Files.createDirectory(uploadPath);
-            }
-            
-            // Scrittura del file nell'apposita directory
-            try (InputStream inputStream = multipartFile.getInputStream()) {
-            	
-            	Path filePath = uploadPath.resolve(fileName);
-            	
-            	Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-    		
-            } catch (IOException ioe) {
-    			throw new IOException("Could not save the file!");
-    		}
+			multipartProcessing(multipartFile, activity);
         } else {
         	activityService.addNewActivity(activity);
         }
@@ -113,5 +76,41 @@ public class NewActivityController {
 		
 		
 		return "redirect:/homePage";
+	}
+
+	private void multipartProcessing(MultipartFile multipartFile, Activity activity) throws IOException {
+		
+		// Generation of filename
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+               
+        
+        // Insertion of filename in Acticity entity
+        activity.setPhoto(fileName);
+    
+    
+    	// Saving Activity in DB
+    	Activity savedActivity = activityService.addNewActivity(activity);
+
+        // Generation of path to the directory where to store the photo 
+        String uploadDir = "/activity-photos/" + savedActivity.getId();
+        Path uploadPath = Paths.get(uploadDir);
+        
+        
+        // Checks if folder exist
+        if (!Files.exists(uploadPath)) {
+        	Files.createDirectory(uploadPath);
+        }
+        
+        // Saving file in the correct dir
+        try (InputStream inputStream = multipartFile.getInputStream()) {
+        	
+        	Path filePath = uploadPath.resolve(fileName);
+        	
+        	Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+		
+        } catch (IOException ioe) {
+			throw new IOException("Could not save the file!");
+		}
+		
 	}
 }

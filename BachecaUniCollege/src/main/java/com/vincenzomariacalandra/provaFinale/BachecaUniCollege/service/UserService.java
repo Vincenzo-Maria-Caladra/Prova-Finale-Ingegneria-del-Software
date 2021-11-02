@@ -279,8 +279,10 @@ public class UserService implements UserDetailsService{
 		
 		Optional<AppUser> userOptional =  userRepository.findById(userId);
 		Optional<AppUser> userTutorOptional =  userRepository.findById(Long.valueOf(tutorId));
-		userOptional.get().setTutor(userTutorOptional.get());
 		
+		if (userOptional.isPresent() && userTutorOptional.isPresent()) {
+			userOptional.get().setTutor(userTutorOptional.get());
+		}
 		
 	}
     

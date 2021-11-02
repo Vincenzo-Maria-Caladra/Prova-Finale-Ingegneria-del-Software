@@ -4,13 +4,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * @author CalandraVM
- * Classe Controller per la pagina login.html
+ * @author VectorCode
+ *
  */
 @Controller
 public class LoginController {
 	
-	  // Login form
+	  // Initialization Login form
 	  @RequestMapping("/login")
 	  public String login() {
 	    return "login";

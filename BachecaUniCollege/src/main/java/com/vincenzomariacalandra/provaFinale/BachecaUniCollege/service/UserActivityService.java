@@ -1,5 +1,6 @@
 package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -108,6 +109,66 @@ public class UserActivityService {
 			throw new IllegalStateException("User Activity does not exist!");
 		}
 		
+	}
+
+	public double getTotalApprovedCredits(AppUser user) {
+		
+		ArrayList<UserActivity> list = new ArrayList<>();
+		listAllActivitiesOfUser(user.getEmail()).iterator().forEachRemaining(list::add);
+		
+		double count1 = 0;
+		
+		for (UserActivity userActivity : list) {
+			
+			if (userActivity.isOrganizer()) {
+				
+				if (userActivity.isApproved()) {
+					count1 = count1 + 0.2;
+				}
+				
+			} else {
+				
+				if (userActivity.isApproved()) {
+					count1 = count1 + userActivity.getActivity().getActivityCredits().getVal();
+				}
+				
+			}
+		}
+		
+		count1 = (count1/4.5)*100;
+		count1 = (double) Math.round(count1 * 100) / 100;
+
+		return count1;
+	}
+	
+	public double getTotalToBeApprovedCredits(AppUser user) {
+		
+		ArrayList<UserActivity> list = new ArrayList<>();
+		listAllActivitiesOfUser(user.getEmail()).iterator().forEachRemaining(list::add);
+		
+		double count2 = 0;
+		
+		for (UserActivity userActivity : list) {
+			
+			if (userActivity.isOrganizer()) {
+				
+				if (!userActivity.isApproved()) {
+					count2 = count2 + 0.2;
+				}
+				
+			} else {
+				
+				if (!userActivity.isApproved()) {
+					count2 = count2 + userActivity.getActivity().getActivityCredits().getVal();
+				}
+				
+			}
+		}
+		
+		count2 = (count2/4.5)*100;
+		count2 = (double) Math.round(count2 * 100) / 100;
+		
+		return count2;
 	}
 	
 }

@@ -3,7 +3,12 @@ package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.controller.confi
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
- 
+
+
+/**
+ * @author VectorCode
+ *
+ */
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
  
