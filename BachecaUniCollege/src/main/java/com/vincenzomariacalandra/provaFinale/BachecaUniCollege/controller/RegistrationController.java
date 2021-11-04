@@ -3,9 +3,7 @@ package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,8 +13,8 @@ import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.Registratio
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service.RegistrationService;
 
 /**
- * @author CalandraVM
- * Classe Controller per la pagina registraione.html
+ * @author VectorCode
+ *
  */
 @Controller
 @SessionAttributes("registrationRequest")
@@ -31,13 +29,14 @@ public class RegistrationController {
 		this.registrationService = registrationService;
 	}
 	
+	// Registration page initialization
 	@RequestMapping(path = "/registration", method = RequestMethod.GET)
 	public String registrationPage(Model model) {
 		model.addAttribute("registrationRequest", new RegistrationRequest());
 		return "registration";
 	}
 	
-	
+	// Registration handler
 	@RequestMapping(path = "/registration", method = RequestMethod.POST)
 	public String register (@ModelAttribute RegistrationRequest registrationRequest, Model model) {
 		registrationService.register(registrationRequest);
@@ -45,6 +44,7 @@ public class RegistrationController {
 		return "confirmationPage";
 	}
 	
+	// Confirm Registration handler
 	@RequestMapping(path = "/registration/confirm", method = RequestMethod.GET)
     public String confirm(@RequestParam("token") String token, Model model) {
 		registrationService.confirmToken(token);
