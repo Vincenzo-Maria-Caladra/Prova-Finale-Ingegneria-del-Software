@@ -142,7 +142,7 @@ public class DettaglioAttivitaController {
 	@RequestMapping(path = "/deleteActivity", method = RequestMethod.POST )
 	public String activityDelete(@RequestParam("id") Long id) {
 		
-		activityService.deleteActivity(id);
+		String err = activityService.deleteActivity(id);
 		
 		return "redirect:/homePage";
 	}

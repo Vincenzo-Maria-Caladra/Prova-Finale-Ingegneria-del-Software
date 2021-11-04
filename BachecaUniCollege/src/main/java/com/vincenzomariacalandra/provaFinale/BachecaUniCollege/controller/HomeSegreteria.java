@@ -83,7 +83,7 @@ public class HomeSegreteria {
 	public String updateTertuliaATema(@ModelAttribute Activity activity, @RequestParam("id") Long id, Model model,
 			HttpServletRequest request) {
 		
-		activityService.updateActivity(id, activity.getStartDate(), activity.getStartTime(), activity.getEndTime());
+		String err = activityService.updateActivity(id, activity.getStartDate(), activity.getStartTime(), activity.getEndTime());
 		
 		return "redirect:/homeSegreteria";
 	}

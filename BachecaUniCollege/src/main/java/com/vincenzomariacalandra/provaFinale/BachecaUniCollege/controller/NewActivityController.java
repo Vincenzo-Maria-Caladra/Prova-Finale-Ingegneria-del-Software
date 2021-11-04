@@ -90,10 +90,10 @@ public class NewActivityController {
     
     
     	// Saving Activity in DB
-    	Activity savedActivity = activityService.addNewActivity(activity);
+    	String err = activityService.addNewActivity(activity);
 
         // Generation of path to the directory where to store the photo 
-        String uploadDir = "/activity-photos/" + savedActivity.getId();
+        String uploadDir = "/activity-photos/" + activity.getId();
         Path uploadPath = Paths.get(uploadDir);
         
         

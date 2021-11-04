@@ -48,7 +48,7 @@ public class GestioneAttivitaController {
 	@RequestMapping(path = "/acceptActivity", method = RequestMethod.POST)
 	public String acceptActivity(@RequestParam("id") Long id, Model model, HttpServletRequest request) {
 
-		activityService.updateActivityState(id);
+		String err = activityService.updateActivityState(id);
 
 		return "redirect:/gestioneAttivita";
 	}
@@ -57,7 +57,7 @@ public class GestioneAttivitaController {
 	@RequestMapping(path = "/deleteActivity", method = RequestMethod.POST)
 	public String deleteActivity(@RequestParam("id") Long id, Model model, HttpServletRequest request) {
 
-		activityService.deleteActivity(id);
+		String error = activityService.deleteActivity(id);
 
 		return "redirect:/gestioneAttivita";
 	}
