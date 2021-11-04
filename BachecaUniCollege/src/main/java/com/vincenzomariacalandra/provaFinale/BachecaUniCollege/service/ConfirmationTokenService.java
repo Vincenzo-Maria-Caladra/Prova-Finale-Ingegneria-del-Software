@@ -9,6 +9,11 @@ import org.springframework.stereotype.Service;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.ConfirmationToken;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.repository.ConfirmationTokenRepository;
 
+
+/**
+ * @author VectorCode
+ *
+ */
 @Service
 public class ConfirmationTokenService {
 	

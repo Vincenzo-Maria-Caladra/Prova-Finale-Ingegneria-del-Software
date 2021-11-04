@@ -1,5 +1,10 @@
 package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model;
 
+/**
+ * @author VectorCode
+ *
+ */
+//Pojo for Activities
 public class StudentCredits {
 	
 	public AppUser user;

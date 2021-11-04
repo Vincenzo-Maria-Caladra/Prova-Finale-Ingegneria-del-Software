@@ -11,6 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+/**
+ * @author VectorCode
+ *
+ */
+//Entity mapping confirmation_token Table
 @Entity
 public class ConfirmationToken {
 	

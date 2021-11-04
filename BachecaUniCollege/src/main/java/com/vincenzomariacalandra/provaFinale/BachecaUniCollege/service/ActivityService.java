@@ -2,14 +2,13 @@ package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import org.hibernate.internal.build.AllowSysOut;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,20 +17,28 @@ import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.repository.Activi
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.ActivityCredits;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.ActivityType;
 
+
+/**
+ * @author VectorCode
+ *
+ */
 @Service
 public class ActivityService {
 
+	//List all repository to use
 	private final ActivityRepository activityRepository;
 	
+	@Autowired
 	public ActivityService(ActivityRepository activityRepository) {
 		this.activityRepository = activityRepository;
 	}
 	
-	public Iterable<Activity> getActivities() {
-		return activityRepository.findAll();
-	}
-	
+	//Return an activity
 	public Optional<Activity> findActivityById(Long id) {
+		
+		if (activityRepository.findById(id).isEmpty()) {
+			throw new NullPointerException("Activity not found");
+		}
 		
 		return activityRepository.findById(id);
 	}

@@ -8,6 +8,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ * @author VectorCode
+ *
+ */
+//Entity mapping User_Activities Table
 @Entity
 @Table(name= "Users_Activities")
 public class UserActivity {

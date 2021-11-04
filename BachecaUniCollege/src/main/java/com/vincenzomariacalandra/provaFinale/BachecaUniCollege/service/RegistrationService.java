@@ -13,6 +13,10 @@ import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.EmailSend
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.EmailValidator;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.UserType;
 
+/**
+ * @author VectorCode
+ *
+ */
 @Service
 public class RegistrationService {
 	

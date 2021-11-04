@@ -12,7 +12,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -66,11 +66,12 @@ public class NewActivityController {
         	activityService.addNewActivity(activity);
         }
         
-        
-        // Inserimento del creatore dell'attivit� nella tabella userActivity come "organizer"
-		String user = request.getUserPrincipal().getName();
-		Optional<AppUser> optionalUser = userService.getUser(user);
-		userActivityService.insertNewUserActivity(optionalUser.get().getId(), activity.getId(), true);
+		//Retrieve usefull information
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		AppUser user = ((AppUser)principal);
+		
+		//Insert userActivity as "organizer"
+		userActivityService.insertNewUserActivity(user.getId(), activity.getId(), true);
 		
 		model.addAttribute("msg", "Attivit� aggiunta con successo! Attendi che venga approvata!");
 		

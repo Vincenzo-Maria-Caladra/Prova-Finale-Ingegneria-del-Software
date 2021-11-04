@@ -3,9 +3,10 @@ package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model;
 import java.util.Objects;
 
 /**
- * @author CalandraVM
+ * @author VectorCode
  *
  */
+//Pojo for Registration request
 public class RegistrationRequest {
 	
 	private String name;

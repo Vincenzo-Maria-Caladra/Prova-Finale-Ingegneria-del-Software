@@ -15,25 +15,22 @@ import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.UserType;
 @Repository
 @Transactional(readOnly = true)
 public interface UserRepository extends JpaRepository<AppUser, Long> {
-	
-	Optional<List<AppUser>> findByName(String name);
 
-	Optional<List<AppUser>> findBySurname(String surname);
-
+	//Return a user, if exists, by user's id
 	Optional<AppUser> findById(Long id);
 
+	//Return a user, if exists, by user's email
 	Optional<AppUser> findByEmail(String email);
 
-	Optional<List<AppUser>> findByUserType(UserType type);
-
-	Optional<AppUser> findByUsername(String username);
-
+	//Update a user, if exists, by email
 	@Transactional
 	@Modifying
 	@Query("UPDATE AppUser a " + "SET a.enabled = TRUE WHERE a.email = ?1")
 	int enableAppUser(String email);
 
-	Optional<List<AppUser>> findAllByUserType(UserType userType);
+	//Return a list of users, if they exist, by user's type
+	List<AppUser> findAllByUserType(UserType userType);
 
-	Optional<List<AppUser>> findAllByTutor(AppUser tutor);
+	//Return a list of users, if they exist, by user's tutor
+	List<AppUser> findAllByTutor(AppUser tutor);
 }

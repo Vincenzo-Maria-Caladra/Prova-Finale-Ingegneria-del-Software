@@ -17,12 +17,15 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.ActivityCredits;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.ActivityType;
 
 
+/**
+ * @author VectorCode
+ *
+ */
+//Entity mapping Activities Table
 @Entity
 @Table(name = "Activities")
 public class Activity {

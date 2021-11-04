@@ -7,7 +7,6 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.Activity;
@@ -17,6 +16,10 @@ import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.repository.Activi
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.repository.UserActivityRepository;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.repository.UserRepository;
 
+/**
+ * @author VectorCode
+ *
+ */
 @Service
 public class UserActivityService {
 

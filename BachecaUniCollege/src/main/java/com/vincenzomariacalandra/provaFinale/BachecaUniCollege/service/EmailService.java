@@ -13,6 +13,10 @@ import org.springframework.stereotype.Service;
 
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.EmailSender;
 
+/**
+ * @author VectorCode
+ *
+ */
 @Service
 public class EmailService implements EmailSender {
 	

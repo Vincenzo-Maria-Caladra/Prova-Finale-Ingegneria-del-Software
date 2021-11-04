@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Random;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +22,10 @@ import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.UserActivit
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.repository.UserRepository;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.UserType;
 
+/**
+ * @author VectorCode
+ *
+ */
 @Service
 public class UserService implements UserDetailsService{
 	
@@ -147,12 +150,12 @@ public class UserService implements UserDetailsService{
     
     public List<AppUser> getAllAppUserStudenti(){
     	
-    	return userRepository.findAllByUserType(UserType.STUDENTE).get();
+    	return userRepository.findAllByUserType(UserType.STUDENTE);
     }
     
     public List<AppUser> getAllAppUserTutor(){
     	
-    	return userRepository.findAllByUserType(UserType.TUTOR).get();
+    	return userRepository.findAllByUserType(UserType.TUTOR);
     }
     
     
@@ -214,7 +217,7 @@ public class UserService implements UserDetailsService{
     
     public List<AppUser> getAllMenteeByTutor(AppUser tutor){
     	
-    	return userRepository.findAllByTutor(tutor).get();
+    	return userRepository.findAllByTutor(tutor);
     }
 
 	public List<StudentCredits> getAllMenteeCreditsByTutor(AppUser tutor) {
