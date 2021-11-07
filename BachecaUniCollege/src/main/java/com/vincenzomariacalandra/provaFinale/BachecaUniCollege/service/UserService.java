@@ -43,7 +43,7 @@ public class UserService implements UserDetailsService{
 		this.userActivityService = userActivityService;
 	}
 	
-	public Iterable<AppUser> getUsers() {
+	public List<AppUser> getUsers() {
 		return userRepository.findAll();
 	}
 
@@ -287,6 +287,17 @@ public class UserService implements UserDetailsService{
 			userOptional.get().setTutor(userTutorOptional.get());
 		}
 		
+	}
+	
+	@Transactional
+	public void updateUserType(Long userId, String type) {
+		
+		Optional<AppUser> userOptional =  userRepository.findById(userId);
+		
+		if (userOptional.isPresent()) {
+			
+			userOptional.get().setUserType(UserType.valueOf(type));
+		}
 	}
     
 	

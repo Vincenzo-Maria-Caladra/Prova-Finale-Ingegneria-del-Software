@@ -27,8 +27,7 @@
                         href="/creditometro">Creditometro</a></li>
 
                 <li th:if="${#authentication.getPrincipal().isDirettore()}" class=" nav-item"><a class="nav-link"
-                        href="/gestioneAttivita">Gestione
-                        Attività</a></li>
+                        href="/gestioneAttivita">Gestione Attività</a></li>
 
                 <li th:if="${#authentication.getPrincipal().isDirettore()}" class=" nav-item"><a class="nav-link active"
                         href="/homeDirettore">Home Direttore</a></li>
@@ -57,7 +56,7 @@
             <div class="col-auto text-center">
                 <table class="table table-primary table-striped table-hover">
 
-                    <caption>Lista Studenti</caption>
+                    <caption>Lista Utenti</caption>
 
                     <thead>
 
@@ -69,6 +68,10 @@
 
                             <th scope="col">
                                 <p>Cognome</p>
+                            </th>
+
+                            <th scope="col">
+                                <p>Tipo</p>
                             </th>
 
                             <th scope="col">
@@ -85,11 +88,13 @@
 
 
                     <tbody>
-                        <div th:each="user : ${listOfStudenti}">
+                        <div th:each="user : ${listOfUtenti}">
 
                             <tr>
                                 <td th:text="${user.name}">Tb data</td>
                                 <td th:text="${user.surname}">Tb data</td>
+                                <td th:text="${user.userType}">Tb data</td>
+
                                 <td th:text="${user.tutor} ? ${user.tutor.surname} : '*'">*</td>
 
                                 <td class="justify-content-center d-inline-block">
@@ -99,19 +104,19 @@
                                         <form class="m-2" action="#"
                                             th:action="@{/homeDirettore/deleteUser?userId=}+${user.id}" method="post">
                                             <button type="submit" class="btn btn-danger btn-block">Rimuovi
-                                                Studente</button>
+                                                Utente</button>
                                         </form>
 
                                         <form class="m-2" action="#"
                                             th:action="@{/homeDirettore/updateTutor?userId=}+${user.id}" method="post">
 
                                             <div class="form-group d-flex">
-                                                <select class="form-control" id="tutor" name="tutor" type="file"
+                                                <select class="form-control" id="tutor" name="tutor"
                                                     aria-label=".form-select-sm example" required>
 
                                                     <div th:each="tutor : ${listOfTutor}">
                                                         <option th:value="${tutor.id}"
-                                                            th:text="${tutor.name} + ${tutor.surname}">One
+                                                            th:text="${tutor.name} + ${tutor.surname}">tutor
                                                         </option>
                                                     </div>
 
@@ -119,6 +124,27 @@
                                                 <button type="submit" class="btn btn-warning btn-sm">Assegna</button>
                                             </div>
                                         </form>
+
+                                        <form class="m-2" action="#"
+                                            th:action="@{/homeDirettore/updateUserType?userId=}+${user.id}"
+                                            method="post">
+
+                                            <div class="form-group d-flex">
+
+                                                <select class="form-control" aria-label="Select for User type" id="type"
+                                                    name="type" required>
+
+                                                    <option value="STUDENTE">Studente</option>
+                                                    <option value="SEGRETERIA">Segreteria</option>
+                                                    <option value="TUTOR">Tutor</option>
+                                                    <option value="DIRETTORE">Direttore</option>
+
+                                                </select>
+
+                                                <button type="submit" class="btn btn-warning btn-sm">Assegna</button>
+                                            </div>
+                                        </form>
+
                                     </div>
                                 </td>
                             </tr>

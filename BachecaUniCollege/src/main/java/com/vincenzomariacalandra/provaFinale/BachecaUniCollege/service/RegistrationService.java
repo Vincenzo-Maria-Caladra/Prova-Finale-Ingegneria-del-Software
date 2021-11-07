@@ -150,6 +150,5 @@ public class RegistrationService {
                 "\n" +
                 "</div></div>";
     }
-
     
 }

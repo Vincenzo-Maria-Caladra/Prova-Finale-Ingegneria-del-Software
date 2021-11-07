@@ -31,7 +31,7 @@ public class HomeDirettoreController {
 	public String goToHomeDirettore(Model model) {
 		
 		//Add list attributes to the page
-		model.addAttribute("listOfStudenti", userService.getAllAppUserStudenti());
+		model.addAttribute("listOfUtenti", userService.getUsers());
 		model.addAttribute("listOfTutor", userService.getAllAppUserTutor());
 		
 		return "homeDirettore";
@@ -51,6 +51,15 @@ public class HomeDirettoreController {
 	public String updateTutorStudente (@RequestParam("userId") Long userId, @RequestParam("tutor") String tutorId, Model model) {
 		
 		userService.updateUserTutor(userId, tutorId);
+		
+		return "redirect:/homeDirettore";
+	}
+	
+	//Update users Type handler
+	@RequestMapping(path = "/updateUserType", method = RequestMethod.POST)
+	public String updateUserType (@RequestParam("userId") Long userId, @RequestParam("type") String type, Model model) {
+		
+		userService.updateUserType(userId, type);
 		
 		return "redirect:/homeDirettore";
 	}
