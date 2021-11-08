@@ -1,4 +1,6 @@
-package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model;
+package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.pojo;
+
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.entity.AppUser;
 
 /**
  * @author VectorCode
@@ -16,7 +18,7 @@ public class StudentCredits {
 	public AppUser getUser() {
 		return user;
 	}
-
+	
 	public void setUser(AppUser user) {
 		this.user = user;
 	}

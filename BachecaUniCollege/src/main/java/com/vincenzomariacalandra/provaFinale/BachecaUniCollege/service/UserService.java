@@ -15,10 +15,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.AppUser;
-import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.ConfirmationToken;
-import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.StudentCredits;
-import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.UserActivity;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.entity.AppUser;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.entity.ConfirmationToken;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.entity.UserActivity;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.pojo.StudentCredits;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.repository.UserRepository;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.UserType;
 

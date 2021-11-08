@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.Activity;
-import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.AppUser;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.entity.Activity;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.entity.AppUser;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.repository.ActivityRepository;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.ActivityType;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.EmailSender;
@@ -75,10 +75,24 @@ public class ActivityService {
 			return "Title should not be empty!";
 		} else if (activity.getDescrizione() == null || activity.getDescrizione().equals("") ) {
 			return "Description should not be empty!";
-		} else if (activity.getStartDate().after(activity.getEndDate())) {
-			return "Start date should not be after end date!";
-		} else if (activity.getStartTime().after(activity.getEndTime())) {
-			return "Start time should not be after end time!";
+		} else if (activity.getActivityType() == ActivityType.VISITA_CULTURALE || activity.getActivityType() == ActivityType.VOLONTARIATO  ) {
+			
+			if (activity.getStartDate().before(Date.valueOf(LocalDate.now()))) {
+				return "Start Date should not be before now!";
+			} else if (activity.getStartDate().after(activity.getEndDate())) {
+				return "Start date should not be after end date!";
+			} else if (activity.getStartTime().after(activity.getEndTime())) {
+				return "Start time should not be after end time!";
+			}
+			
+		} else if (activity.getActivityType() == ActivityType.TERTULIA_A_TEMA ) {
+			
+			if (activity.getStartDate().before(Date.valueOf(LocalDate.now()))) {
+				return "Start Date should not be before now!";
+			} else if (activity.getStartTime().after(activity.getEndTime())) {
+				return "Start time should not be after end time!";
+			}
+			
 		}
 		
 		return null;
@@ -107,22 +121,33 @@ public class ActivityService {
 	@Transactional
 	public String updateActivity(long activityId, Date startDate, Time startTime, Time endTime) {
 				
-		Activity activity = activityRepository.findById(activityId).orElseThrow( () -> new IllegalStateException(
-				"Activity with id:" + activityId + " not found!"));
+		Optional<Activity> activityOptional = activityRepository.findById(activityId);
 		
-		if(startDate.before(Date.valueOf(LocalDate.now()))) {
-			
-			return "Data inserita antecedente ad oggi!";
-			
+		if (activityOptional.isEmpty()) {
+			return "Activity not found!";
 		} else {
 			
-			activity.setStartDate(startDate);
-			activity.setStartTime(startTime.toString());
+			String err = activityValidator(activityOptional.get());
 			
-			if (activityValidator(activity) != null) {
-				return activityValidator(activity);
+			if (err != null) {
+				return err;
+			} else {
+				
+				if(startDate.before(Date.valueOf(LocalDate.now()))) {
+					
+					return "Date could not be before today!";
+					
+				} else {
+					
+					if (startTime.after(endTime)) {
+						return "Start time could not be after end time!";
+					} else {
+						activityOptional.get().setStartDate(startDate);
+						activityOptional.get().setStartTime(startTime);
+						activityOptional.get().setEndTime(endTime);
+					}
+				}
 			}
-			
 		}
 		
 		return null;
@@ -136,19 +161,23 @@ public class ActivityService {
 		
 		if(activityOptional.isPresent()) {
 			
+			// Update state
 			activityOptional.get().setState(true);
 				
-				for(AppUser user : userService.getUsers()) {
+			// Send notification email to all
+			for(AppUser user : userService.getUsers()) {
 					
-					emailSender.send(user.getEmail(), buildEmail(user.getName(), activityOptional.get()));
+				emailSender.send(user.getEmail(), buildEmail(user.getName(), activityOptional.get()));
 					
-				}
+			}
 	
 			
 			return null;
+			
+		} else {
+			
+			return "Activity not found!";
 		}
-		
-		return "Activity not found!";
 		
 	}
 	

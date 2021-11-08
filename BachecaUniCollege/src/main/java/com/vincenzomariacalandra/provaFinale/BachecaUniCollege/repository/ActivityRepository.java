@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.Activity;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.entity.Activity;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.ActivityType;
 
 

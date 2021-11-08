@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.AppUser;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.entity.AppUser;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.UserType;
 
 @Repository

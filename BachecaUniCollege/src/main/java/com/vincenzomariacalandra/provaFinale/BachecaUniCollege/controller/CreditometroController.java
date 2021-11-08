@@ -12,8 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.AppUser;
-import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.UserActivity;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.entity.AppUser;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.entity.UserActivity;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service.UserActivityService;
 
 /**

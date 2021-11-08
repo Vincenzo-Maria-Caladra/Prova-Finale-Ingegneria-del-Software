@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.RegistrationRequest;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.pojo.RegistrationRequest;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service.RegistrationService;
 
 /**
@@ -32,16 +33,32 @@ public class RegistrationController {
 	// Registration page initialization
 	@RequestMapping(path = "/registration", method = RequestMethod.GET)
 	public String registrationPage(Model model) {
-		model.addAttribute("registrationRequest", new RegistrationRequest());
+		
+		if (!model.containsAttribute("registrationRequest")) {
+			model.addAttribute("registrationRequest", new RegistrationRequest());
+		}
+		
 		return "registration";
 	}
 	
 	// Registration handler
 	@RequestMapping(path = "/registration", method = RequestMethod.POST)
-	public String register (@ModelAttribute RegistrationRequest registrationRequest, Model model) {
-		registrationService.register(registrationRequest);
-		model.addAttribute("msg","Thanks to have sended the registration, an email has been sended to your email" ); 
-		return "confirmationPage";
+	public String register (@ModelAttribute RegistrationRequest registrationRequest, Model model, RedirectAttributes redirectAttributes) {
+		
+		String err = registrationService.register(registrationRequest);
+		
+		if (err != null) {
+			
+			//Adding error to the model
+    		redirectAttributes.addFlashAttribute("error", err);	
+    		
+			return "redirect:/registration";
+		}
+		
+		//Adding error to the model
+		redirectAttributes.addFlashAttribute("msg", "Registrazione avvenuta con successo! \n Per proseguire conferma la email.");	
+		
+		return "redirect:/confirmationPage";
 	}
 	
 	// Confirm Registration handler

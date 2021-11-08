@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.Activity;
-import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.AppUser;
-import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.UserActivity;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.entity.Activity;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.entity.AppUser;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.entity.UserActivity;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service.ActivityService;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service.UserActivityService;
 

@@ -1,4 +1,4 @@
-package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model;
+package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.entity;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -122,16 +122,16 @@ public class Activity {
 		return startTime;
 	}
 
-	public void setStartTime(String startTime) {
-		this.startTime = Time.valueOf(LocalTime.parse(startTime));
+	public void setStartTime(Time startTime) {
+		this.startTime = startTime;
 	}
 
 	public Time getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(String endTime) {
-		this.endTime = Time.valueOf(LocalTime.parse(endTime));
+	public void setEndTime(Time endTime) {
+		this.endTime = endTime;
 	}
 
 	public List<UserActivity> getUserActivities() {

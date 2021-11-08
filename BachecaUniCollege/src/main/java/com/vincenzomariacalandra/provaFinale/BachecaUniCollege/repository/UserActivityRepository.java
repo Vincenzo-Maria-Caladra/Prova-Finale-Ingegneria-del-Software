@@ -5,9 +5,9 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.Activity;
-import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.AppUser;
-import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.UserActivity;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.entity.Activity;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.entity.AppUser;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.entity.UserActivity;
 
 public interface UserActivityRepository extends JpaRepository<UserActivity, Long> {
 	

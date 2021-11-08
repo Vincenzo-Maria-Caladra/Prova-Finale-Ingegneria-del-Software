@@ -1,4 +1,4 @@
-package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model;
+package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.entity;
 
 import java.util.Collection;
 import java.util.Collections;

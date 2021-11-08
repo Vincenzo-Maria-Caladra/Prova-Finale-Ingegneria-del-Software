@@ -1,16 +1,17 @@
 package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service;
 
 import java.time.LocalDateTime;
+import java.util.regex.Pattern;
 
+import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.AppUser;
-import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.ConfirmationToken;
-import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.RegistrationRequest;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.entity.AppUser;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.entity.ConfirmationToken;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.pojo.RegistrationRequest;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.EmailSender;
-import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.EmailValidator;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.UserType;
 
 /**
@@ -21,16 +22,14 @@ import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.UserType;
 public class RegistrationService {
 	
 	private final UserService userService;
-	private final EmailValidator emailValidator;
 	private final ConfirmationTokenService confirmationTokenService;
 	private final EmailSender emailSender;
 	
 	@Autowired
-	public RegistrationService(EmailValidator emailValidator, UserService userService, 
+	public RegistrationService(UserService userService, 
 			ConfirmationTokenService confirmationTokenService, EmailSender emailSender) {
 		super();
 		this.userService = userService;
-		this.emailValidator = emailValidator;
 		this.confirmationTokenService = confirmationTokenService;
 		this.emailSender = emailSender;
 	}
@@ -38,24 +37,48 @@ public class RegistrationService {
 	
 	public String register(RegistrationRequest registrationRequest) {
 		
-		boolean isValidEmail = emailValidator.test(registrationRequest.getEmail());
 		
-		if (!isValidEmail) {
-			throw new IllegalStateException("Your Email is not valid!");
+		//Check if the email is Valid
+		//EmailValidator class validate email which uses RFC 822 standards
+		if (!EmailValidator.getInstance().isValid(registrationRequest.getEmail())) {
+			return "Email not valid!";
 		}
 		
+		//Check name field
+		if (registrationRequest.getName().trim().isBlank() || registrationRequest.getName().trim().isBlank()) {
+			return "Name could not be empty!";
+		} else if ( patternFind(registrationRequest.getName().trim(), "[^A-Za-z0-9]")) {
+			return "Invalid characters in surname!";
+		}
+		
+		//Check surname field
+		if (registrationRequest.getSurname().trim().isBlank() || registrationRequest.getSurname().trim().isBlank()) {
+			return "Surname could not be empty!";
+		} else if ( patternFind(registrationRequest.getSurname().trim(), "[^A-Za-z0-9]")) {
+			return "Invalid characters in surname!";
+		}
+		
+		//Check password field
+		if (registrationRequest.getPassword().isBlank() || registrationRequest.getPassword().isBlank()) {
+			return "Password could not be empty!";
+		}
+		
+		//Register a new user
 		String token = userService.signUpUser(
 				new AppUser(
-						registrationRequest.getName(),
-						registrationRequest.getSurname(), 
-						registrationRequest.getEmail(),
+						registrationRequest.getName().trim(),
+						registrationRequest.getSurname().trim(), 
+						registrationRequest.getEmail().trim(),
 						registrationRequest.getPassword(), 
 						UserType.STUDENTE));
 		
+		//Generate user token link where to validate the registration
 		String link = "http://localhost:8080/registration/confirm?token="+token;
+		
+		//Sending the confirmation email
 		emailSender.send(registrationRequest.getEmail(), buildEmail(registrationRequest.getName(), link));
 		
-		return token;
+		return null;
 	}
 	
     @Transactional
@@ -149,6 +172,12 @@ public class RegistrationService {
                 "  </tbody></table><div class=\"yj6qo\"></div><div class=\"adL\">\n" +
                 "\n" +
                 "</div></div>";
+    }
+    
+    public static boolean patternFind(String stringToTest, String regexPattern) {
+        return Pattern.compile(regexPattern)
+          .matcher(stringToTest)
+          .find();
     }
     
 }

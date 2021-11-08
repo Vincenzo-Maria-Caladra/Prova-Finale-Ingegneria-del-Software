@@ -9,9 +9,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.Activity;
-import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.AppUser;
-import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.UserActivity;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.entity.Activity;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.entity.AppUser;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.entity.UserActivity;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.repository.ActivityRepository;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.repository.UserActivityRepository;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.repository.UserRepository;

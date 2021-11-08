@@ -1,4 +1,4 @@
-package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model;
+package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.pojo;
 
 import java.util.Objects;
 

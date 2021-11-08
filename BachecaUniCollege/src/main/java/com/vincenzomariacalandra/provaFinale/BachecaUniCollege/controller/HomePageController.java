@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.model.Activity;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.entity.Activity;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service.ActivityService;
 
 /**
