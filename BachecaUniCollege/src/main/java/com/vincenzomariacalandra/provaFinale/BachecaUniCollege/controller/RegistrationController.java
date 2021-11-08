@@ -55,7 +55,7 @@ public class RegistrationController {
 			return "redirect:/registration";
 		}
 		
-		//Adding error to the model
+		//Adding msg to the model
 		redirectAttributes.addFlashAttribute("msg", "Registrazione avvenuta con successo! \n Per proseguire conferma la email.");	
 		
 		return "redirect:/confirmationPage";
@@ -63,9 +63,22 @@ public class RegistrationController {
 	
 	// Confirm Registration handler
 	@RequestMapping(path = "/registration/confirm", method = RequestMethod.GET)
-    public String confirm(@RequestParam("token") String token, Model model) {
-		registrationService.confirmToken(token);
+    public String confirm(@RequestParam("token") String token, Model model, RedirectAttributes redirectAttributes) {
+		
+		String err = registrationService.confirmToken(token);
+		
+		if (err != null) {
+			
+			//Adding error to the model
+			model.addAttribute("errorMessage", err);
+    		
+    		return "error";
+    		
+		}
+		
+		//Adding msg to the model
 		model.addAttribute("msg","Thanks to have confirmed the registration, now you could access to the portal" ); 
+		
 		return "confirmationPage";
     }
 	

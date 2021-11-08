@@ -1,6 +1,8 @@
 package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.validator.routines.EmailValidator;
@@ -34,7 +36,7 @@ public class RegistrationService {
 		this.emailSender = emailSender;
 	}
 
-	
+	// handle registration
 	public String register(RegistrationRequest registrationRequest) {
 		
 		
@@ -61,6 +63,8 @@ public class RegistrationService {
 		//Check password field
 		if (registrationRequest.getPassword().isBlank() || registrationRequest.getPassword().isBlank()) {
 			return "Password could not be empty!";
+		} else if (passwordValidation(registrationRequest.getPassword())) {
+			return "Password must contains letters, numbers and special characters!";
 		}
 		
 		//Register a new user
@@ -81,27 +85,26 @@ public class RegistrationService {
 		return null;
 	}
 	
+	//handle signUp confirmation
     @Transactional
     public String confirmToken(String token) {
-        ConfirmationToken confirmationToken = confirmationTokenService.getToken(token)
-                .orElseThrow(() ->
-                        new IllegalStateException("token not found"));
-
-        if (confirmationToken.getConfirmedAt() != null) {
-            throw new IllegalStateException("email already confirmed");
+    	
+    	//Check if the token exist and if it has been exipered
+        Optional<ConfirmationToken> confirmationToken = confirmationTokenService.getToken(token);
+        
+        if (confirmationToken.isEmpty()) {
+            return "Confirmation token not found!";
+        } else if (confirmationToken.get().getExpiredAt().isBefore(LocalDateTime.now())) {
+        	return "Token has expired";
         }
 
-        LocalDateTime expiredAt = confirmationToken.getExpiredAt();
-
-        if (expiredAt.isBefore(LocalDateTime.now())) {
-            throw new IllegalStateException("token expired");
-        }
-
+        //Set confirmation localDateTime
         confirmationTokenService.setConfirmedAt(token);
         
-        userService.enableAppUser( confirmationToken.getAppUser().getEmail());
+        //Enable the user account
+        userService.enableAppUser( confirmationToken.get().getAppUser().getEmail());
         
-        return "confirmed";
+        return null;
     }
     
     // template for the confirmation email
@@ -174,10 +177,35 @@ public class RegistrationService {
                 "</div></div>";
     }
     
-    public static boolean patternFind(String stringToTest, String regexPattern) {
-        return Pattern.compile(regexPattern)
+    //Utility method to check if a string contains a gived list of character
+    public static boolean patternFind(String stringToTest, String listOfCharacter) {
+        return Pattern.compile(listOfCharacter)
           .matcher(stringToTest)
           .find();
+    }
+    
+    //Utility method to check password if the password contains
+    //LETTERS, SPECIAL CHARACTERS and NUMBERS with at least 8 digit
+    public static boolean passwordValidation(String password) 
+    {
+
+        if(password.length()>=8)
+        {
+            Pattern letter = Pattern.compile("[a-zA-z]");
+            Pattern digit = Pattern.compile("[0-9]");
+            Pattern special = Pattern.compile ("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
+
+
+               Matcher hasLetter = letter.matcher(password);
+               Matcher hasDigit = digit.matcher(password);
+               Matcher hasSpecial = special.matcher(password);
+
+               return hasLetter.find() && hasDigit.find() && hasSpecial.find();
+
+        }
+        else
+            return false;
+
     }
     
 }
