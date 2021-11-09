@@ -1,8 +1,7 @@
 package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service;
 
-import java.sql.Date;
-import java.sql.Time;
-import java.time.LocalDate;
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,8 +56,10 @@ public class ActivityService {
 			return err;
 			
 		} else {
-			
+			// Perform data formatting and logic operation before save entity 
 			activity.setState(false);
+			activity.setTitle(activity.getTitle().trim());
+			activity.setDescrizione(activity.getDescrizione().trim());
 			activityRepository.save(activity);
 		}
 		
@@ -71,13 +72,15 @@ public class ActivityService {
 		if (activity == null) {
 			return "Invalid activity!";
 		}
-		else if (activity.getTitle() == null || activity.getTitle().equals("")) {
+		else if (activity.getTitle().trim() == null || activity.getTitle().trim().equals("")) {
 			return "Title should not be empty!";
-		} else if (activity.getDescrizione() == null || activity.getDescrizione().equals("") ) {
+		} else if (activity.getTitle().trim().length() > 26) {
+			return "Title length should be less then 26 character!"; 
+		} else if (activity.getDescrizione().trim() == null || activity.getDescrizione().trim().equals("") ) {
 			return "Description should not be empty!";
 		} else if (activity.getActivityType() == ActivityType.VISITA_CULTURALE || activity.getActivityType() == ActivityType.VOLONTARIATO  ) {
 			
-			if (activity.getStartDate().before(Date.valueOf(LocalDate.now()))) {
+			if (activity.getStartDate().before(Date.from(Instant.now()))) {
 				return "Start Date should not be before now!";
 			} else if (activity.getStartDate().after(activity.getEndDate())) {
 				return "Start date should not be after end date!";
@@ -87,7 +90,7 @@ public class ActivityService {
 			
 		} else if (activity.getActivityType() == ActivityType.TERTULIA_A_TEMA ) {
 			
-			if (activity.getStartDate().before(Date.valueOf(LocalDate.now()))) {
+			if (activity.getStartDate().before(Date.from(Instant.now()))) {
 				return "Start Date should not be before now!";
 			} else if (activity.getStartTime().after(activity.getEndTime())) {
 				return "Start time should not be after end time!";
@@ -119,7 +122,7 @@ public class ActivityService {
 	
 	//Update activity function
 	@Transactional
-	public String updateActivity(long activityId, Date startDate, Time startTime, Time endTime) {
+	public String updateActivity(long activityId, Date startDate, Date startTime, Date endTime) {
 				
 		Optional<Activity> activityOptional = activityRepository.findById(activityId);
 		
@@ -133,7 +136,7 @@ public class ActivityService {
 				return err;
 			} else {
 				
-				if(startDate.before(Date.valueOf(LocalDate.now()))) {
+				if(startDate.before(Date.from(Instant.now()))) {
 					
 					return "Date could not be before today!";
 					
@@ -184,13 +187,13 @@ public class ActivityService {
 	// Return a list activities to be approved, without book
 	public List<Activity> getActivitiesToApprove(){
 		
-		return activityRepository.findByStateAndActivityTypeNot(false, ActivityType.LIBRO);
+		return activityRepository.findAllByStartDateGreaterThanAndStateAndActivityTypeNot( Date.from(Instant.now()), false, ActivityType.LIBRO);
 	}
 	
 	// Return a list activities approved, without book
 	public List<Activity> getActivitiesApproved(){
 		
-		return activityRepository.findByStateAndActivityTypeNot(true, ActivityType.LIBRO);
+		return activityRepository.findAllByStartDateGreaterThanAndStateAndActivityTypeNot( Date.from(Instant.now()), true, ActivityType.LIBRO);
 	}
 	
 	// Return a list of tertulie a tema to be approved

@@ -31,15 +31,18 @@ import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.UserType;
 @Table(name = "Users")
 public class AppUser implements UserDetails{
 	
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
     
     private String name;
     
     private String surname;
-    
-    private String username;
     
     private String email;
     
@@ -176,10 +179,6 @@ public class AppUser implements UserDetails{
 	@Override
 	public boolean isEnabled() {
 		return enabled;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 	
 	public boolean isDirettore() {

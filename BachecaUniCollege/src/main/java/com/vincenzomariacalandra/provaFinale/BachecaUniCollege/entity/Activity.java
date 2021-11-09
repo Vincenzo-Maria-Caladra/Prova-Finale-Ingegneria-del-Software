@@ -1,8 +1,6 @@
 package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.entity;
 
-import java.sql.Date;
-import java.sql.Time;
-import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,7 +13,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.ActivityCredits;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.ActivityType;
@@ -40,13 +42,19 @@ public class Activity {
     
     private boolean state;
     
+    @Temporal(TemporalType.DATE)
     private Date startDate;
     
+    @Temporal(TemporalType.DATE)
     private Date endDate;
     
-    private Time startTime;
+    @Temporal(TemporalType.TIME)
+    @DateTimeFormat(pattern = "HH:mm")
+    private Date startTime;
     
-    private Time endTime;
+    @Temporal(TemporalType.TIME)
+    @DateTimeFormat(pattern = "HH:mm")
+    private Date endTime;
     
     @Column(nullable = true, length = 64)
     private String photo;
@@ -63,7 +71,7 @@ public class Activity {
 		super();
 	}
 
-	public Activity(String title, String descrizione, boolean state, Date startDate, Date endDate, Time startTime, Time endTime,
+	public Activity(String title, String descrizione, boolean state, Date startDate, Date endDate, Date startTime, Date endTime,
 			ActivityType activityType, ActivityCredits activityCredits, String photo) {
 		super();
 		this.title = title;
@@ -118,19 +126,19 @@ public class Activity {
 		this.endDate = endDate;
 	}
 
-	public Time getStartTime() {
+	public Date getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(Time startTime) {
+	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
 
-	public Time getEndTime() {
+	public Date getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(Time endTime) {
+	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
 

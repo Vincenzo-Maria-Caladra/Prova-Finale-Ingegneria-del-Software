@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.entity.Activity;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service.ActivityService;
@@ -73,8 +74,8 @@ public class HomeSegreteria {
 	
 	// Update Activity handler
 	@RequestMapping(path = "/updateTertulia", method = RequestMethod.GET)
-	public String updateShowFormTertuliaATema(@RequestParam("id") Long id, Model model, HttpServletRequest request) {
-
+	public String updateShowFormTertuliaATema(@RequestParam("id") Long id, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		redirectAttributes.addFlashAttribute("panel", "programmazioneTertulieATema");
 		return "redirect:/homeSegreteria?id=" + id + "#programmazioneTertulieATema";
 	}
 	

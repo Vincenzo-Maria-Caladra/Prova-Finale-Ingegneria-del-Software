@@ -32,7 +32,7 @@ public class RegistrationController {
 	
 	// Registration page initialization
 	@RequestMapping(path = "/registration", method = RequestMethod.GET)
-	public String registrationPage(Model model) {
+	public String getRegistrationPage(Model model) {
 		
 		if (!model.containsAttribute("registrationRequest")) {
 			model.addAttribute("registrationRequest", new RegistrationRequest());
@@ -43,7 +43,7 @@ public class RegistrationController {
 	
 	// Registration handler
 	@RequestMapping(path = "/registration", method = RequestMethod.POST)
-	public String register (@ModelAttribute RegistrationRequest registrationRequest, Model model, RedirectAttributes redirectAttributes) {
+	public String postRegistrationRequest (@ModelAttribute RegistrationRequest registrationRequest, Model model, RedirectAttributes redirectAttributes) {
 		
 		String err = registrationService.register(registrationRequest);
 		
@@ -56,14 +56,14 @@ public class RegistrationController {
 		}
 		
 		//Adding msg to the model
-		redirectAttributes.addFlashAttribute("msg", "Registrazione avvenuta con successo! \n Per proseguire conferma la email.");	
+		redirectAttributes.addFlashAttribute("msg", "Registration was successful! \n To continue please confirm your email.");	
 		
 		return "redirect:/confirmationPage";
 	}
 	
 	// Confirm Registration handler
 	@RequestMapping(path = "/registration/confirm", method = RequestMethod.GET)
-    public String confirm(@RequestParam("token") String token, Model model, RedirectAttributes redirectAttributes) {
+    public String getRegistrationConfirm(@RequestParam("token") String token, Model model, RedirectAttributes redirectAttributes) {
 		
 		String err = registrationService.confirmToken(token);
 		

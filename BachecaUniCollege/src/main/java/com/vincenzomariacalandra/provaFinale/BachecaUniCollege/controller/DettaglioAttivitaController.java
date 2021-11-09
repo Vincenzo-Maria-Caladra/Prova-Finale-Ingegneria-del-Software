@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.entity.Activity;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.entity.AppUser;
@@ -140,9 +141,13 @@ public class DettaglioAttivitaController {
 	
 	//Delete Activity handler
 	@RequestMapping(path = "/deleteActivity", method = RequestMethod.POST )
-	public String activityDelete(@RequestParam("id") Long id) {
+	public String activityDelete(@RequestParam("id") Long id, RedirectAttributes redirectAttributes) {
 		
 		String err = activityService.deleteActivity(id);
+		
+		if (err != null) {
+			redirectAttributes.addFlashAttribute("err", err);
+		}
 		
 		return "redirect:/homePage";
 	}
