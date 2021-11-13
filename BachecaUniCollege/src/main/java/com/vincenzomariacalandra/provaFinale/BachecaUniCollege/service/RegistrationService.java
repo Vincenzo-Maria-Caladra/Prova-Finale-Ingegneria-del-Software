@@ -50,7 +50,7 @@ public class RegistrationService {
 		if (registrationRequest.getName().trim().isBlank() || registrationRequest.getName().trim().isBlank()) {
 			return "Name could not be empty!";
 		} else if ( patternFind(registrationRequest.getName().trim(), "[^A-Za-z0-9]")) {
-			return "Invalid characters in surname!";
+			return "Invalid characters in name!";
 		}
 		
 		//Check surname field

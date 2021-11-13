@@ -32,5 +32,6 @@ public interface UserRepository extends JpaRepository<AppUser, Long> {
 	List<AppUser> findAllByUserType(UserType userType);
 
 	//Return a list of users, if they exist, by user's tutor
-	List<AppUser> findAllByTutor(AppUser tutor);
+	@Query("SELECT a " + "FROM AppUser a " + "WHERE a.tutor = ?1")
+	List<AppUser> findAllByTutor(AppUser appUser);
 }

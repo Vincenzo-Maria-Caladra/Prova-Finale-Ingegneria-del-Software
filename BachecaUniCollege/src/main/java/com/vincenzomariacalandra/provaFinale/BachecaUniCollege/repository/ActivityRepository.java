@@ -24,7 +24,7 @@ public interface ActivityRepository extends JpaRepository<Activity, Long> {
 	//Return an activity, if exists, by the activity's title
 	List<Activity> findByTitle(String title);
 	
-	//Return a list of activities, if they exist, by not the activity's title specified and the state
+	//Return a list of activities, if they exist, by not the activity's title specified, the state and the startDate
 	List<Activity> findAllByStartDateGreaterThanAndStateAndActivityTypeNot(Date startDate, boolean state, ActivityType activityType);
 
 	//Return a list of activities, if they exist, by the activity's type and state

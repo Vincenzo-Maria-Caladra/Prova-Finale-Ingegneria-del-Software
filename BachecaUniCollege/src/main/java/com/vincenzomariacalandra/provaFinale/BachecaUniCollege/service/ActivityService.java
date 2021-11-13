@@ -37,9 +37,8 @@ public class ActivityService {
 	
 	//Return an activity
 	public Optional<Activity> findActivityById(Long id) {
-		
-		if (activityRepository.findById(id).isEmpty()) {
-			throw new NullPointerException("Activity not found" + id);
+		if (id == null) {
+			return null;
 		}
 		
 		return activityRepository.findById(id);
@@ -72,11 +71,11 @@ public class ActivityService {
 		if (activity == null) {
 			return "Invalid activity!";
 		}
-		else if (activity.getTitle().trim() == null || activity.getTitle().trim().equals("")) {
+		else if (activity.getTitle() == null || activity.getTitle().trim().equals("")) {
 			return "Title should not be empty!";
 		} else if (activity.getTitle().trim().length() > 26) {
 			return "Title length should be less then 26 character!"; 
-		} else if (activity.getDescrizione().trim() == null || activity.getDescrizione().trim().equals("") ) {
+		} else if (activity.getDescrizione() == null || activity.getDescrizione().trim().equals("") ) {
 			return "Description should not be empty!";
 		} else if (activity.getActivityType() == ActivityType.VISITA_CULTURALE || activity.getActivityType() == ActivityType.VOLONTARIATO  ) {
 			

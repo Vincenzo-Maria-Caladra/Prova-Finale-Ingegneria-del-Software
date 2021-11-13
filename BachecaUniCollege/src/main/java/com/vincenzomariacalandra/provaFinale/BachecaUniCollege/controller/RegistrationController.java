@@ -34,6 +34,7 @@ public class RegistrationController {
 	@RequestMapping(path = "/registration", method = RequestMethod.GET)
 	public String getRegistrationPage(Model model) {
 		
+		//Check on model attribute initialization
 		if (!model.containsAttribute("registrationRequest")) {
 			model.addAttribute("registrationRequest", new RegistrationRequest());
 		}
@@ -56,9 +57,9 @@ public class RegistrationController {
 		}
 		
 		//Adding msg to the model
-		redirectAttributes.addFlashAttribute("msg", "Registration was successful! \n To continue please confirm your email.");	
+		model.addAttribute("msg", "Registration was successful! \n To continue please confirm your email.");	
 		
-		return "redirect:/confirmationPage";
+		return "confirmationPage";
 	}
 	
 	// Confirm Registration handler
