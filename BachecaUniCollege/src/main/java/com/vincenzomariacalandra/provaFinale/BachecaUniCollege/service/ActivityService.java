@@ -24,19 +24,21 @@ import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.EmailSend
 public class ActivityService {
 
 	//List all repository to use
+	@Autowired
 	private final ActivityRepository activityRepository;
 	private final EmailSender emailSender;
 	private final UserService userService;
 	
-	@Autowired
 	public ActivityService(ActivityRepository activityRepository, EmailSender emailSender, UserService userService) {
+		super();
 		this.activityRepository = activityRepository;
 		this.emailSender = emailSender;
 		this.userService = userService;
 	}
-	
+
 	//Return an activity
 	public Optional<Activity> findActivityById(Long id) {
+		
 		if (id == null) {
 			return null;
 		}
@@ -101,13 +103,21 @@ public class ActivityService {
 	}
 
 	//Delete activity function
-	public String deleteActivity(long id) {
+	public String deleteActivity(Long id) {
 		
+		System.out.println(id);
+		
+		if ( id == null) {
+			return "Activity id could not be null!";
+		}
 		
 		Optional<Activity> activityOptional =
 				activityRepository.findById(id);
 		
+		System.out.println(activityOptional.isPresent());
+		
 		if (activityOptional.isPresent()) {
+			
 			activityRepository.deleteById(id);
 			return null;
 			
