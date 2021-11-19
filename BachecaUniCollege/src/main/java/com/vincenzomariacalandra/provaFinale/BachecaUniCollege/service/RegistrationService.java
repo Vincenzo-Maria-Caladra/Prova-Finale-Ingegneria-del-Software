@@ -111,7 +111,10 @@ public class RegistrationService {
         }
 
         //Set confirmation localDateTime
-        confirmationTokenService.setConfirmedAt(token);
+        String err = confirmationTokenService.setConfirmedAt(token);
+        if (err != null) {
+        	return err;
+        }
         
         //Enable the user account
         if (confirmationToken.get().getAppUser() != null) {

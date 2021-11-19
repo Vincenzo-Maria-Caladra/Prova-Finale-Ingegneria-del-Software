@@ -3,12 +3,10 @@ package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.entity.ConfirmationToken;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.repository.ConfirmationTokenRepository;
-
 
 /**
  * @author VectorCode
@@ -16,27 +14,47 @@ import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.repository.Confir
  */
 @Service
 public class ConfirmationTokenService {
-	
+
 	private final ConfirmationTokenRepository confirmationTokenRepository;
 
-	@Autowired
 	public ConfirmationTokenService(ConfirmationTokenRepository confirmationTokenRepository) {
 		super();
 		this.confirmationTokenRepository = confirmationTokenRepository;
 	}
-	
-	public void saveConfirmationToken(ConfirmationToken token) {
-		 confirmationTokenRepository.save(token);
-	}
-	
-    public Optional<ConfirmationToken> getToken(String token) {
-        return confirmationTokenRepository.findByToken(token);
-    }
 
-    public int setConfirmedAt(String token) {
-        return confirmationTokenRepository.updateConfirmedAt(
-                token, LocalDateTime.now());
-    }
-	
-	
+	public String saveConfirmationToken(ConfirmationToken token) {
+
+		if (token == null) {
+			return "Token could not be null!";
+		}
+		
+		ConfirmationToken savedToken = confirmationTokenRepository.save(token);
+		
+		if (savedToken == null) {
+			return "Saved token is null";
+		}
+		
+		return null;
+	}
+
+	public Optional<ConfirmationToken> getToken(String token) {
+		
+		if (token == null) {
+			return Optional.ofNullable(null);
+		}
+		
+		return confirmationTokenRepository.findByToken(token);
+	}
+
+	public String setConfirmedAt(String token) {
+		
+		if (token == null || token.isEmpty()) {
+			return "Token could not be null or empty";
+		}
+		
+		confirmationTokenRepository.updateConfirmedAt(token, LocalDateTime.now());
+		
+		return null;
+	}
+
 }
