@@ -23,11 +23,11 @@ import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.UserType;
 @Service
 public class RegistrationService {
 	
+	// List all repository to use
 	private final UserService userService;
 	private final ConfirmationTokenService confirmationTokenService;
 	private final EmailSender emailSender;
 	
-	@Autowired
 	public RegistrationService(UserService userService, 
 			ConfirmationTokenService confirmationTokenService, EmailSender emailSender) {
 		super();
@@ -39,6 +39,9 @@ public class RegistrationService {
 	// handle registration
 	public String register(RegistrationRequest registrationRequest) {
 		
+		if (registrationRequest == null) {
+			return "Registration request could not be null";
+		}
 		
 		//Check if the email is Valid
 		//EmailValidator class validate email which uses RFC 822 standards
@@ -47,23 +50,23 @@ public class RegistrationService {
 		}
 		
 		//Check name field
-		if (registrationRequest.getName().trim().isBlank() || registrationRequest.getName().trim().isBlank()) {
+		if (registrationRequest.getName() == null || registrationRequest.getName().trim().isBlank()) {
 			return "Name could not be empty!";
-		} else if ( patternFind(registrationRequest.getName().trim(), "[^A-Za-z0-9]")) {
+		} else if ( patternFind(registrationRequest.getName().trim(), "[^A-Za-z]")) {
 			return "Invalid characters in name!";
 		}
 		
 		//Check surname field
-		if (registrationRequest.getSurname().trim().isBlank() || registrationRequest.getSurname().trim().isBlank()) {
+		if (registrationRequest.getSurname() == null || registrationRequest.getSurname().trim().isBlank()) {
 			return "Surname could not be empty!";
-		} else if ( patternFind(registrationRequest.getSurname().trim(), "[^A-Za-z0-9]")) {
+		} else if ( patternFind(registrationRequest.getSurname().trim(), "[^A-Za-z]")) {
 			return "Invalid characters in surname!";
 		}
 		
 		//Check password field
-		if (registrationRequest.getPassword().isBlank() || registrationRequest.getPassword().isBlank()) {
+		if (registrationRequest.getPassword() == null || registrationRequest.getPassword().isBlank()) {
 			return "Password could not be empty!";
-		} else if (passwordValidation(registrationRequest.getPassword())) {
+		} else if (!passwordValidation(registrationRequest.getPassword())) {
 			return "Password must contains letters, numbers and special characters!";
 		}
 		
@@ -75,6 +78,11 @@ public class RegistrationService {
 						registrationRequest.getEmail().trim(),
 						registrationRequest.getPassword(), 
 						UserType.STUDENTE));
+		
+		
+		if (token == null || token.trim().isBlank() ) {
+			return "Token generation Error";
+		}
 		
 		//Generate user token link where to validate the registration
 		String link = "http://localhost:8080/registration/confirm?token="+token;
@@ -89,6 +97,10 @@ public class RegistrationService {
     @Transactional
     public String confirmToken(String token) {
     	
+    	if (token == null || token.trim().isBlank()) {
+    		return "Token could not be null or empty!";
+    	}
+    	
     	//Check if the token exist and if it has been exipered
         Optional<ConfirmationToken> confirmationToken = confirmationTokenService.getToken(token);
         
@@ -102,13 +114,18 @@ public class RegistrationService {
         confirmationTokenService.setConfirmedAt(token);
         
         //Enable the user account
-        userService.enableAppUser( confirmationToken.get().getAppUser().getEmail());
+        if (confirmationToken.get().getAppUser() != null) {
+        	userService.enableAppUser( confirmationToken.get().getAppUser().getEmail());
+        } else 
+        {
+        	return "Token email could not be null!";
+        }
         
         return null;
     }
     
     // template for the confirmation email
-    private String buildEmail(String name, String link) {
+    public String buildEmail(String name, String link) {
         return "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
                 "\n" +
                 "<span style=\"display:none;font-size:1px;color:#fff;max-height:0\"></span>\n" +
@@ -178,15 +195,15 @@ public class RegistrationService {
     }
     
     //Utility method to check if a string contains a gived list of character
-    public static boolean patternFind(String stringToTest, String listOfCharacter) {
-        return Pattern.compile(listOfCharacter)
+    public boolean patternFind(String stringToTest, String pattern) {
+        return Pattern.compile(pattern)
           .matcher(stringToTest)
           .find();
     }
     
     //Utility method to check password if the password contains
     //LETTERS, SPECIAL CHARACTERS and NUMBERS with at least 8 digit
-    public static boolean passwordValidation(String password) 
+    public boolean passwordValidation(String password) 
     {
 
         if(password.length()>=8)
