@@ -86,7 +86,7 @@ public class UserActivity {
 		this.organizer = organizer;
 	}
 
-	protected UserActivity() {
+	public UserActivity() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

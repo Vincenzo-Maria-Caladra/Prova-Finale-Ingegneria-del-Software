@@ -17,9 +17,6 @@ import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.ActivityT
  */
 @Repository
 public interface ActivityRepository extends JpaRepository<Activity, Long> {
-
-	//Return an activity, if exists, by the activity's id
-	Optional<Activity> findById(long id);
 	
 	//Return an activity, if exists, by the activity's title
 	List<Activity> findByTitle(String title);

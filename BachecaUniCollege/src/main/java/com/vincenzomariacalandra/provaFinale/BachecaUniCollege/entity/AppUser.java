@@ -64,7 +64,7 @@ public class AppUser implements UserDetails{
     @OneToMany(mappedBy = "appUser", cascade= {CascadeType.PERSIST, CascadeType.REMOVE} )
     private List<ConfirmationToken> confirmationTokens;
 
-	protected AppUser() {
+	public AppUser() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

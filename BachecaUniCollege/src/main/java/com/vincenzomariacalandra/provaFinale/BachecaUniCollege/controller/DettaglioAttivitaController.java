@@ -94,7 +94,7 @@ public class DettaglioAttivitaController {
 	
 	//Activity Subscription handler
 	@RequestMapping(path = "/subscribe", method = RequestMethod.POST)
-	public String activitySubscription (@RequestParam("id") Long id, Model model, HttpServletRequest request) {
+	public String activitySubscription (@RequestParam("id") Long id, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 		
 		//Retrive usefull information
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -112,7 +112,13 @@ public class DettaglioAttivitaController {
 		//Check if activity is present
 		if (activityOptional.isPresent()) {
 			
-			userActivityService.insertNewUserActivity(user.getId(), activityOptional.get().getId(), false);
+			String err = userActivityService.insertNewUserActivity(user.getId(), activityOptional.get().getId(), false);
+			
+			// Check for errors
+			if (err != null) {
+				redirectAttributes.addFlashAttribute("err", err);
+				return "redirect:/dettaglioAttivita?id="+id;
+			}
 		}
 		
 		return "redirect:/dettaglioAttivita?id="+id;
@@ -120,7 +126,7 @@ public class DettaglioAttivitaController {
 	
 	//Activity unsubscription handler
 	@RequestMapping(path = "/unsubscribe", method = RequestMethod.POST )
-	public String activityUnSubscription(@RequestParam("id") Long id, Model model, HttpServletRequest request) {
+	public String activityUnSubscription(@RequestParam("id") Long id, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 		
 		//Retrive usefull information
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -132,8 +138,13 @@ public class DettaglioAttivitaController {
 		if (userActivityOptional.isPresent()) {
 			
 			//Delete subscrition
-			userActivityService.deleteUserActivityByActivityId(userActivityOptional.get().getUser(), userActivityOptional.get().getActivity());
+			String err = userActivityService.deleteUserActivityByActivityId(userActivityOptional.get().getUser(), userActivityOptional.get().getActivity());
 			
+			// Check for errors
+			if (err != null) {
+				redirectAttributes.addFlashAttribute("err", err);
+				return "redirect:/dettaglioAttivita?id="+id;
+			}
 		}
 		
 		return "redirect:/dettaglioAttivita?id="+id;

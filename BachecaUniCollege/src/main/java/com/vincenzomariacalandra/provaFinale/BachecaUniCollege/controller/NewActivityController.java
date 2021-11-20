@@ -110,7 +110,17 @@ public class NewActivityController {
 		AppUser user = ((AppUser)principal);
 		
 		//Insert userActivity as "organizer"
-		userActivityService.insertNewUserActivity(user.getId(), activity.getId(), true);
+		String err = userActivityService.insertNewUserActivity(user.getId(), activity.getId(), true);
+		
+		// Check for errors
+		if (err != null) {
+			
+    		//Redirect homePage.html
+    		//Adding error to the model
+    		redirectAttributes.addFlashAttribute("error", err);	
+    		return "redirect:/homePage"; 	
+			
+		}
 		
 		redirectAttributes.addFlashAttribute("msg", "Attività aggiunta con successo! Attendi che venga approvata!");	
 		
