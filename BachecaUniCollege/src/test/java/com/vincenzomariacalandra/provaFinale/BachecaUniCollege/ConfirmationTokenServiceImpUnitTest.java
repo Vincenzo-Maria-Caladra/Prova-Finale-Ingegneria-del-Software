@@ -45,9 +45,6 @@ public class ConfirmationTokenServiceImpUnitTest {
 		ConfirmationToken token = new ConfirmationToken();
 		
 		assertEquals("Token could not be null!", service.saveConfirmationToken(null));
-				
-		lenient().when(confirmationTokenRepository.save(token)).thenReturn(null);
-		assertEquals("Saved token is null", service.saveConfirmationToken(token));
 		
 		lenient().when(confirmationTokenRepository.save(token)).thenReturn(token);
 		assertNull(service.saveConfirmationToken(token));
