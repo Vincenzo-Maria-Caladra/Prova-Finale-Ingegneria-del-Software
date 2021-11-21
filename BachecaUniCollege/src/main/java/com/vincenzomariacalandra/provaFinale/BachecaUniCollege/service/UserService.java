@@ -34,7 +34,7 @@ public class UserService implements UserDetailsService {
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	private final ConfirmationTokenService confirmationTokenService;
 
-	@Autowired
+	
 	public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder,
 			ConfirmationTokenService confirmationTokenService, UserActivityService userActivityService) {
 		super();
@@ -51,8 +51,12 @@ public class UserService implements UserDetailsService {
 
 	// Remove a user, if exitst, by userId
 	@Transactional
-	public String removeUser(long userId) {
+	public String removeUser(Long userId) {
 
+		if (userId == null) {
+			return "User id must not be null!";
+		}
+		
 		Optional<AppUser> userOptional = userRepository.findById(userId);
 
 		if (userOptional.isPresent()) {
@@ -67,15 +71,27 @@ public class UserService implements UserDetailsService {
 	// Login a user by username (email)
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		return userRepository.findByEmail(email)
-				.orElseThrow(() -> new UsernameNotFoundException("Unable to find user with e: " + email));
+		
+		if (email == null || email.isEmpty() || email.isBlank()) {
+			throw new UsernameNotFoundException("Email could not be null!");
+		}
+		
+		Optional<AppUser> useOptional = userRepository.findByEmail(email);
+		
+		if (useOptional.isPresent()) {
+			return useOptional.get();
+		} else {
+			throw new UsernameNotFoundException("Unable to find user with e: " + email);
+		}
 	}
 
 	// Register a new user
-	public String signUpUser(AppUser user) {
+	public String signUpUser(AppUser user) throws IllegalStateException {
 
+		String email = user.getEmail();
+		
 		// Check if user already exist
-		Optional<AppUser> optionalUser = userRepository.findByEmail(user.getEmail());
+		Optional<AppUser> optionalUser = userRepository.findByEmail(email);
 
 		if (optionalUser.isPresent()) {
 
@@ -101,9 +117,12 @@ public class UserService implements UserDetailsService {
 				confirmationTokenService.saveConfirmationToken(token);
 
 				return tokenString;
-			}
+				
+			} else {
+				
+				throw new IllegalStateException("Email already in use! " + user.getEmail());
 
-			throw new IllegalStateException("Email already in use! " + user.getEmail());
+			}
 		}
 
 		// Create and save a new user
@@ -155,6 +174,16 @@ public class UserService implements UserDetailsService {
 	// Return a list of App Users STUDENTI credits
 	public List<StudentCredits> getAllUsersCredits() {
 		return computeUserCredits(getAllAppUserStudenti());
+	}
+	
+	// Return a list of tutor's mentee
+	public List<AppUser> getAllMenteeByTutor(AppUser tutor) {
+		return userRepository.findAllByTutor(tutor);
+	}
+	
+	// Return a list of tutor's mentee credits
+	public List<StudentCredits> getAllMenteeCreditsByTutor(AppUser tutor) {
+		return computeUserCredits(getAllMenteeByTutor(tutor));
 	}
 
 	private List<StudentCredits> computeUserCredits(List<AppUser> appUserStudenti) {
@@ -209,18 +238,8 @@ public class UserService implements UserDetailsService {
 
 			usersCreditsList.add(studentCredits);
 		}
-
+		
 		return usersCreditsList;
-	}
-
-	// Return a list of tutor's mentee
-	public List<AppUser> getAllMenteeByTutor(AppUser tutor) {
-		return userRepository.findAllByTutor(tutor);
-	}
-
-	// Return a list of tutor's mentee credits
-	public List<StudentCredits> getAllMenteeCreditsByTutor(AppUser tutor) {
-		return computeUserCredits(getAllMenteeByTutor(tutor));
 	}
 
 	// Update User Tutor
