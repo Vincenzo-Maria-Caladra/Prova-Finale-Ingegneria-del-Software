@@ -15,4 +15,10 @@ public class LoginController {
 	  public String login() {
 	    return "login";
 	  }
+	  
+	  // Initialization Login form
+	  @RequestMapping("/")
+	  public String index() {
+	    return "redirect:/login";
+	  }
 }

@@ -31,9 +31,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.csrf().disable().authorizeRequests()
 				.antMatchers("/registration/**", "/login/**", "/error/**", "/", "/confirmationPage/**").permitAll()
+				.antMatchers("/homeDirettore/**").hasAuthority("DIRETTORE")
+				.antMatchers("/gestioneAttivita/**").hasAuthority("DIRETTORE")
+				.antMatchers("/homeTutor/**").hasAuthority("TUTOR")
+				.antMatchers("/homeSegreteria/**").hasAuthority("SEGRETERIA")
 				.anyRequest().authenticated()
 				.and().formLogin().loginPage("/login").defaultSuccessUrl("/homePage", true)
-				.failureUrl("/login?error=true").and().logout();
+				.failureUrl("/login?error=true")
+				.and().logout()
+				.logoutSuccessUrl("/")
+				.logoutUrl("/perform_logout")
+				.invalidateHttpSession(true);
+		
 	}
 
 	@Override

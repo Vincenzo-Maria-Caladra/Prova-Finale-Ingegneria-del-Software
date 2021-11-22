@@ -34,7 +34,13 @@
         <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="password"> <br>
       </div>
 
-      <input class="w-100 btn btn-lg btn-primary" type="submit" value="Log in" />
+      <div class="form-floating d-flex flex-column">
+
+        <input class="w-100 btn btn-lg btn-primary mr-3" type="submit" value="Log in" />
+        <a th:href="@{/registration}" href="#" class="mt-2 font-weight-light font-size">First time?Click to Sign Up!</a>
+
+      </div>
+
       <p class="mt-5 mb-3 text-muted">Powered by Vector Code</p>
     </form>
   </div>
