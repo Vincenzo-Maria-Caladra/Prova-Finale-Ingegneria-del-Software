@@ -10,6 +10,11 @@
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+		crossorigin="anonymous"></script>
+
 </head>
 
 <body>
@@ -73,14 +78,14 @@
 
 				<div class="tab-content">
 
-					<div th:if="${error}" class="alert alert-danger d-inline-flex row m-4" role="alert">
+					<div th:if="${error}" class="alert alert-danger w-75 m-3" role="alert">
 						<div th:text="${error}">ERRORE GRAVE</div>
 					</div>
 
 					<div id="ATTIVITA_GENERICA" class="tab-pane fade"
 						th:classappend="${panel == 'ATTIVITA_GENERICA'} ? 'show active'">
 
-						<div class="row m-3 col-10">
+						<div class="m-3 w-75">
 							<form action="#" th:action="@{/nuovaAttivita}" th:object="${activity}" method="post"
 								enctype="multipart/form-data">
 								<div class="font-weight-bold">
@@ -166,7 +171,7 @@
 					<div id="TERTULIA_A_TEMA" class="tab-pane fade"
 						th:classappend="${panel == 'TERTULIA_A_TEMA'} ? 'show active'">
 
-						<div class="row m-3 col-10">
+						<div class="m-3 w-75">
 							<form action="#" th:action="@{/nuovaAttivita}" th:object="${activity}" method="post"
 								enctype="multipart/form-data">
 								<div class="font-weight-bold">
@@ -251,11 +256,13 @@
 
 					<div id="LIBRO" class="tab-pane fade" th:classappend="${panel == 'LIBRO'} ? 'show active' : ''">
 
-						<div class="row m-3 col-6 d-block">
+						<div class="m-3 w-75">
 
-							<form action="#" th:action="@{/nuovaAttivita}" th:object="${activity}" method="post">
+							<form action="#" th:action="@{/nuovaAttivita}" th:object="${activity}" method="post"
+								class="mr-3">
 								<div class="font-weight-bold">
 									<h5>Libro</h5>
+									<p>Proponine uno!</p>
 								</div>
 
 								<div class="form-group">
@@ -289,6 +296,20 @@
 								</div>
 
 								<button type="submit" class="btn btn-primary">Submit</button>
+
+								<button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+									data-bs-target="#collapseWidthExample" aria-expanded="false"
+									aria-controls="collapseWidthExample">
+									Lasciati consigliare
+								</button>
+
+								<div class="collapse collapse-horizontal" id="collapseWidthExample">
+									<div class="card card-body" style="width: 300px;">
+										This is some placeholder content for a horizontal collapse. It's hidden by
+										default and shown when triggered.
+									</div>
+								</div>
+
 							</form>
 
 						</div>
