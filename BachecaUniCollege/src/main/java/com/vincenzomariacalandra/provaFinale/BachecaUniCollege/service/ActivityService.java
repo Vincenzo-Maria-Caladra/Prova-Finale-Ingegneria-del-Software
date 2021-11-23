@@ -243,4 +243,11 @@ public class ActivityService {
 				+ "      <td height=\"30\"><br></td>\n" + "    </tr>\n"
 				+ "  </tbody></table><div class=\"yj6qo\"></div><div class=\"adL\">\n" + "\n" + "</div></div>";
 	}
+
+	// Return a list of approved book activity
+	public List<Activity> getAllBooks() {
+		
+		return activityRepository.findAllByActivityTypeAndState(ActivityType.LIBRO, true);
+	}
+
 }

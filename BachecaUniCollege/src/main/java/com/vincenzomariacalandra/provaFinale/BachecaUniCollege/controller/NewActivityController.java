@@ -54,6 +54,10 @@ public class NewActivityController {
 			model.addAttribute("activity", new Activity());
 		}
 		
+		if (!model.containsAttribute("books")) {
+			model.addAttribute("books", activityService.getAllBooks());
+		}
+		
 		return "creaAttivita";
 	}
 	
@@ -122,6 +126,7 @@ public class NewActivityController {
 			
 		}
 		
+		// Adding default success message
 		redirectAttributes.addFlashAttribute("msg", "Attività aggiunta con successo! Attendi che venga approvata!");	
 		
 		return "redirect:/homePage";
@@ -170,5 +175,31 @@ public class NewActivityController {
         
         return null;
 		
+	}
+	
+	@RequestMapping(path = "/nuovaAttivita/libro", method = RequestMethod.POST)
+	public String chooseJustApprovedBook (@RequestParam("id") Long id, RedirectAttributes redirectAttributes) {
+		
+		//Retrieve usefull information
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		AppUser user = ((AppUser)principal);
+		
+		String err = userActivityService.addAJustRedBook(id, user);
+		
+    	if (err != null) {
+    		
+    		//Redirect to correct pane of creaAttivita.html
+    		//Adding error to the model
+    		redirectAttributes.addFlashAttribute("error", err);	
+    		redirectAttributes.addFlashAttribute("panel", "LIBRO");	
+    		
+    		return "redirect:/nuovaAttivita";     		
+    		
+    	}
+		
+    	// Adding default success message
+		redirectAttributes.addFlashAttribute("msg", "Attività aggiunta con successo! Attendi che venga approvata!");	
+		
+		return "redirect:/homePage";
 	}
 }

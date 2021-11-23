@@ -25,5 +25,6 @@ public interface ActivityRepository extends JpaRepository<Activity, Long> {
 	List<Activity> findAllByStartDateGreaterThanAndStateAndActivityTypeNot(Date startDate, Boolean state, ActivityType activityType);
 
 	//Return a list of activities, if they exist, by the activity's type and state
-	List<Activity> findAllByActivityTypeAndState(ActivityType tertuliaATema, Boolean state);
+	List<Activity> findAllByActivityTypeAndState(ActivityType activityType, Boolean state);
+
 }

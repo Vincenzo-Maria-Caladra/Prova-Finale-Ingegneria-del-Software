@@ -251,5 +251,35 @@ public class UserActivityService {
 		
 		return count2;
 	}
+
+	// Add a new book user activity from already exist book activity
+	public String addAJustRedBook(Long id, AppUser appUser) {
+		
+		String err;
+		
+		// Check params
+		if ( id == null || appUser == null) {
+			err = "Activity id and user could not be null";
+			return err;
+		}
+		
+		Optional<Activity> optional = activityRepository.findById(id);
+		
+		// Check if book activity exists
+		if (optional.isEmpty()) {
+			err = "Activity with id " + id + " not found!";
+			return err;
+		}
+		
+		// Create a new user activity
+		UserActivity userActivity = new UserActivity();
+		userActivity.setActivity(optional.get());
+		userActivity.setUser(appUser);
+		
+		// Save it 
+		userActivityRepository.save(userActivity);
+		
+		return null;
+	}
 	
 }

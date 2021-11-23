@@ -1,5 +1,6 @@
 package com.vincenzomariacalandra.provaFinale.BachecaUniCollege;
 
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
@@ -331,6 +332,20 @@ public class ActivityServiceImplUnitTest {
 				+ "  </tbody></table><div class=\"yj6qo\"></div><div class=\"adL\">\n" + "\n" + "</div></div>";
 	
 		assertEquals(email, service.buildEmail(name, activity));
+	}
+	
+	@Test
+	private void getAllBooksTest() {
+		
+		ActivityType aT = ActivityType.LIBRO;
+		Boolean state = true;
+		List<Activity> list1 = List.of(new Activity(), new Activity(), new Activity());
+		
+		reset(activityRepository);
+		lenient().when(activityRepository.findAllByActivityTypeAndState(aT, state)).thenReturn(list1);
+		assertEquals(list1, service.getAllBooks());
+		verify(activityRepository, atLeastOnce()).findAllByActivityTypeAndState(aT, state);
+		
 	}
 	
     private void verifyFindByIdIsCalledOnce(Long id) {

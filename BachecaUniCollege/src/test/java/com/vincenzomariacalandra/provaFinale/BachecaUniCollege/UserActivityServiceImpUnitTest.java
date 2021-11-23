@@ -253,5 +253,27 @@ public class UserActivityServiceImpUnitTest {
 		assertEquals(4.44, service.getTotalToBeApprovedCredits(appUser));
 	}
 	
+	
+	@Test
+	public void addAJustRedBookTest() {
+		
+
+		Long id = 0L;
+		AppUser appUser = new AppUser();
+		Activity activity = new Activity();
+				
+		assertEquals("Activity id and user could not be null", service.addAJustRedBook(null, appUser));
+		assertEquals("Activity id and user could not be null", service.addAJustRedBook(id, null));
+
+		
+		lenient().when(activityRepository.findById(id)).thenReturn(Optional.ofNullable(null));
+		assertEquals("Activity with id " + id + " not found!", service.addAJustRedBook(id, appUser));
+
+		
+		lenient().when(activityRepository.findById(id)).thenReturn(Optional.of(activity));
+		assertNull(service.addAJustRedBook(id, appUser));
+		
+	}
+	
 
 }

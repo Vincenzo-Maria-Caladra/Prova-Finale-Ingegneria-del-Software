@@ -258,81 +258,142 @@
 
 						<div class="m-3 w-75">
 
-							<form action="#" th:action="@{/nuovaAttivita}" th:object="${activity}" method="post"
-								class="mr-3">
-								<div class="font-weight-bold">
-									<h5>Libro</h5>
-									<p>Proponine uno!</p>
-								</div>
+							<div class="nav">
+								<a class="btn btn-primary mr-2" data-toggle="tab" href="#PROPONINEUNO">
+									Proponine uno
+								</a>
 
-								<div class="form-group">
-									<label for="title">Titolo Libro</label> <input type="text" class="form-control"
-										id="title" th:field="*{title}" placeholder="Titolo Attività" required>
-
-								</div>
-
-								<div class="form-group">
-									<label for="descrizione">Descrizione Tema</label>
-									<textarea class="form-control" id="descrizione" th:field="*{descrizione}"
-										placeholder="Breve Descrizione" rows="3" required></textarea>
-
-								</div>
-
-								<div class="row">
-									<div class="form-group col-6">
-										<select class="form-control" aria-label="Select for credits"
-											th:field="*{activityCredits}" required>
-											<option value="FIVE" selected>0,5</option>
-										</select>
-									</div>
-
-
-									<div class="form-group col-6">
-										<select class="form-control" aria-label="Select for Activity type"
-											th:field="*{activityType}" required>
-											<option value="LIBRO" selected>LIBRO</option>
-										</select>
-									</div>
-								</div>
-
-								<button type="submit" class="btn btn-primary">Submit</button>
-
-								<button class="btn btn-primary" type="button" data-bs-toggle="collapse"
-									data-bs-target="#collapseWidthExample" aria-expanded="false"
-									aria-controls="collapseWidthExample">
+								<a class="btn btn-primary" data-toggle="tab" href="#LASCIATICONSIGLIARE">
 									Lasciati consigliare
-								</button>
+								</a>
+							</div>
 
-								<div class="collapse collapse-horizontal" id="collapseWidthExample">
-									<div class="card card-body" style="width: 300px;">
-										This is some placeholder content for a horizontal collapse. It's hidden by
-										default and shown when triggered.
+							<div class="tab-content mt-3">
+
+								<div class="tab-pane fade" id="LASCIATICONSIGLIARE">
+									<div class="text-center">
+										<table class="table table-primary table-striped table-hover col-5">
+
+											<caption>Lista Attività</caption>
+
+											<thead>
+
+												<tr>
+													<th scope="col">
+														<p>#</p>
+													</th>
+
+													<th scope="col">
+														<p>Titolo</p>
+													</th>
+
+													<th scope="col">
+														<p>Descrizione</p>
+													</th>
+
+													<th scope="col">
+														<p>Crediti</p>
+													</th>
+
+													<th scope="col">
+														<p>Azione</p>
+													</th>
+
+												</tr>
+
+											</thead>
+
+
+											<tbody>
+												<div th:each="book : ${books}">
+
+													<tr>
+														<th scope="row">#</th>
+														<td th:text="${book.title}">Tb data</td>
+														<td th:text="${book.descrizione}">Tb data</td>
+														<td th:text="${book.activityCredits}">Tb data</td>
+
+														<td>
+															<form class="m-2" action="#"
+																th:action="@{/nuovaAttivita/libro?id=} + ${book.id}"
+																method="post">
+																<button type="submit"
+																	class="btn btn-success">Scegli</button>
+															</form>
+														</td>
+
+													</tr>
+
+												</div>
+											</tbody>
+
+										</table>
 									</div>
+
 								</div>
 
-							</form>
+								<div class="tab-pane fade show active" id="PROPONINEUNO">
+									<form action="#" th:action="@{/nuovaAttivita}" th:object="${activity}" method="post"
+										class="mr-3">
+
+										<div class="form-group">
+											<label for="title">Titolo Libro</label> <input type="text"
+												class="form-control" id="title" th:field="*{title}"
+												placeholder="Titolo Attività" required>
+
+										</div>
+
+										<div class="form-group">
+											<label for="descrizione">Descrizione Tema</label>
+											<textarea class="form-control" id="descrizione" th:field="*{descrizione}"
+												placeholder="Breve Descrizione" rows="3" required></textarea>
+
+										</div>
+
+										<div class="row">
+											<div class="form-group col-6">
+												<select class="form-control" aria-label="Select for credits"
+													th:field="*{activityCredits}" required>
+													<option value="FIVE" selected>0,5</option>
+												</select>
+											</div>
+
+
+											<div class="form-group col-6">
+												<select class="form-control" aria-label="Select for Activity type"
+													th:field="*{activityType}" required>
+													<option value="LIBRO" selected>LIBRO</option>
+												</select>
+											</div>
+										</div>
+
+										<button type="submit" class="btn btn-primary">Submit</button>
+
+									</form>
+
+								</div>
+
+							</div>
 
 						</div>
-
 					</div>
 				</div>
 			</div>
+
 		</div>
 
-	</div>
+		<!-- Optional JavaScript -->
 
-	<!-- Optional JavaScript -->
-
-	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-		crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-		crossorigin="anonymous"></script>
+		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+			integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+			crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+			integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+			crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+			integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+			crossorigin="anonymous"></script>
 </body>
 
 </html>
