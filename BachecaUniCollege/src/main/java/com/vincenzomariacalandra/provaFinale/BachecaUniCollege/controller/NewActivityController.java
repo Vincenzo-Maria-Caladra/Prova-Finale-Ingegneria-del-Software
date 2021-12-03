@@ -40,6 +40,8 @@ public class NewActivityController {
 	private final ActivityService activityService;
 	private final UserActivityService userActivityService;
 	
+	private String ROOT_UPLOAD_DIR = "/tmp/activity-photos/";
+	
 	@Autowired
 	public NewActivityController(ActivityService activityService, UserActivityService userActivityService) {
 		this.activityService = activityService;
@@ -151,11 +153,18 @@ public class NewActivityController {
         	
         	return err;
     	}
+    	
+    	// Checks if ROOT_UPLOAD_DIR exist
+    	if (!Files.exists(Paths.get(ROOT_UPLOAD_DIR))) {
+    		Files.createDirectory(Paths.get(ROOT_UPLOAD_DIR));
+    	}
 
         // Generation of path to the directory where to store the photo 
-        String uploadDir = "/activity-photos/" + activity.getId();
-        Path uploadPath = Paths.get(uploadDir);
+        String uploadDir = ROOT_UPLOAD_DIR + activity.getId();
         
+        Path uploadPath = Paths.get(uploadDir);
+        System.out.println(uploadPath.getFileName());
+        System.out.println(uploadPath.toString());
         
         // Checks if folder exist
         if (!Files.exists(uploadPath)) {

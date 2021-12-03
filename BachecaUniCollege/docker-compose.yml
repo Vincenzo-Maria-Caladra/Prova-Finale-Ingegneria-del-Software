@@ -1,0 +1,21 @@
+version: '3'
+services:
+  bacheca-uni-college:
+    image: "bacheca-uni-college"
+    ports:
+      - "80:8080"
+    networks:
+      - bacheca-uni-college-mysqldb-network
+    depends_on:
+      - mysqldb
+
+  mysqldb:
+    image: mysql:8
+    networks:
+      - bacheca-uni-college-mysqldb-network
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=database
+
+networks:
+  bacheca-uni-college-mysqldb-network: null
