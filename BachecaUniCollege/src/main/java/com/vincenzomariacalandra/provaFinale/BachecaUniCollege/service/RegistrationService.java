@@ -66,6 +66,8 @@ public class RegistrationService {
         // Check password field
         if (registrationRequest.getPassword() == null || registrationRequest.getPassword().isBlank()) {
             return "Password could not be empty!";
+        } else if (!registrationRequest.getPassword().equals(registrationRequest.getConfirmPassword())) {
+        	return "Passwords are not the same!";
         } else if (!passwordValidation(registrationRequest.getPassword())) {
             return "Password must contains letters, numbers and special characters!";
         }

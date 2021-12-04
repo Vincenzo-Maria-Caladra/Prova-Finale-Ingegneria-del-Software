@@ -102,11 +102,13 @@ Di seguito il database schema e il diagramma ER.
 
 ## Use Case
 
+![Use Case Diagram](C:\Users\CalandraVM\Desktop\Prova Finale\Use Case Diagram.jpg)
 
 
 
 
-### Authentication
+## Dettaglio implementazioni tecnologiche
+### Documentazione gestione Autenticazione e Registrazione
 
 When working with Spring Boot, the *spring-boot-starter-security* starter will automatically include all dependencies, such as *spring-security-core*, *spring-security-web*, and *spring-security-config* among others:
 

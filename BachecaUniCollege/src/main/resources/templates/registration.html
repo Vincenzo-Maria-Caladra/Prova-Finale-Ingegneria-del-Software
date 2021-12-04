@@ -55,7 +55,12 @@
 				<input type="password" class="form-control" id="password" th:field="*{password}" required>
 			</div>
 
-			<button type="submit" class="btn btn-primary">Registrati</button>
+			<div class="form-group">
+				<label for="password">Confirm Password</label>
+				<input type="password" class="form-control" id="confirmPassword" th:field="*{confirmPassword}" required>
+			</div>
+
+			<button type="submit" onclick="ansValidation(event)" class="btn btn-primary">Registrati</button>
 
 			<p class="mt-5 mb-3 text-muted">Powered by Vector Code</p>
 		</form>
@@ -74,6 +79,26 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 		crossorigin="anonymous"></script>
+
+	<script>
+		function ansValidation(ev) {
+			ev.preventDefault
+
+			var nameValue = "test";
+			var passValue = document.getElementById("password").value
+			var confpassValue = document.getElementById("confirmPassword").value
+			// the typeof operator returns a string.
+			if (typeof nameValue !== "string") {
+				window.alert("Please re-enter your name")
+				// we use strict validation ( !== ) because it's a good practice.
+			} else if (passValue !== confpassValue) {
+				window.alert("Passwords do not match!")
+			} else if (!passValue.match("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})")) {
+				window.alert("The password must contain at least 1 lowercase, 1 uppercase, 1 numeric, 1 special character and must be eight characters or longer!")
+			}
+		}
+	</script>
+
 </body>
 
 </html>

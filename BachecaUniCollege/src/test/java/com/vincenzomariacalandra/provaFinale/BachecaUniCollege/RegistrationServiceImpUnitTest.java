@@ -106,10 +106,16 @@ public class RegistrationServiceImpUnitTest {
 		registrationRequest.setPassword("");
 		assertEquals("Password could not be empty!", service.register(registrationRequest));
 
+		registrationRequest.setPassword("password1");
+		registrationRequest.setConfirmPassword("password2");
+		assertEquals("Passwords are not the same!", service.register(registrationRequest));
+		
 		registrationRequest.setPassword("password");
+		registrationRequest.setConfirmPassword("password");
 		assertEquals("Password must contains letters, numbers and special characters!", service.register(registrationRequest));
 
 		registrationRequest.setPassword("P4ssw0rd!");
+		registrationRequest.setConfirmPassword("P4ssw0rd!");
 		assertEquals("Token generation Error", service.register(registrationRequest));
 		reset(userService);
 
