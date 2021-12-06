@@ -39,7 +39,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  *
  */
 @ExtendWith(MockitoExtension.class)
-@RunWith(JUnitPlatform.class)
 public class ActivityServiceImplUnitTest {
     
     @Mock

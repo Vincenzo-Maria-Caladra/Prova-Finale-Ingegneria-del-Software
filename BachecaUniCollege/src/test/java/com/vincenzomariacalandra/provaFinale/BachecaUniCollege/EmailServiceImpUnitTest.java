@@ -20,7 +20,6 @@ import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service.EmailServ
  *
  */
 @ExtendWith(MockitoExtension.class)
-@RunWith(JUnitPlatform.class)
 public class EmailServiceImpUnitTest {
 	
 	@Mock

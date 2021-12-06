@@ -86,11 +86,11 @@ public class RegistrationService {
         }
 
         // Generate user token link where to validate the registration
-        String link = "http://ec2-3-95-171-237.compute-1.amazonaws.com/registration/confirm?token=" + token;
+        String link = "http://51.68.138.245/registration/confirm?token=" + token;
 
         // Sending the confirmation email
         emailSender.send(registrationRequest.getEmail(), buildEmail(registrationRequest.getName(), link));
-
+        
         return null;
     }
 

@@ -38,9 +38,12 @@ public class Activity {
     
     private String title;
     
+    @Column(length = 5000) 
     private String descrizione;
     
     private boolean state;
+    
+    private Integer maxNumberOfPartecipant;
     
     @Temporal(TemporalType.DATE)
     private Date startDate;
@@ -182,7 +185,15 @@ public class Activity {
 		this.photo = photo;
 	}
 	
-    @Transient
+    public Integer getMaxNumberOfPartecipant() {
+		return maxNumberOfPartecipant;
+	}
+
+	public void setMaxNumberOfPartecipant(Integer maxNumberOfPartecipant) {
+		this.maxNumberOfPartecipant = maxNumberOfPartecipant;
+	}
+
+	@Transient
     public String getPhotosImagePath() {
         if (photo == null) {
         	return null;

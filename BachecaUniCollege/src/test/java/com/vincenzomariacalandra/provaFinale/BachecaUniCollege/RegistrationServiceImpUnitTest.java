@@ -38,7 +38,6 @@ import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.UserType;
  *
  */
 @ExtendWith(MockitoExtension.class)
-@RunWith(JUnitPlatform.class)
 public class RegistrationServiceImpUnitTest {
 
 	@Mock

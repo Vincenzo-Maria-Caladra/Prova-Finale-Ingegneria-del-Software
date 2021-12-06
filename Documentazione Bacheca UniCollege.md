@@ -108,21 +108,27 @@ Di seguito il database schema e il diagramma ER.
 
 
 ## Dettaglio implementazioni tecnologiche
-### Documentazione gestione Autenticazione e Registrazione
+### Gestione Autenticazione e Autorizzazione
 
-When working with Spring Boot, the *spring-boot-starter-security* starter will automatically include all dependencies, such as *spring-security-core*, *spring-security-web*, and *spring-security-config* among others:
+Le esigenze di procetto hanno rivelato la necessità dell'implementazione di un layer di security nella web application, in particolar modo è venuto fuori dalle analisi che:
+
+- Occorre permettere l'accesso al portale solo ad utenti registrati, per tenere traccia dei fruitori del portale e per permettere future implementazioni correlate.
+- Evitare che gli studenti abbiano accesso ad aree del portale riservate alla segreteria, alla direzione e ai tutor.
+
+Per tale motivo si è deciso di utilizzare le librerie di Spring Security per l'implementazione di quanto citato sopra. 
+
+Quando si lavora con Spring Boot, lo *spring-boot-starter-security* ingloba tutte le dependecies necessarie per l'implementazione di un layer di security all'interno dell'applicativo, come ad esempio *spring-security-core*, *spring-security-web*, e spring-security-config.
 
 ```xml
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-security</artifactId>
-    <version>2.3.3.RELEASE</version>
 </dependency>
 ```
 
-The Spring Security configuration class extends *WebSecurityConfigurerAdapter.*
+La classe di configurazione di Spring Security estende la classe astratta *WebSecurityConfigurerAdapter.*
 
-By adding *@EnableWebSecurity*, we get Spring Security and MVC integration support:
+Aggiungendo l'annotation *@EnableWebSecurity* attiviamo l'integrazione tra Spring MVC e Spring Security:
 
 ```java
 @Configuration
@@ -131,16 +137,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private UserService userService;
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
+
 	@Autowired
-	public SecurityConfig(UserService userService, BCryptPasswordEncoder 							bCryptPasswordEncoder) {
+	public SecurityConfig(UserService userService, BCryptPasswordEncoder 					bCryptPasswordEncoder) {
 		super();
 		this.userService = userService;
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 	}
 ```
 
-**Starting with Spring 5, we also have to define a password encoder**. In our case, we'll use the *BCryptPasswordEncoder* defined in the *PasswordEncoder* class:
+A partire da Spring 5, occorre definire un password encoder. Nel nostro caso la scelta è ricaduta su **BCryptPasswordEncoder** definito nella classe *PasswordEncoder* al'interno del package security:
 
 ```java
 @Configuration
@@ -154,130 +160,176 @@ public class PasswordEncoder {
 }
 ```
 
-The necessary configurations to Authorize Requests it allowing anonymous access on */login* so that users can authenticate. We'll restrict */admin* to *ADMIN* roles and securing everything else:
+Tale password encoder è poi inglobato nella configurazione globale di Spring Security grazie all'annotation *@Bean*.
+
+BCrypt negli ultimi anni è diventato uno standard nell'hashing delle password, è basato sull'agoritmo blowfish ed aggiunge un salt ed un fattore di costo all'hashing, in questo modo è resistente ad attacchi di tipo *rainbow table*. Inoltre è una funzione adattiva, cioè la sua complessità aumenta con il numero di iterazione, per tale motivo è anche resistente ad attacchi di tipo *brute force*. Da una serie di crypto-analisi è venuto fuori che BCrypt è molto più complesso da "crakkare" rispetto a SHA-512, in quanto quest'ultimo è messo a dura prova dal calcolo parallelizzato e dall'utilizzo di GPU sempre più potenti a differenza di BCrypt che non subisce tali fattori.
+
+#### Autorizzazione
+
+A questo punto possiamo procedere con il settaggio delle autorizzazioni sulle richieste ai vari endpoint. La configurazione base prevede l'accesso anonimo egli endpoint /, /login, /registration e /error. In questo modo gli utenti possono registrarsi e autenticarsi.
 
 ```java
-@Override
-protected void configure(HttpSecurity http) throws Exception {
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+
+		http.csrf().disable().authorizeRequests()
+				.antMatchers("/registration/**", "/login/**", "/error/**", "/", 						"/confirmationPage/**").permitAll()
+				.antMatchers("/homeDirettore/**").hasAuthority("DIRETTORE")
+				.antMatchers("/gestioneAttivita/**").hasAuthority("DIRETTORE")
+				.antMatchers("/homeTutor/**").hasAuthority("TUTOR")
+				.antMatchers("/homeSegreteria/**").hasAuthority("SEGRETERIA")
+				.anyRequest().authenticated()
+				.and().formLogin().loginPage("/login").defaultSuccessUrl("/homePage", 					true)
+				.failureUrl("/login?error=true")
+				.and().logout()
+				.logoutSuccessUrl("/")
+				.logoutUrl("/perform_logout")
+				.invalidateHttpSession(true);
 		
-		http
-		.csrf().disable()
-			.authorizeRequests()
-			.antMatchers("/api/v*/registration/**", "/login/**", "/error/**")
-				.permitAll()
-		.anyRequest()
-			.authenticated().and()
-			.formLogin()
-			.loginPage("/login")
-		    .failureUrl("/login-error")
-		   .and()
-		.logout();
 	}
 ```
 
-```java
-@Override
-protected void configure(final HttpSecurity http) throws Exception {
-    http
-      .csrf().disable()
-      .authorizeRequests()
-      .antMatchers("/admin/**").hasRole("ADMIN")
-      .antMatchers("/anonymous*").anonymous()
-      .antMatchers("/login*").permitAll()
-      .anyRequest().authenticated()
-      .and()
-      // ...
-}
-```
-
-Note that the order of the *antMatchers()* elements is significant; **the more specific rules need to come first, followed by the more general ones**.
-
-Next we'll extend the above configuration for form login and logout:
+Inoltre si è ristretto l'accesso agli endpoint /homeDirettore e /gestioneAttivita ai soli utenti etichettati come DIRETTORE. In maniera analoga si è proceduto con gli endpoint /homeTutor e /homeSegreteria rispettivamente per gli utenti etichettati come TUTOR e SEGRETERIA.
 
 ```java
-@Override
-protected void configure(final HttpSecurity http) throws Exception {
-    http
-      // ...
-      .and()
-      .formLogin()
-      .loginPage("/login.html")
-      .loginProcessingUrl("/perform_login")
-      .defaultSuccessUrl("/homepage.html", true)
-      .failureUrl("/login.html?error=true")
-      .failureHandler(authenticationFailureHandler())
-      .and()
-      .logout()
-      .logoutUrl("/perform_logout")
-      .deleteCookies("JSESSIONID")
-      .logoutSuccessHandler(logoutSuccessHandler());
-}
+.antMatchers("/homeDirettore/**").hasAuthority("DIRETTORE")
+.antMatchers("/gestioneAttivita/**").hasAuthority("DIRETTORE")
+.antMatchers("/homeTutor/**").hasAuthority("TUTOR")
+.antMatchers("/homeSegreteria/**").hasAuthority("SEGRETERIA")
 ```
 
-- *loginPage()* – the custom login page
-- *loginProcessingUrl()* – the URL to submit the username and password to
-- *defaultSuccessUrl()* – the landing page after a successful login
-- *failureUrl()* – the landing page after an unsuccessful login
-- *logoutUrl()* – the custom logout
+#### Autenticazione
 
-The login form page is going to be registered with Spring MVC using the straightforward mechanism to [map views names to URLs](https://www.baeldung.com/spring-mvc-tutorial#configviews). Furthermore, there is no need for an explicit controller in between:
+Tutti gli altri accessi al portale sono vincolati alla sola autenticazione tramite /login.
+
+```java
+.anyRequest().authenticated()
+.and().formLogin().loginPage("/login").defaultSuccessUrl("/homePage",true)
+```
+
+Da notare che l'ordine degli elementi contrassegnati da *antMatchers()* è significativo, le regole più specifiche sono poste prima di quelle generali. 
+
+Di seguito sono riportate le configurazioni di logout:
+
+```java
+.and().logout()
+.logoutSuccessUrl("/")
+.logoutUrl("/perform_logout")
+.invalidateHttpSession(true);
+```
+
+Da notare che sono stati cambiati tutti i valori di default degli endpoint, questa buona pressi evita che il framework sia facilmente identificabile dall'esterno, evitando così attacchi mirati.
+
+Il login form di Spring deve contenere i seguenti attributi:
+
+- *login* – lo URL dove effettuare la chiamata POST.
+- *username* – lo username.
+- *password* – la password.
 
 ```html
-<html>
-<head></head>
-<body>
-   <h1>Login</h1>
-   <form name='f' action="login" method='POST'>
-      <table>
-         <tr>
-            <td>User:</td>
-            <td><input type='text' name='username' value=''></td>
-         </tr>
-         <tr>
-            <td>Password:</td>
-            <td><input type='password' name='password' /></td>
-         </tr>
-         <tr>
-            <td><input name="submit" type="submit" value="submit" /></td>
-         </tr>
-      </table>
-  </form>
-</body>
-</html>
+ <form action="login" method="post">
+      <div class="form-floating">
+        <label for="username"></label>
+        <input type="text" class="form-control" name="username" id="floatingInput" aria-          describedby="emailHelpId"
+          placeholder="your.email@example.com">
+      </div>
+
+      <div class="form-floating">
+        <label for="password"></label>
+        <input type="password" class="form-control" name="password" id="floatingPassword"          placeholder="password"> <br>
+      </div>
+
+      <div class="form-floating d-flex flex-column">
+        <input class="w-100 btn btn-lg btn-primary mr-3" type="submit" value="Log in" />
+        <a th:href="@{/registration}" href="#" class="mt-2 font-weight-light font-                size">First time?Click to Sign Up!</a>
+      </div>
+      <p class="mt-5 mb-3 text-muted">Powered by Vector Code</p>
+</form>
 ```
 
-The **Spring Login form** has the following relevant artifacts:
+Tale fom è contenuto all'interno della file login.html nella cartella *src/main/resources/templates*. Tale path è il percorso che viene utilizzato da Spring per servire i contenuti dinamici della web app.
 
-- *login* – the URL where the form is POSTed to trigger the authentication process
-- *username* – the username
-- *password* – the password
+<img src="C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\LoginPage.PNG" style="zoom:50%;" />
 
-The default URL where the Spring Login will POST to trigger the authentication process is */login,* which used to be */j_spring_security_check* before [Spring Security 4](https://docs.spring.io/spring-security/site/migrate/current/3-to-4/html5/migrate-3-to-4-xml.html#m3to4-xmlnamespace-form-login). We can use the *loginProcessingUrl* method to override this URL:
+
+
+A questo punto occorre chiedersi: "Dove avviene tutta la magia dell'autenticazione?". La risponda è semplice, occorre dichiarare un provider che si occupi di tutto  ciò:
 
 ```java
-http.
-  ...
-  .formLogin()
-  .loginProcessingUrl("/perform_login")
+@Bean
+public DaoAuthenticationProvider daoAuthenticationProvider() {
+
+		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+
+		provider.setPasswordEncoder(bCryptPasswordEncoder);
+		provider.setUserDetailsService(userService);
+
+		return provider;
+}
 ```
 
-After successfully logging in, we will be redirected to a page that by default is the root of the web application.
-
-We can override this via the *defaultSuccessUrl()* method:
+In questo caso viene detto al provider che l'autenticazione va effettuata usando il bcryptPasswordEncoder dichiarato precedentemente e lo user *userService*, una classe che si occupa esclusivamente di interagire con la entity *AppUser* e che implementa l'interfaccia *UserDetailService* che richiede di implementare il seguente metodo:
 
 ```java
-http.
-  ...
-  .formLogin()
-  .defaultSuccessUrl("/homePage")
+@Service
+public class UserService implements UserDetailsService {
+    ...
+        
+    // Login a user by username (email)
+	@Override
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException 	{
+		
+		if (email == null || email.isEmpty() || email.isBlank()) {
+			throw new UsernameNotFoundException("Email could not be null!");
+		}
+		
+		Optional<AppUser> useOptional = userRepository.findByEmail(email);
+		
+		if (useOptional.isPresent()) {
+			return useOptional.get();
+		} else {
+			throw new UsernameNotFoundException("Unable to find user with e: " + email);
+		}
+	}
+    
+    ...
 ```
 
-Similar to the Login Page, the Login Failure Page is autogenerated by Spring Security at */login?*error by default.
+Grazie a tale  override è possibile effettuare il login alla web app usando come username la mail dell'utente, che è univoca.
 
-To override this, we can use the *failureUrl()* method:
+#### Registrazione
 
-```java
-http.formLogin()
-  .failureUrl("/login.html?error=true")
-```
+Per quanto riguardo la registrazione si è adottato un meccanismo di verifica a 2 passaggi, di seguito sono elecanti i punti principali:
+
+- Registrazione su apposita pagina raggiugibile tramite endpoint "/registration" o tramite opportuna page di login.
+
+  <img src="C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\RegistrationForm.PNG" alt="RegistrationForm" style="zoom:50%;" />
+
+- Confema dell'avvenuta registrazione correttamete o incorrettamente.
+
+  <img src="C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\ErrorInRegistrationForm.PNG" alt="ErrorInRegistrationForm" style="zoom:50%;" />
+
+  Or:
+
+  <img src="C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\ConfirmRegistration.PNG" alt="ConfirmRegistration" style="zoom:50%;" />
+
+- Ricevimento della mail contenente il token nella url di conferma.
+
+  ![ConfirmationEmail](C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\ConfirmationEmail.png)
+
+
+
+
+
+- Messaggio di success:
+
+  <img src="C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\ConfirmEmailMessage.PNG" alt="ConfirmEmailMessage" style="zoom:50%;" />
+
+Il processo di registrazione segue dunque un percoso un po' più articolato rispetto all'autenticazione, per tale motivo si è provvisto a creare una rappresentazione grafica opportuna tramite sequece diagram.
+
+![RegistrationSequenceiagram](C:\Users\CalandraVM\Desktop\Prova Finale\RegistrationSequenceiagram.jpg)
+
+
+
+
 

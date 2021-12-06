@@ -18,12 +18,14 @@
         <div class="row">
             <div class="col">
 
-                <div class="row m-1">
-                    <h2>Dettaglio Attività</h2>
+                <div class="row">
+                    <div class="col-sm col-md-5 col-lg-5 m-1">
+                        <h2>Dettaglio Attività</h2>
+                    </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-sm col-md-5 col-lg-5 d-flex m-1">
+                    <div class="col-sm col-md-5 col-lg-5 d-flex m-1 d-flex flex-column">
                         <form action="#" th:if="${!iscritto}"
                             th:action="@{/dettaglioAttivita/subscribe?id=}+${activity.id}" method="post">
                             <button type="submit" class="btn btn-primary">Iscriviti</button>
@@ -35,7 +37,7 @@
                         </form>
                     </div>
 
-                    <div class="col-sm col-md-5 col-lg-5 d-flex flex-column m-1">
+                    <div class="col-sm col-md-5 col-lg-5 m-1 d-flex flex-column">
 
                         <form action="#" th:if="${organizer}"
                             th:action="@{/dettaglioAttivita/deleteActivity?id=}+${activity.id}" method="post">
@@ -50,10 +52,27 @@
 
                 </div>
 
-                <div class="row m-1">
-                    <div class="alert alert-primary d-inline-block" role="alert" th:if="${msg != null}">
-                        <p th:text="${msg}">Example text for confirmation page</p>
+                <div class="row">
+
+                    <div class="col-sm col-md-5 col-lg-5 m-1 d-flex flex-column">
+                        <div class="alert alert-primary" role="alert" th:if="${msg != null}">
+                            <p th:text="${msg}">Example text for confirmation page</p>
+                        </div>
+
+                        <div th:text="'Posti disponibili: ' + ${activity.maxNumberOfPartecipant}" class="text-monospace">
+                            Posti disponibili: 45
+                        </div>
+                        
+                        <div th:if="${err != null}">
+                            <p th:text="${err}">Example text for confirmation page</p>
+                        </div>
                     </div>
+
+                    <div class="col-sm col-md-5 col-lg-5  m-1">
+                        <img th:src="${activity.photosImagePath}" class="card-img-top"
+                            style="width: 100%; height: 10rem !important; object-fit: cover;" alt="...">
+                    </div>
+
                 </div>
             </div>
 

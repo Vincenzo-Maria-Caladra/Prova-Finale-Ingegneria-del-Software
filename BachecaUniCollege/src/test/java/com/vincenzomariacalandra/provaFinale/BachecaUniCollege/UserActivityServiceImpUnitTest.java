@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.lenient;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,16 +25,15 @@ import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.repository.UserAc
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.repository.UserRepository;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service.UserActivityService;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.ActivityCredits;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.ActivityType;
 
 /**
  * @author CalandraVM
  *
  */
 @ExtendWith(MockitoExtension.class)
-@RunWith(JUnitPlatform.class)
 public class UserActivityServiceImpUnitTest {
 	
-
 	@Mock
 	private UserActivityRepository userActivityRepository;
 	
@@ -55,10 +55,16 @@ public class UserActivityServiceImpUnitTest {
 	@Test
 	public void insertNewUserActivityTest() {
 		
-		long idUser = 0; 
-		long idActivity = 0; 
+		long idUser = 0;
+		long idActivity = 0;
 		boolean organizer = true;
+		List<UserActivity> list = new ArrayList<>();
+		
 		Activity activity = new Activity();
+		activity.setMaxNumberOfPartecipant(0);
+		activity.setUserActivities(list);
+		activity.setActivityType(ActivityType.VISITA_CULTURALE);
+		
 		AppUser appUser = new AppUser();
 		UserActivity userActivity = new UserActivity();
 		
@@ -81,6 +87,12 @@ public class UserActivityServiceImpUnitTest {
 		lenient().when(userActivityRepository.findByActivityAndOrganizer(activity, organizer)).thenReturn(Optional.of(userActivity));
 		assertEquals("An Organizer is already set for actvity with id:" + idActivity, service.insertNewUserActivity(idUser, idActivity, organizer));
 		
+		lenient().when(activityRepository.findById(idActivity)).thenReturn(Optional.of(activity));
+		lenient().when(userRepository.findById(idUser)).thenReturn(Optional.of(appUser));
+		lenient().when(userActivityRepository.findByActivityAndOrganizer(activity, organizer)).thenReturn(Optional.ofNullable(null));		
+		assertEquals("We are sorry, max number of users have been reached!", service.insertNewUserActivity(idUser, idActivity, organizer));
+		
+		activity.setMaxNumberOfPartecipant(1);
 		lenient().when(activityRepository.findById(idActivity)).thenReturn(Optional.of(activity));
 		lenient().when(userRepository.findById(idUser)).thenReturn(Optional.of(appUser));
 		lenient().when(userActivityRepository.findByActivityAndOrganizer(activity, organizer)).thenReturn(Optional.ofNullable(null));
@@ -185,6 +197,10 @@ public class UserActivityServiceImpUnitTest {
 		
 		Long userActivityId = 0L;
 		UserActivity userActivity = new UserActivity();
+		Activity activity = new Activity();
+		activity.setActivityType(ActivityType.VISITA_CULTURALE);
+		userActivity.setActivity(activity);
+		
 		lenient().when(userActivityRepository.findById(userActivityId)).thenReturn(Optional.of(userActivity));
 		assertNull(service.updateUserActivityState(userActivityId));
 		

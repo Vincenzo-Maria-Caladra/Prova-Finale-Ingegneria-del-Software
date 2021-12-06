@@ -25,7 +25,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  *
  */
 @ExtendWith(MockitoExtension.class)
-@RunWith(JUnitPlatform.class)
 public class ConfirmationTokenServiceImpUnitTest {
 	
 	@Mock
