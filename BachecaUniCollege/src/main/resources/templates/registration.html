@@ -15,18 +15,13 @@
 
 <body class="text-center">
 
-	<div class="text-left form-group d-inline-flex flex-column mt-5">
+	<div class="text-center form-group d-inline-flex flex-column mt-5">
 
-		<form action="#" th:action="@{/registration}" th:object="${registrationRequest}" method="post">
+		<form action="#" th:action="@{/registration}" th:object="${registrationRequest}" method="post"
+			class="text-left">
 
 			<div class"font-weight-bold">
 				<h3>Registrazione Bacheca UniCollege</h3>
-			</div>
-
-			<div class="form-group">
-				<div th:if="${error}" class="alert alert-danger d-inline-flex" role="alert">
-					<div th:text="${error}">ERRORE GRAVE</div>
-				</div>
 			</div>
 
 			<div class="form-group">
@@ -60,10 +55,21 @@
 				<input type="password" class="form-control" id="confirmPassword" th:field="*{confirmPassword}" required>
 			</div>
 
-			<button type="submit" onclick="ansValidation(event)" class="btn btn-primary">Registrati</button>
+			<div class="form-group">
+				<div th:if="${error}" class="alert alert-danger d-inline-flex" role="alert">
+					<div th:text="${error}">ERRORE GRAVE</div>
+				</div>
+			</div>
 
-			<p class="mt-5 mb-3 text-muted">Powered by Vector Code</p>
+			<div class="form-group  text-right">
+				<button type="submit" onclick="ansValidation(event)" class="btn btn-primary">Registrati</button>
+
+			</div>
+
 		</form>
+
+		<p class="mt-5 mb-3 text-muted text-lg-center text-md-center text-sm-center">Powered by Vector
+			Code</p>
 
 	</div>
 

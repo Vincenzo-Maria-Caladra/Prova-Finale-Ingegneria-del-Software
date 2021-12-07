@@ -79,8 +79,6 @@ crediti su una versione innovata del “creditometro”.
 Per il conseguimento di tali obiettivi è stato scelto come linguaggio di programmazione JAVA 11, ad oggi esiste un numero notevole di applicazioni e siti web che fanno uso di questo linguaggio. <br><br>Infatti JAVA  è un linguaggio ad alto livello orientato agli ogetti con una forte tipizzazione statica che si appoggia sulla omonima piattaforma, JVM, per questo motivo JAVA, che è linguaggio sia compilato che interpretato, riesce a girare su un numero considerevole di dispositivi differenti con prestazioni mediocri in termini di tempo di esecuzione e prestazioni.<br><br>
 Grazie a queste sue caratteristiche JAVA, nelle sue varie versioni, ha creato intorno a se nel corso degli anni un forte interesse da parte delle comunity di sviluppatori che hanno creato innumerevoli librerie e framework per questo linguaggio.<br><br>
 A tal proposito si è scelto di adottare Spring Boot come framework per lo sviluppo web della applicativo. Spring Boot è un evoluzione del già noto Spring, il framework di JAVA più utilizzato. Spring permette di programmare in maniera facile, veloce e sicura grazie ad una serie di librerie native che implementano le best practice per il soddisfacimento di vari use-case in termini di sicurezza e performance in grado di collabborare tra loro permettendo così allo sviluppatore di poter concentrare i propri sforzi non sulla tecnologia ma sulla logica di busisness che dovrà animare l'appliccativo sviluppato. <br><br>Spring Boot introduce un livello di astrazione ancora superiore, esso infatti implementa una gestione facilitata delle configurazioni delle singole librerie del framework grazie ad un file di configurazione globale e una gestione automatica delle compatibilità delle versioni tra le varie librerie del framework. L'uso commerciale di Spring è regolato dalla licenza Apache 2.0.
-
-
 <div style="text-align: justify">
     Per quanto riguarda la gestione del processo di build del progetto è stato scelto Maven. Maven è un framework dichiarativo di gestione del progetto che segue specifiche convenzioni per quanto riguarda la struttura dello stesso. Maven fa il build di un progetto usando il suo Project Object Model (POM) file e un insieme di plugin. Una volta che si familiarizza con un progetto Maven si è in grado di conoscere qualsiasi progetto Maven e ciò fa risparmiare molto tempo allo sviluppatore. In questo progetto sono state utilizzate principalmente le funzioni di gestione delle dependencies usate nel progetto, di build, di unit testing report e coverage. 
 </div>
@@ -117,7 +115,7 @@ Le esigenze di procetto hanno rivelato la necessità dell'implementazione di un 
 
 Per tale motivo si è deciso di utilizzare le librerie di Spring Security per l'implementazione di quanto citato sopra. 
 
-Quando si lavora con Spring Boot, lo *spring-boot-starter-security* ingloba tutte le dependecies necessarie per l'implementazione di un layer di security all'interno dell'applicativo, come ad esempio *spring-security-core*, *spring-security-web*, e spring-security-config.
+Quando si lavora con Spring Boot, lo *spring-boot-starter-security* ingloba tutte le dependecies necessarie per l'implementazione di un layer di security all'interno dell'applicativo, come ad esempio *spring-security-core*, *spring-security-web*, e spring-security-config. Nel file *pom.xml* troviamo:
 
 ```xml
 <dependency>
@@ -327,9 +325,99 @@ Per quanto riguardo la registrazione si è adottato un meccanismo di verifica a 
 
 Il processo di registrazione segue dunque un percoso un po' più articolato rispetto all'autenticazione, per tale motivo si è provvisto a creare una rappresentazione grafica opportuna tramite sequece diagram.
 
-![RegistrationSequenceiagram](C:\Users\CalandraVM\Desktop\Prova Finale\RegistrationSequenceiagram.jpg)
+![RegistrationSequenceiagram](C:\Users\CalandraVM\Desktop\Prova Finale\RegistrationSequenceiagram.svg)
+
+In questo modo è possibile avere una visione di insieme del processo di registrazione. Come si può notare i nomi dei processi sono stati  scelti in modo da poter essere auto esplicativi nella compresione di tale meccanismo. Unica nota che occorre fare è relativa agli ultimi step del processo.
+
+#### Mail Service
+
+Come si può ben notare negli ultimi passi del processo di registrazione viene fatto riferimento a due classi particolari, *EmailSender* e *JavaMailSender*, vediamole nel dettaglio. Tali classi forniscono l'implementazione Java di servizi di invio messaggi via mail, nel file *pom.xml* troviamo: 
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-mail</artifactId>
+</dependency>
+```
+
+Le interfaccie e le classi per tale supporto sono organizzate in questo modo:
+
+- **EmailSender interface**: è l'interfaccia di primo livello che integra le funionalità base per l'invio di emails. 
+- **JavaMailSender interface**: è la subinterface di *MailSender*. Supporta MIME messages ed è usata in congiunzione con la classe *MimeMessageHelper* per la creazione di un *MimeMessage*.
+- **MailSender class** è l'implementazione dell'interfaccia  *JavaMailSender*.
+- **SimpleMailMessage class**: viene utilizzata per creare email usuali, con campi di to, from, cc, oggetto e testo.
+- **MimeMessageHelper class**: è una classe di supporto per la creazione di  MIME messages, in particolar modo per l'inserimento di immagini come allegato e per l'inserimento di testo in formato html.
+
+Come accennato precedentemente, Spring Boot permette la configurazione di tali dependencies in un apposito file di properties chiamato *application.properties*, in esso troviamo:
+
+```in
+# For Google Mail Server
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=residenza.elis.bacheca@gmail.com
+spring.mail.password=elis1928
+spring.mail.properties.mail.smtp.ssl.trust=*
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+spring.mail.smtp.ssl.protocols=TLSv1.2
+```
+
+Quelle riportate sono le properties per configurare il server SMTP Gmail. Quello che resta da fare è dunque fornire l'implementazione dell'interfaccia *EmailSender*:
+
+```java
+@Service
+public class EmailService implements EmailSender {
+	
+	// SetUp Logger for logging email sending operation
+	private final static Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
+	
+	// List all service to use
+	private final JavaMailSender javaMailsender;
+	
+	public EmailService(JavaMailSender javaMailsender) {
+		super();
+		
+		this.javaMailsender = javaMailsender;
+	}
+
+```
+
+E effettuare l'override del metodo che conterrà la composizione del messaggio a nostro piacimento:
+
+```java
+// Send Email
+@Override
+@Async
+public void send(String to, String email) {
+
+    if (to == null || email == null || to.isBlank() || email.isBlank()) {
+        throw new IllegalArgumentException();
+
+    }
+
+    try {
+        // Util class to setup mail sender
+        MimeMessage mimeMessage = javaMailsender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+
+        // Fill the mail
+        helper.setText(email, true);
+        helper.setTo(to);
+        helper.setSubject("Bacheca UniCollege");
+        helper.setFrom("residenza.elis.bacheca@gmail.com");
+
+        // Send it
+        javaMailsender.send(mimeMessage);
 
 
+    } catch (Exception e) {
 
+        // Else logged the err and then trown a new IllegalStateEx
+        LOGGER.error("Failed to send the email", e);
+        throw new IllegalStateException("Failed to send the email");		
+    }
 
+}
+```
 
+Da notare che il metodo è stato etichettato con l'annotation @Async, in questo modo l'invio delle mail non rallenterà la web app e dunque la user experience.

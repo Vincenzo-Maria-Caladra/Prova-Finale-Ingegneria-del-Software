@@ -21,7 +21,7 @@ public class EmailService implements EmailSender {
 	// SetUp Logger for logging email sending operation
 	private final static Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
 	
-	// List all repository to use
+	// List all service to use
 	private final JavaMailSender javaMailsender;
 	
 	public EmailService(JavaMailSender javaMailsender) {
