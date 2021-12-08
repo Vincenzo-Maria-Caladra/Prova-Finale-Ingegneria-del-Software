@@ -77,8 +77,10 @@
                     <span th:text="${msg}" style="">Example text for confirmation page</span>
                 </div>
 
-                <div th:text="'Posti disponibili: ' + ${activity.maxNumberOfPartecipant}" class="text-monospace">
-                    Posti disponibili: 45
+                <div th:if="${postiDisponibili != null}">
+                    <div th:text="'Posti disponibili: ' + ${postiDisponibili}" class="text-monospace">
+                        Posti disponibili: 45
+                    </div>
                 </div>
 
                 <div th:if="${err != null}">
@@ -90,7 +92,6 @@
                     <caption>Lista Iscritti</caption>
 
                     <thead style="background-color: #0069d9; color: white;">
-
                         <tr>
                             <th scope="col">
                                 <p>#</p>
@@ -119,8 +120,7 @@
                                 <th scope="row">#</th>
                                 <td th:text="${userActivity.user.name}">Tb data</td>
                                 <td th:text="${userActivity.user.surname}">Tb data</td>
-
-                                <td th:if="${userActivity.organizer}">*</td>
+                                <td th:text="${userActivity.organizer}? 'organizer' : '' ">*</td>
 
                             </tr>
 

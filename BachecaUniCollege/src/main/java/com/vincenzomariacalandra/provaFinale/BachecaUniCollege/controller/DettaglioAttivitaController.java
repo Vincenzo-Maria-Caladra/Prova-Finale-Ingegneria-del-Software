@@ -51,7 +51,6 @@ public class DettaglioAttivitaController {
 		Optional<UserActivity> userOrganizerOptional = userActivityService.getUserActivityByUserAndActivityAndOrganizer(user.getEmail(), id, true);
 		Optional<UserActivity> userActivityOptional = userActivityService.getUserActivityByUserAndActivityAndOrganizer(user.getEmail(), id, false);
 		
-		
 		//Checks if  the logged AppUser is the organizer of the Activity
 		//Set a boolean model attribute "organizer"
 		if(userOrganizerOptional.isPresent()) {
@@ -77,14 +76,18 @@ public class DettaglioAttivitaController {
 			userActivityService.listAllUserOfOneActivity(activityOptional.get()).iterator().forEachRemaining(list::add);
 			model.addAttribute("userOfActivities", list);
 			
+			// Inserting number of available seats
+			int postiDisponibili = activityOptional.get().getMaxNumberOfPartecipant() - list.size();
+			model.addAttribute("postiDisponibili", postiDisponibili);
+			
 			//Checks if the logged AppUser is subcribe to the actvitity
 			//This will be use to show the subscribe and unsubscribe buttons 
 			if(userActivityOptional.isPresent()) {
 				model.addAttribute("iscritto", Boolean.TRUE);
-				model.addAttribute("msg", "Sei iscritto a questa attivit�!");
+				model.addAttribute("msg", "Sei iscritto a questa attività!");
 			} else {
 				model.addAttribute("iscritto", Boolean.FALSE);
-				model.addAttribute("msg", "Non sei iscritto a questa attivit�!");
+				model.addAttribute("msg", "Non sei iscritto a questa attività!");
 			}
 			
 		}

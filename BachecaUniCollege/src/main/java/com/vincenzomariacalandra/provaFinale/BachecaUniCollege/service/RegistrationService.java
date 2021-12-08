@@ -52,14 +52,14 @@ public class RegistrationService {
         // Check name field
         if (registrationRequest.getName() == null || registrationRequest.getName().trim().isBlank()) {
             return "Name could not be empty!";
-        } else if (patternFind(registrationRequest.getName().trim(), "[^A-Za-z]")) {
+        } else if (patternFind(registrationRequest.getName().trim(), "[^A-Za-z\\s']+$")) {
             return "Invalid characters in name!";
         }
 
         // Check surname field
         if (registrationRequest.getSurname() == null || registrationRequest.getSurname().trim().isBlank()) {
             return "Surname could not be empty!";
-        } else if (patternFind(registrationRequest.getSurname().trim(), "[^A-Za-z]")) {
+        } else if (patternFind(registrationRequest.getSurname().trim(), "[^A-Za-z\\s']+$")) {
             return "Invalid characters in surname!";
         }
 

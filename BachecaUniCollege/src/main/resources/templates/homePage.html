@@ -16,8 +16,8 @@
 <body>
 
 	<div class="container-fluid">
-		<div class="row">
-			<ul class="nav nav-tabs container-fluid">
+		<div class="container">
+			<ul class="nav nav-pills flex-column flex-sm-row">
 
 				<li class="nav-item"><a class="nav-link active" href="/homePage">Bacheca</a></li>
 				<li class="nav-item"><a class="nav-link" href="/nuovaAttivita">Crea
@@ -48,16 +48,20 @@
 					</div>
 				</li>
 
-				<li class="ml-auto">
-					<a class="btn btn-danger p-0 mt-2" href="/perform_logout">Logout</a>
+				<li class="nav-item ml-lg-auto ml-2">
+					<a class="btn btn-danger" href="/perform_logout">Logout</a>
 				</li>
 
 			</ul>
 		</div>
 
-		<div class="alert alert-primary m-2 row" role="alert" th:if="${msg != null}">
-			<p th:text="${msg}">Example text for confirmation page</p>
+		<div class="container">
+			<div class="alert alert-primary m-2 row" role="alert" th:if="${msg != null}">
+				<p th:text="${msg}">Example text for confirmation page</p>
+			</div>
+
 		</div>
+
 
 		<div class="container row m-3 justify-content-center">
 			<div th:each="activity : ${activities}">
@@ -68,18 +72,20 @@
 						<h5 class="card-title" th:text="${activity.title}">Card title</h5>
 						<p class="card-text">
 						<p>
-							Tipo: <span style="color: blue" th:text="${activity.activityType}">TYPE</span>
+							Tipo: <span style="color: blue" th:text="${activity.getActivityTypeString()}">TYPE</span>
 						</p>
 						<p>
-							Crediti: <span style="color: blue" th:text="${activity.activityCredits}">CREDITS</span>
+							Crediti: <span style="color: blue"
+								th:text="${activity.getActivityCreditsDouble()}">CREDITS</span>
 						</p>
 						<p>
-							Giorno: <span style="color: blue" th:text="${activity.startDate}">start Date</span>-<span
+							Giorno: <span style="color: blue" th:text="${activity.startDate}">start Date</span> - <span
 								style="color: blue" th:text="${activity.endDate}">end Date</span>
 						</p>
 						<p>
-							Ora: <span style="color: blue" th:text="${activity.startTime}">start Time</span>-<span
-								style="color: blue" th:text="${activity.endTime}">end time</span>
+							Ora: <span style="color: blue" th:text="${activity.getStartTimeString()}">start
+								Time</span>-<span style="color: blue" th:text="${activity.getEndTimeString()}">end
+								time</span>
 						</p>
 
 						<a th:href="@{/dettaglioAttivita?id=}+${activity.id}" class="btn btn-primary">Dettaglio

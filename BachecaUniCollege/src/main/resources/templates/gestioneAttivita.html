@@ -15,21 +15,19 @@
 <body>
 
 	<div class="container-fluid">
-		<div class="row">
-			<ul class="nav nav-tabs container-fluid">
+		<div class="container">
+			<ul class="nav nav-pills flex-column flex-sm-row">
 
-				<li class="nav-item"><a class="nav-link" href="/homePage">Bacheca</a>
-				</li>
-
+				<li class="nav-item"><a class="nav-link" href="/homePage">Bacheca</a></li>
 				<li class="nav-item"><a class="nav-link" href="/nuovaAttivita">Crea
 						Attività</a></li>
-
 				<li th:if="${#authentication.getPrincipal().isStudente()}" class="nav-item"><a class="nav-link"
 						href="/creditometro">Creditometro</a>
 				</li>
 
-				<li th:if="${#authentication.getPrincipal().isDirettore()}" class=" nav-item"><a class="nav-link active"
-						href="/gestioneAttivita">Gestione Attività</a></li>
+				<li th:if="${#authentication.getPrincipal().isDirettore()}" class="nav-item"><a class="nav-link active"
+						href="/gestioneAttivita">Gestione
+						Attività</a></li>
 
 				<li th:if="${#authentication.getPrincipal().isSegreteria()}" class=" nav-item"><a class="nav-link"
 						href="/homeSegreteria">Home
@@ -49,81 +47,83 @@
 					</div>
 				</li>
 
-				<li class="ml-auto">
-					<a class="btn btn-danger p-0 mt-2" href="/perform_logout">Logout</a>
+				<li class="nav-item ml-lg-auto ml-2">
+					<a class="btn btn-danger" href="/perform_logout">Logout</a>
 				</li>
 
 			</ul>
 		</div>
 
-		<div class="row m-3 text-center">
-			<table class="table table-striped table-hover col-5">
+		<div class="container">
+			<div class="table-responsive-sm">
+				<table class="table table-striped table-hover col-5 m-3 text-center">
 
-				<caption>Lista di attività da approvare</caption>
+					<caption>Lista di attività da approvare</caption>
 
-				<thead style="background-color: #0069d9; color: white;">
-
-					<tr>
-						<th scope="col">
-							<p>#</p>
-						</th>
-
-						<th scope="col">
-							<p>Title</p>
-						</th>
-
-						<th scope="col">
-							<p>Credits</p>
-						</th>
-
-						<th scope="col">
-							<p>Type</p>
-						</th>
-
-						<th scope="col">
-							<p>Date</p>
-						</th>
-
-						<th scope="col">
-							<p>Actions</p>
-						</th>
-
-					</tr>
-
-				</thead>
-
-
-				<tbody>
-					<div th:each="activity : ${activities}">
+					<thead style="background-color: #0069d9; color: white;">
 
 						<tr>
-							<th scope="row">#</th>
-							<td><a th:text="${activity.title}" th:href="@{/dettaglioAttivita?id=}+${activity.id}">Tb
-									data</a></td>
-							<td th:text="${activity.activityCredits}">Tb data</td>
-							<td th:text="${activity.activityType}">Tb data</td>
-							<td th:text="${activity.startDate}">Tb data</td>
+							<th scope="col">
+								<p>#</p>
+							</th>
 
-							<td class="justify-content-center">
+							<th scope="col">
+								<p>Title</p>
+							</th>
 
-								<form class="m-2" action="#"
-									th:action="@{/gestioneAttivita/acceptActivity?id=}+${activity.id}" method="post">
-									<button type="submit" class="btn btn-success btn-block">Accetta</button>
-								</form>
+							<th scope="col">
+								<p>Credits</p>
+							</th>
 
-								<form class="m-2" action="#"
-									th:action="@{/gestioneAttivita/deleteActivity?id=}+${activity.id}" method="post">
-									<button type="submit" class="btn btn-danger btn-block">Rifiuta</button>
-								</form>
+							<th scope="col">
+								<p>Type</p>
+							</th>
 
-							</td>
+							<th scope="col">
+								<p>Date</p>
+							</th>
+
+							<th scope="col">
+								<p>Actions</p>
+							</th>
+
 						</tr>
 
-					</div>
-				</tbody>
+					</thead>
 
 
-			</table>
+					<tbody>
+						<div th:each="activity : ${activities}">
+
+							<tr>
+								<th scope="row">#</th>
+								<td><a th:text="${activity.title}" th:href="@{/dettaglioAttivita?id=}+${activity.id}">Tb
+										data</a></td>
+								<td th:text="${activity.activityCredits}">Tb data</td>
+								<td th:text="${activity.activityType}">Tb data</td>
+								<td th:text="${activity.startDate}">Tb data</td>
+
+								<td class="justify-content-center">
+
+									<form class="m-2" action="#"
+										th:action="@{/gestioneAttivita/acceptActivity?id=}+${activity.id}"
+										method="post">
+										<button type="submit" class="btn btn-success btn-block">Accetta</button>
+									</form>
+
+									<form class="m-2" action="#"
+										th:action="@{/gestioneAttivita/deleteActivity?id=}+${activity.id}"
+										method="post">
+										<button type="submit" class="btn btn-danger btn-block">Rifiuta</button>
+									</form>
+
+								</td>
+							</tr>
+
+						</div>
+					</tbody>
+				</table>
+			</div>
 		</div>
 
 	</div>

@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.EmailSender;
@@ -15,6 +16,7 @@ import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.EmailSend
  * @author VectorCode
  *
  */
+@EnableAsync
 @Service
 public class EmailService implements EmailSender {
 	

@@ -116,7 +116,7 @@ public class Activity {
 	public Date getStartDate() {
 		return startDate;
 	}
-
+	
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
@@ -132,6 +132,10 @@ public class Activity {
 	public Date getStartTime() {
 		return startTime;
 	}
+	
+	public String getStartTimeString() {
+		return startTime.toString().substring(0, 5);
+	}
 
 	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
@@ -139,6 +143,10 @@ public class Activity {
 
 	public Date getEndTime() {
 		return endTime;
+	}
+	
+	public String getEndTimeString() {
+		return endTime.toString().substring(0, 5);
 	}
 
 	public void setEndTime(Date endTime) {
@@ -156,6 +164,10 @@ public class Activity {
 	public ActivityType getActivityType() {
 		return activityType;
 	}
+	
+	public String getActivityTypeString() {
+		return activityType.toString().replace("_", "\s");
+	}
 
 	public void setActivityType(ActivityType activityType) {
 		this.activityType = activityType;
@@ -163,6 +175,10 @@ public class Activity {
 
 	public ActivityCredits getActivityCredits() {
 		return activityCredits;
+	}
+	
+	public double getActivityCreditsDouble() {
+		return activityCredits.getVal();
 	}
 
 	public void setActivityCredits(ActivityCredits activityCredits) {

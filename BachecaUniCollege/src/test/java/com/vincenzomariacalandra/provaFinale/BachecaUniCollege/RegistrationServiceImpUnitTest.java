@@ -87,6 +87,13 @@ public class RegistrationServiceImpUnitTest {
 		registrationRequest.setName("Name0");
 		assertEquals("Invalid characters in name!", service.register(registrationRequest));
 
+		registrationRequest.setName("Name Secondname");
+		registrationRequest.setSurname(null);
+		assertEquals("Surname could not be empty!", service.register(registrationRequest));
+
+		registrationRequest.setName("Name Jr'Second Name");
+		registrationRequest.setSurname(null);
+		assertEquals("Surname could not be empty!", service.register(registrationRequest));
 
 		registrationRequest.setName("Name");
 		registrationRequest.setSurname(null);
@@ -98,6 +105,10 @@ public class RegistrationServiceImpUnitTest {
 		registrationRequest.setSurname("Surname9");
 		assertEquals("Invalid characters in surname!", service.register(registrationRequest));
 
+		registrationRequest.setSurname("Surname Second Sur'Name");
+		registrationRequest.setPassword(null);
+		assertEquals("Password could not be empty!", service.register(registrationRequest));
+		
 		registrationRequest.setSurname("Surname");
 		registrationRequest.setPassword(null);
 		assertEquals("Password could not be empty!", service.register(registrationRequest));
