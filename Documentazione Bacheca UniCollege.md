@@ -5,8 +5,7 @@
 <h4 style="text-align: center">Autore: Calandra Vincenzo Maria</h4>
 
 
-
-## Contesto
+<h2 id="Contesto">Contesto</h2>
 
 <div style="text-align: justify">
 La residenza universitaria “UniCollege” permette la permanenza nella struttura subordinata al
@@ -58,7 +57,7 @@ A fine primo semestre il tutor dovrà assicurasi che gli studenti a suo carico a
 crediti necessari per proseguire la permanenza in residenza.
 </div>
 
-## Soluzione
+<h2 id="Soluzione">Soluzione</h2>
 
 <div style="text-align: justify">
     Una possibile alternativa a tale processo può essere un sistema informatico interattivo che dia la
@@ -73,7 +72,7 @@ infine che permetta una gestione facilitata di inserimento di tutte le altre att
 crediti su una versione innovata del “creditometro”.
 </div>
 
-## Tecnologie
+<h2 id="Tecnologie">Tecnologie</h2>
 
 <div style="text-align: justify">
 Per il conseguimento di tali obiettivi è stato scelto come linguaggio di programmazione JAVA 11, ad oggi esiste un numero notevole di applicazioni e siti web che fanno uso di questo linguaggio. <br><br>Infatti JAVA  è un linguaggio ad alto livello orientato agli ogetti con una forte tipizzazione statica che si appoggia sulla omonima piattaforma, JVM, per questo motivo JAVA, che è linguaggio sia compilato che interpretato, riesce a girare su un numero considerevole di dispositivi differenti con prestazioni mediocri in termini di tempo di esecuzione e prestazioni.<br><br>
@@ -90,23 +89,21 @@ A tal proposito si è scelto di adottare Spring Boot come framework per lo svilu
 <div style="text-align: justify">
 	Infine si è scelto di effettuare il deploy dell'applicativo utilizzando la containerizzazione piuttosto che la virtualizzazione. La conteinerizzazione permette maggiore scalabilità e gestione delle risorse rispetto alla virtualizzazione, in questo modo ogni applicativo viene eseguito in processi che consumano il minimo delle risorse e che sono isolati tra loro. Inoltre la conteinerizzazione permette di impacchettare il software con tutte le sue dependencies e distribuirlo da un computing env ad un altro senza alcun problema di compatibilità. L'implementazione scelta, nonchè la più famosa e quella su cui si è poi basato lo standard di mercato,"containerd" della CNCF, è Docker. Docker Engine ha un piano di utilizzo gratuito ad uso personale o commerciale regolato dalla licenza Apache 2.0. </div>
 
-## Base di dati
+<h2 id=" BaseDiDati"> Base di dati</h2>
 
 Di seguito il database schema e il diagramma ER.
 
 ![RE DB schematic](C:\Users\CalandraVM\Desktop\Prova Finale\RE DB schematic.PNG)
 
 
+<h2 id=" UseCase">Use Case</h2>
 
-## Use Case
-
-![Use Case Diagram](C:\Users\CalandraVM\Desktop\Prova Finale\Use Case Diagram.jpg)
-
+![Use Case Diagram](C:\Users\CalandraVM\Desktop\Prova Finale\Use Case Diagram.drawio.svg)
 
 
+<h2 id="DettaglioImplementazioniTecnologiche"> Dettaglio implementazioni tecnologiche</h2>
 
-## Dettaglio implementazioni tecnologiche
-### Gestione Autenticazione e Autorizzazione
+<h3 id="GestioneAutenticazioneAutorizzazione">Gestione Autenticazione e Autorizzazione</h3>
 
 Le esigenze di procetto hanno rivelato la necessità dell'implementazione di un layer di security nella web application, in particolar modo è venuto fuori dalle analisi che:
 
@@ -162,7 +159,7 @@ Tale password encoder è poi inglobato nella configurazione globale di Spring Se
 
 BCrypt negli ultimi anni è diventato uno standard nell'hashing delle password, è basato sull'agoritmo blowfish ed aggiunge un salt ed un fattore di costo all'hashing, in questo modo è resistente ad attacchi di tipo *rainbow table*. Inoltre è una funzione adattiva, cioè la sua complessità aumenta con il numero di iterazione, per tale motivo è anche resistente ad attacchi di tipo *brute force*. Da una serie di crypto-analisi è venuto fuori che BCrypt è molto più complesso da "crakkare" rispetto a SHA-512, in quanto quest'ultimo è messo a dura prova dal calcolo parallelizzato e dall'utilizzo di GPU sempre più potenti a differenza di BCrypt che non subisce tali fattori.
 
-#### Autorizzazione
+<h4 id="Autorizzazione">Autorizzazione</h4>
 
 A questo punto possiamo procedere con il settaggio delle autorizzazioni sulle richieste ai vari endpoint. La configurazione base prevede l'accesso anonimo egli endpoint /, /login, /registration e /error. In questo modo gli utenti possono registrarsi e autenticarsi.
 
@@ -196,7 +193,7 @@ Inoltre si è ristretto l'accesso agli endpoint /homeDirettore e /gestioneAttivi
 .antMatchers("/homeSegreteria/**").hasAuthority("SEGRETERIA")
 ```
 
-#### Autenticazione
+<h4 id="Autenticazione">Autenticazione</h4>
 
 Tutti gli altri accessi al portale sono vincolati alla sola autenticazione tramite /login.
 
@@ -295,7 +292,7 @@ public class UserService implements UserDetailsService {
 
 Grazie a tale  override è possibile effettuare il login alla web app usando come username la mail dell'utente, che è univoca.
 
-#### Registrazione
+<h4 id="Registrazione">Registrazione</h4>
 
 Per quanto riguardo la registrazione si è adottato un meccanismo di verifica a 2 passaggi, di seguito sono elecanti i punti principali:
 
@@ -329,7 +326,7 @@ Il processo di registrazione segue dunque un percoso un po' più articolato risp
 
 In questo modo è possibile avere una visione di insieme del processo di registrazione. Come si può notare i nomi dei processi sono stati  scelti in modo da poter essere auto esplicativi nella compresione di tale meccanismo. Unica nota che occorre fare è relativa agli ultimi step del processo.
 
-#### Mail Service
+<h4 id="MailService">Mail Service</h4>
 
 Come si può ben notare negli ultimi passi del processo di registrazione viene fatto riferimento a due classi particolari, *EmailSender* e *JavaMailSender*, vediamole nel dettaglio. Tali classi forniscono l'implementazione Java di servizi di invio messaggi via mail, nel file *pom.xml* troviamo: 
 
@@ -350,7 +347,7 @@ Le interfaccie e le classi per tale supporto sono organizzate in questo modo:
 
 Come accennato precedentemente, Spring Boot permette la configurazione di tali dependencies in un apposito file di properties chiamato *application.properties*, in esso troviamo:
 
-```in
+```ini
 # For Google Mail Server
 spring.mail.host=smtp.gmail.com
 spring.mail.port=587
@@ -365,6 +362,7 @@ spring.mail.smtp.ssl.protocols=TLSv1.2
 Quelle riportate sono le properties per configurare il server SMTP Gmail. Quello che resta da fare è dunque fornire l'implementazione dell'interfaccia *EmailSender*:
 
 ```java
+@EnableAsync
 @Service
 public class EmailService implements EmailSender {
 	
@@ -421,3 +419,530 @@ public void send(String to, String email) {
 ```
 
 Da notare che il metodo è stato etichettato con l'annotation @Async, in questo modo l'invio delle mail non rallenterà la web app e dunque la user experience.
+
+<h3 id="Web"> Web </h3>
+
+<h4 id="SpringMVC">Spring MVC</h4>
+<div style="text-align: justify">
+    Spring MVC è il framework di Spring per lo sviluppo di web app. Proprio come suggerisce il suo nome segue il design pattern MVC e fa uso del <i>DispatcherServlet</i>. Il <i>DispatcherServlet</i> è una classe che agisce da front controller nell'architettura web, essa riceve le richieste in entratrata, converte i payload delle richieste con le rappresentazioni dei dati interne alla web app, manda le rappresentazioni dei dati ai model per successivi riprocessamenti e infine effettua il rendering delle view con i dati processati.
+</div>
+
+
+![The-Spring-MVC-architecture](C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\The-Spring-MVC-architecture.png)
+
+Più precisamente:
+
+- Il *model* layer si occupa delle strutture dati e della busisness logic della web app implementata nelle entities, nei repository e nei services.
+- Il *controller* layer si occupa di legare dati e template in modo che possano essere poi elaborati dal *view resolver*. 
+- Le *view* forniscono la rappresentazione grafica finale dei dati attraverso cui lo user può interagire.  
+
+![SpringMVC](C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\SpringMVC.webp)
+
+Ancora una volta, tale integrazione è possibile grazie alla seguente Spring Boot dependencies, esplicitata all'interno del file *pom.xml*:
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+```
+
+Le uniche configurazioni effettuate all'interno del file *application.properties* sono le seguenti:
+
+```ini
+#Configuration for conversion of date and time
+spring.mvc.format.date=yyyy-MM-dd
+spring.mvc.format.time=HH:mm:ss
+```
+
+In questo modo la web app utilizza una rappresentazione univoca globale di conversione delle date e delle ore, evitando così problemi di compatibilità.
+
+Un altro settaggio fine effettuato è il seguente:
+
+```java
+@Configuration
+public class MvcConfig implements WebMvcConfigurer {
+
+	// Configuration to expose filesystem directory where to store the imgs of the
+	// activity
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+
+        // reference dir name
+		registry.addResourceHandler("/activity-photos/**") 
+            // real path dir reference
+				.addResourceLocations("file:/tmp/activity-photos/"); 
+
+	}
+
+}
+```
+<div style="text-align: justify">
+    E' stata inserita una directory nel file system dove effettuare lo store delle immagini della bacheca ed è stata registrata come custom registry resource location. In questo modo Spring MVC può caricare da questa location le risorse e comporre correttamente le views. Notasi che la classe è stata etichettata con l'annotation <i>@Configuration</i>, in questo modo Spring Boot è in grado di riconoscere la configurazione ed effettuarne il bind con l'env. globale. Tale configurazione poteva essere fatta anche tramite file <i>application.properties</i> ma per maggiore chiarezza si è preferito procedere in manira classica.
+</div>
+
+<div style="text-align: justify">
+A questo punto possiamo passere al layer Controller, esso viene sviluppato all'interno del package <i>com.vincenzomariacalandra.provaFinale.BachecaUniCollege.controller</i>. Ogni classe al suo interno è una classe controller che mappa un apposito template contenuto all'interno della cartella <i>/BachecaUniCollege/src/main/resources/templates</i>. Per maggior rigore si è scelto chiamare di chiamare ogni template con lo stesso nome della corrispettiva classe controller.
+</div>
+
+Ogni classe controller ha dunque la seguente struttura:
+
+```java
+@Controller
+@RequestMapping("/homeBacheca")
+public class HomeBachecaController {
+	
+	// All Services required
+	private final ActivityService activityService;
+	
+	@Autowired
+	public HomeBachecaController(ActivityService activityService) {
+		this.activityService = activityService;
+	}
+	
+	// Initialization of homePage 
+	@GetMapping
+	public String listAllActivities(Model model) {
+		
+		//Add list attribute to the model
+		ArrayList<Activity> list = new ArrayList<>();
+		activityService.getActivitiesApproved().iterator().forEachRemaining(list::add);
+		model.addAttribute("activities", list);
+		
+		return "homeBacheca";
+	}
+	
+}
+```
+
+- L'annotation *@Controller* serve a mappare la classe all'interno di Spring come custom controller.
+- L'annotation @RequestMapping specifica l'endpoint da mappare.
+- L'annotation @GetMapping specifica il metodo da chiamare quando viene effettuata una GET.
+- L'annotation @PostMapping specifica il metodo da chiamare quando viene effettuata una POST.
+- In alternativa alle annotation @Get.. e @Post è possibile usare *@RequestMapping(path = "/path", method = RequestMethod.GET)* prima di ogni metodo.
+- Ogni metodo del controller ritorna sempre una stringa che rappresenta il template html corrispondente o un altro endpoint.
+- E' possibile specificare che un endpoint richiede dei parametri nella URL tramite *@RequestParam("")*
+
+```java
+// Update Activity handler
+@RequestMapping(path = "/updateTertulia", method = RequestMethod.GET)
+public String updateShowFormTertuliaATema(@RequestParam("id") Long id, ...)
+```
+
+- E' possibile specificare degli attributi di modello tramite l'annotatio *@ModelAttribute*
+
+```java
+// Update activity post handler
+@RequestMapping(path = "/updateTertulia", method = RequestMethod.POST)
+public String updateTertuliaATema(@ModelAttribute Activity activity, ... )
+```
+
+Inoltre tutti gli endpoint sono stati documentati meglio all'interno della relative classi.
+
+<h4 id="Templating">Templating</h4>
+
+Come motore di templating dinamico delle view è stato scelto **Thymeleaf**. Il punto di forza principale di Thymeleaf è quello di usare un linguaggio di template naturale. 
+
+Con le dependencies per SpringBoot sono possibili diverse integrazioni, Thymeleaf risulta ideale per il moderno sviluppo web HTML5 JVM e in particolar modo per essere integrato con <i>Spring MVC</i>. 
+
+```xml
+<!-- Framework to template dinamically html files -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-thymeleaf</artifactId>
+</dependency>
+
+<dependency>
+    <groupId>org.thymeleaf.extras</groupId>
+    <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+</dependency>
+```
+
+Le uniche configurazioni apportate sono di utilities e non introducono sostanziali implementazioni, inoltre sono sono auto esplicative:
+
+```ini
+# Thymeleaf settings for templatins HTML files
+spring.thymeleaf.enabled=true 
+spring.thymeleaf.cache=false
+spring.thymeleaf.prefix=classpath:/templates/
+spring.thymeleaf.suffix=.html
+```
+
+Per attivare l'integrazione occore importare i namespace nel seguente modo:
+
+```html
+<!doctype html>
+<html lang="en" 
+    xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    ...
+```
+
+Tra le integrazioni più importanti vi è quella della security. Tali dependencies introducono gli <i>Spring Security Dialect</i> che ci permettono di  mostrare i contenuti all'interno della view in base al ROLE dell'utente, ai sui permessi o ad altre espressioni di sicurezza specifiche di Spring.
+
+Un banale utilizzo che ne è stato fatto nel progetto è il seguente:
+
+```html
+<li th:if="${#authentication.getPrincipal().isDirettore()}" class=" nav-item"><a class="nav-link" href="/gestioneAttivita">Gestione Attività</a></li>
+```
+
+- Il tag <i>th:if</i> permette l'introduzione di una condizione da valutare prima di renderizzare il \<div>.
+- La stringa <i>"${...}"</i> comunica al tag che il contenuto della stringa è una variabile.
+- L'oggetto identificato con <i>#authentication</i> viene introdotto con <i>thymeleaf-extras-springsecurity5</i> e rappresenta lo Spring Security authentication object.
+
+Altri tag utilizzati sono stati:
+
+- <i>th:text=""</i> permette la sostituzione del testo "Example..." con quello contenuto all'interno della varibile <i>"${msg}"</i>.
+
+```html
+<p th:text="${msg}">Example text for confirmation page</p>
+```
+
+- <i>th:href=""</i> permette l'inserimento di hyperlink e <i>@{...}</i> suggerisce che la stringa venga valutata come URL
+
+```html
+<a th:href="@{/dettaglioAttivita?id=}+${activity.id}" class="btn btn-primary">Dettaglio Attività</a>
+```
+
+Per una totale comprensione dei tag introdotti si rimanda alla documentazione ufficiale al seguente [link](https://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html) e alla repository di <i>[thymeleaf-extras-springsecurity5](https://github.com/thymeleaf/thymeleaf-extras-springsecurity)</i>.
+
+<h4 id="SalvataggioImmagini">Salvataggio immagini</h4>
+
+<div style="text-align: justify">
+Come già visto in precedenza si è provvisto a creare un apposita configurazione per permettere alla classe <i>NuovaAttivitaController</i> di salvare i file img in un apposita directory nel file system e successivamente permettere così alle view di poterle renderizzare. 
+</div>
+
+
+Il processo di salvataggio delle immagini avviene in 3 fasi:
+
+- Caricamento del file tramite apposito field nel form di creazione attività. 
+
+<img src="C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\NuovaAttivita.PNG" style="zoom:50%;" />
+
+```html
+<form action="#" th:action="@{/nuovaAttivita}" th:object="${activity}" method="post"
+	enctype="multipart/form-data">
+...
+...
+	<div class="form-group">
+    	<label for="fileImage">Foto per bacheca</label> 
+    	<input class="form-control" id="fileImage" name="fileImage" type="file" 					accept="image/png, image/jpeg" required></input>
+	</div>
+...
+```
+
+Viene specificato che l'encoding sarà di tipo *multipart* e *form-data* e che il file caricato dovrà essere con estensione *png* o *jpg*.
+
+- Il file viene recepito dal'apposito controller che procede alla validazione dell'activity.
+
+```java
+@RequestMapping(path = "/nuovaAttivita", method = RequestMethod.POST)
+public String addActivity (@Valid @ModelAttribute("activity") Activity activity, @RequestParam(name = "fileImage", required = false) MultipartFile multipartFile, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes)
+    throws IOException { 
+    
+    if (multipartFile != null) {
+
+        //Error checking business constraints
+        String err = processing.multipartProcessing(multipartFile, activity);
+	...
+```
+
+- *multipartProcessing(...)* è un metodo di utility che gestisce il salvataggio delle imgs nel file system e viene implementato nella classe *MultipartProcessingUtility*, vediamolo nel dettaglio.
+
+```java
+@Component
+public class MultipartProcessingUtility {
+	
+	// All Services required
+	private final ActivityService activityService;
+	
+	private static String ROOT_UPLOAD_DIR = "/tmp/activity-photos/";
+	
+	@Autowired
+	public MultipartProcessingUtility(ActivityService activityService) {
+		this.activityService = activityService;
+	}
+	
+	public String multipartProcessing(MultipartFile multipartFile, Activity activity) throws IOException {
+		
+		// Generation of filename
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+               
+        
+        // Insertion of filename in Acticity entity
+        activity.setPhoto(fileName);
+    
+    
+    	// Saving Activity in DB
+    	String err = activityService.addNewActivity(activity);
+    	
+    	if (err != null) {
+    		
+        	System.out.println(err);
+        	
+        	return err;
+    	}
+    	
+    	// Checks if ROOT_UPLOAD_DIR exist
+    	if (!Files.exists(Paths.get(ROOT_UPLOAD_DIR))) {
+    		Files.createDirectory(Paths.get(ROOT_UPLOAD_DIR));
+    	}
+
+        // Generation of path to the directory where to store the photo 
+        String uploadDir = ROOT_UPLOAD_DIR + activity.getId();
+        
+        Path uploadPath = Paths.get(uploadDir);
+        
+        // Checks if folder exist
+        if (!Files.exists(uploadPath)) {
+        	Files.createDirectory(uploadPath);
+        }
+        
+        // Saving file in the correct dir
+        try (InputStream inputStream = multipartFile.getInputStream()) {
+        	
+        	Path filePath = uploadPath.resolve(fileName);
+        	
+        	Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+		
+        } catch (IOException ioe) {
+			throw new IOException("Could not save the file!");
+		}
+        
+        return null;
+		
+	}
+
+}
+```
+<ul>
+    <ul>
+        <li>In primis viene generato il nome del file a partire dall'originale.</li>
+        <li>A questo punto viene salvato il nome del file nella entity che rappresenta tale activity.</li>
+        <li>Viene controllata se la root dir dove varranno salvate le immagini esiste già e viene creata se non esiste.</li>
+        <li>Viene generato il path della dir dove effettuare lo store del file img e viene creata la dir se non esiste.</li>
+        <li>A questo punto viene scritto il file img all'interno della dir aprendo uno stream dati.</li>
+    </ul>
+</ul>
+Le configurazione apportate per la gestione delle richieste <i>HTTP multipart</i> sono le seguenti:
+
+```ini
+#MultiPartFile COnfiguration to store Images
+spring.servlet.multipart.max-file-size=50MB
+spring.servlet.multipart.max-request-size=50MB
+spring.servlet.multipart.enabled=true
+```
+
+<h3 id="Testing">Testing</h3>
+<div style="text-align: justify">
+Il testing è stato un punto chiave nello sviluppo della web app, infatti si è evoluto con essa. In origine, quando ancora l'interfaccia grafica non era stata sviluppata e l'app comunica con l'esterno tramite un RESTController, la metologia di testing principale è stata relegata all'utilizzo di software come Postman.
+</div>
+
+<div style="text-align: justify">
+Postman è una piattaforma API per la costruzione e l'utilizzo di API. Postman semplifica ogni fase del ciclo di vita delle API e snellisce la collaborazione in modo da poter creare API migliori, più velocemente. 
+</div>
+
+
+![Postman](C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\Postman.PNG)
+
+In questo modo si è potuto si da subito constatare la presenza di errori nello sviluppo della logica di business.
+
+<div style="text-align: justify">
+Congiuntamente a quanto riportato sopra si è proceduto allo sviluppo di apposite unità di testing per le singole classi che compongo la logica di business, tutte contenute all'interno del package <i>com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service</i>. Tali unità di testing fanno uso di <i>JUnit5 e Mockito</i> piuttosto che utilizzare il supporto nativo offerto da <i>SpringBoot starter test</i>. Tale scelta è  motivata dal fatto che SpringBoot appesantisce di molto l'elaborazione degli unit test da pochi millisecondi a decine di secondi ostacolando così il flusso <i><b>test -> sviluppo -> test</b></i> promosso dalla logica <i><b> Test Driven Development, TDD</b></i>.
+</div>
+Per fare ciò è stato necessario effettuare un esclusione di particolari librerie e import esterne di altre, di seguito quanto detto:
+
+```xml
+<!-- For Testing purpose -->
+<!-- exclude junit 4 and Mockito-->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-test</artifactId>
+    <scope>test</scope>
+    <exclusions>
+        <exclusion>
+            <groupId>org.junit</groupId>
+            <artifactId>junit</artifactId>
+        </exclusion>
+        <exclusion>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+        </exclusion>
+        <exclusion>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+        </exclusion>
+    </exclusions>
+</dependency>
+
+<!-- junit 5 -->
+<dependency>
+    <groupId>org.junit.jupiter</groupId>
+    <artifactId>junit-jupiter-engine</artifactId>
+    <version>${junit-jupiter.version}</version>
+    <scope>test</scope>
+</dependency>
+
+<!-- Mockito dependecy -->
+<dependency>
+    <groupId>org.mockito</groupId>
+    <artifactId>mockito-core</artifactId>
+    <version>2.21.0</version>
+</dependency>
+
+<dependency>
+    <groupId>org.mockito</groupId>
+    <artifactId>mockito-junit-jupiter</artifactId>
+    <version>2.23.0</version>
+    <scope>test</scope>
+</dependency>
+
+<!-- Old vintage -->
+<dependency>
+    <groupId>org.junit.platform</groupId>
+    <artifactId>junit-platform-runner</artifactId>
+    <version>1.2.0</version>
+    <scope>test</scope>
+</dependency>
+<dependency>
+    <groupId>org.junit.vintage</groupId>
+    <artifactId>junit-vintage-engine</artifactId>
+    <version>5.2.0</version>
+    <scope>test</scope>
+</dependency>
+```
+
+Le classi di unit test hanno tutte una struttura così fatta:
+
+```java
+@ExtendWith(MockitoExtension.class)
+public class ActivityServiceImplUnitTest {
+    
+    @Mock
+	private ActivityRepository activityRepository;
+
+    @Mock
+	private UserService userService;
+
+    @Mock
+	private EmailSender emailSender;
+
+    private ActivityService service;
+    
+    @BeforeEach
+    public void setUp() {
+    	
+    	service = new ActivityService(activityRepository, emailSender, userService);
+    	
+    }
+
+	@Test
+	public void contextLoads() throws Exception {
+		assertNotNull(service);
+	}
+...
+```
+
+Il nome della classe fa riferimento alla classe "bersaglio" dello unit test.
+
+La classe é etichettata con l'annotation <i>@ExtendWith(MockitoExtension.class)</i>, utilizzata per abilitare Mockito, e opzionalmente con l'annotation <i>@RunWith(JUnitPlatform.class)</i> utilizzata per runnare la classe di unit test singorlamente.
+
+Ogni attributo della classe di test echittato con l'annotation <i>@Mock</i> verrà fatto diventare una classe fantoccio che restituira <i>null</i> ogni volta che verrà chiamato un suo metodo dalla classe che subisce il test salvo particolari casi in cui chi scrive il test richiede che tale comportamento venga sovrascritto da un altro.
+
+Il metodo etichetta con l'annotation <i>@BeforeEach</i> verrà chiamato prima di ogni metodo etichetta con l'annotation <i>@Test</i>, quest ultimi contengono appunto i test che verrano svolti sul metodo della classe bersaglio.
+
+ ```java
+ @Test
+ public void deleteActivityTest() {
+ 
+     Random rand = new Random();
+     Long id = rand.nextLong();
+ 
+     Activity activity = new Activity();
+     Optional<Activity> optional = Optional.of(activity);
+ 
+     reset(activityRepository);
+ 
+     lenient().when(activityRepository.findById(id)).thenReturn(optional);
+ 
+     assertNull(service.deleteActivity(id));
+     verify(activityRepository, VerificationModeFactory.times(1)).findById(id);
+ 
+     reset(activityRepository);
+     lenient().when(activityRepository.findById(null)).thenReturn(optional);
+     assertEquals("Activity id could not be null!", service.deleteActivity(null));
+ }
+ ```
+
+I punti salienti sono i seguenti:
+
+- Il metodo <i>reset(activityRepository)</i> si occupa resettare il mock da eventuali override di comportamenti precedenti e di azzerarne il numero di istanze.
+- Il metodo <i>lenient().when(activityRepository.findById(id)).thenReturn(optional);</i> si occupa di fare appunto l'override del comportamento del metodo findById(...) della classe fantoccio.
+- Infine, ma non per ultimo, il metodo <i>assertNull(service.deleteActivity(id));</i> si occupa di effetuare il test sul metodo della classe bersaglio, in questo caso verifica se ritorna valore nullo.
+- Il metodo <i>verify(activityRepository, VerificationModeFactory.times(1)).findById(id);</i> verifica che il metodo sia stato chiamato correttamente.
+
+I risultati ottenuti grazie a questa strategia di testing sono valutabili in termini di velocità di verifica e destrezza, infatti hanno permesso di velocizzare lo sviluppo e la risoluzione di errori prima che l'utente finale possa averli potuti sperimentare durante l'utilizzo del prodotto causando così disagio e insoddisfazione. 
+
+Di seguito i risultati ottenuti:
+
+![TestingJUnit](C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\TestingJUnit.PNG)
+
+Proseguendo, implementando l'interfaccia grafica è stato possibile effettuare i primi test di **<i>workflow</i>**, ovvero:
+
+- Testare il flusso di lavoro end-to-end che portano l'utente attraverso una serie di pagine web da completare.
+- Testare gli scenari negativi, in modo che quando un utente esegue  un passo inaspettato nella vostra web app venga mostrato un  messaggio di errore o un aiuto appropriato.
+
+La conclusione di tale test ha portato alla conclusione che il prodotto ottenuto rispecchia le richieste dei futuri utilizzatori.
+
+Si è poi passati ai test di **usabilità**. I test di usabilità sono una parte vitale di qualsiasi  progetto web. Può essere effettuato da testers o da un piccolo gruppo di utenti facenti parte del target finale dell'applicazione web. 
+
+- Testata la navigazione del sito: Menu, pulsanti o link a diverse pagine del tuo sito dovrebbero essere facilmente visibili e coerenti su tutte le pagine web.
+-  Testato il contenuto: Il contenuto dovrebbe essere leggibile senza errori di ortografia o grammatica.    Le immagini, se presenti, dovrebbero contenere un testo "alt".
+
+Il risultato di tale test, effettuato su 1/3 della popolazione finale che utilizzerà l'app, ha permesso la risoluzione di svariati problemi inosservabili all'occhio dello sviluppatore emigliorando così la qualità del prodotto finale.
+
+Continuando, si è passati ai test di **compatibilità**. I test di compatibilità assicurano che la web app venga visualizzata correttamente su diversi dispositivi. Questo include: 
+
+- Test di compatibilità del browser: la stessa pagina in diversi browser venga visualizzata in ugual modo.  
+- Test di compatibilità con i browser mobili. Il rendering del layout è differente da dispositivo a dispositivo.
+
+Di seguito i risultati ottenuti:
+
+- Explorer
+
+<img src="C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\Explorer.PNG" alt="Explorer" style="zoom:50%;" />
+
+- Edge
+
+<img src="C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\Edge.PNG" alt="Edge" style="zoom:50%;" />
+
+- Firefox
+
+<img src="C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\Firefox.png" alt="Firefox" style="zoom:50%;" />
+
+
+
+- Android - Browser Opera
+
+<img src="C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\photo5883970862284127955.jpg" alt="photo5883970862284127955" style="zoom:50%;" />
+
+I risultati sono il linea rispetto a quanto ci si aspettava, minime differenze tra i browser sono dovute alle differenti condizioni di zoom di default.
+
+Infine sono stati effetuati dei test sull'infrattura cloud per testarne la resistenza minima ad attacchi di tipo DDoS. Il cloud provider, OVH, ha immediatamente provvisto a deviare il traffico sull'infrastruttura di mitigazione notificando l'utente dell'avvenuto attacco.
+
+![DDoS](C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\DDoS.PNG)
+
+<h3 id="LoggingEMonitoring">Logging e Monitoring</h3>
+
+
+
+<h3 id="DeployEInstallazione">Deploy e Installazione</h4>
+
+
+
+<h3 id="ClassDiagram">Class Diagram</h3>
+
+Di seguito viene riportato il class diagram del progetto per avere una visione complessiva di esso:
+
+<img src="C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\BachecaUniCollege.umlcd.png" style="zoom: 200%;" />

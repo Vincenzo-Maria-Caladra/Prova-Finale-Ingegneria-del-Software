@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/homeTutor/**").hasAuthority("TUTOR")
 				.antMatchers("/homeSegreteria/**").hasAuthority("SEGRETERIA")
 				.anyRequest().authenticated()
-				.and().formLogin().loginPage("/login").defaultSuccessUrl("/homePage", true)
+				.and().formLogin().loginPage("/login").defaultSuccessUrl("/homeBacheca", true)
 				.failureUrl("/login?error=true")
 				.and().logout()
 				.logoutSuccessUrl("/")

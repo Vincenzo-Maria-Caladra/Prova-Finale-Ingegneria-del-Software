@@ -70,7 +70,7 @@
 		</dependency>
 
 		<!-- For Testing purpose -->
-		<!-- exclude junit 4 -->
+		<!-- exclude junit 4 and Mockito-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -100,7 +100,6 @@
 		</dependency>
 
 		<!-- Mockito dependecy -->
-
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
@@ -115,7 +114,6 @@
 		</dependency>
 
 		<!-- Old vintage -->
-
 		<dependency>
 			<groupId>org.junit.platform</groupId>
 			<artifactId>junit-platform-runner</artifactId>
@@ -150,7 +148,6 @@
 
 		<!-- Framework to validate inputs -->
 		<!-- test scoped -->
-
 		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>

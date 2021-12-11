@@ -166,7 +166,7 @@ public class Activity {
 	}
 	
 	public String getActivityTypeString() {
-		return activityType.toString().replace("_", "\s");
+		return activityType.toString().replace("_", " ");
 	}
 
 	public void setActivityType(ActivityType activityType) {

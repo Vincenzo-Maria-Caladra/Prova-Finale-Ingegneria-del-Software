@@ -16,18 +16,18 @@ import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service.ActivityS
  *
  */
 @Controller
-@RequestMapping("/homePage")
-public class HomePageController {
+@RequestMapping("/homeBacheca")
+public class HomeBachecaController {
 	
 	// All Services required
 	private final ActivityService activityService;
 	
 	@Autowired
-	public HomePageController(ActivityService activityService) {
+	public HomeBachecaController(ActivityService activityService) {
 		this.activityService = activityService;
 	}
 	
-	// Initialization of homePage 
+	// Initialization of homeBacheca 
 	@GetMapping
 	public String listAllActivities(Model model) {
 		
@@ -36,7 +36,7 @@ public class HomePageController {
 		activityService.getActivitiesApproved().iterator().forEachRemaining(list::add);
 		model.addAttribute("activities", list);
 		
-		return "homePage";
+		return "homeBacheca";
 	}
 	
 }

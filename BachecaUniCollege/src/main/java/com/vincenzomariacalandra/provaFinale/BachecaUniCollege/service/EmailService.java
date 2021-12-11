@@ -56,7 +56,6 @@ public class EmailService implements EmailSender {
 			// Send it
 			javaMailsender.send(mimeMessage);
 			
-			
 		} catch (Exception e) {
 			
 			// Else logged the err and then trown a new IllegalStateEx

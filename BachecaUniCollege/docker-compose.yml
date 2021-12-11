@@ -2,6 +2,8 @@ version: '3'
 services:
   bacheca-uni-college:
     image: "bacheca-uni-college"
+    volumes:
+      - BachecaUniCollege-data:/tmp/activity-photos
     ports:
       - "80:8080"
     networks:
@@ -17,5 +19,14 @@ services:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=database
 
+volumes:
+  BachecaUniCollege-data:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /tmp
+
 networks:
   bacheca-uni-college-mysqldb-network: null
+

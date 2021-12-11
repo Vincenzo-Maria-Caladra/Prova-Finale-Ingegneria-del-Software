@@ -28,24 +28,25 @@ import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.entity.AppUser;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service.ActivityService;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service.UserActivityService;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.ActivityType;
+import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.utility.MultipartProcessingUtility;
 
 /**
  * @author VectorCode
  *
  */
 @Controller
-public class NewActivityController {
+public class NuovaAttivitaController {
 	
 	// All Services required
 	private final ActivityService activityService;
 	private final UserActivityService userActivityService;
-	
-	private String ROOT_UPLOAD_DIR = "/tmp/activity-photos/";
+	private final MultipartProcessingUtility processing;
 	
 	@Autowired
-	public NewActivityController(ActivityService activityService, UserActivityService userActivityService) {
+	public NuovaAttivitaController(ActivityService activityService, UserActivityService userActivityService, MultipartProcessingUtility multipartProcessing) {
 		this.activityService = activityService;
 		this.userActivityService = userActivityService;
+		this.processing = multipartProcessing;
 	}
 	
 	// Initialization newActivity page
@@ -60,7 +61,7 @@ public class NewActivityController {
 			model.addAttribute("books", activityService.getAllBooks());
 		}
 		
-		return "creaAttivita";
+		return "nuovaAttivita";
 	}
 	
 	//Nuova Attività  handler
@@ -72,14 +73,14 @@ public class NewActivityController {
 		if (multipartFile != null) {
 			
 			//Error checking business constraints
-			String err = multipartProcessing(multipartFile, activity);
+			String err = processing.multipartProcessing(multipartFile, activity);
 			
         	if (err != null) {
         		
         		//Adding error to the model
         		redirectAttributes.addFlashAttribute("error", err);	
         		
-        		//Redirect to correct pane of creaAttivita.html
+        		//Redirect to correct pane of nuovaAttivita.html
         		if (activity.getActivityType() == ActivityType.TERTULIA_A_TEMA) {
         			redirectAttributes.addFlashAttribute("panel", "TERTULIA_A_TEMA");
         		} else {
@@ -99,7 +100,7 @@ public class NewActivityController {
         	
         	if (err != null) {
         		
-        		//Redirect to correct pane of creaAttivita.html
+        		//Redirect to correct pane of nuovaAttivita.html
         		//Adding error to the model
         		redirectAttributes.addFlashAttribute("error", err);	
         		redirectAttributes.addFlashAttribute("panel", "LIBRO");	
@@ -121,69 +122,17 @@ public class NewActivityController {
 		// Check for errors
 		if (err != null) {
 			
-    		//Redirect homePage.html
+    		//Redirect homeBacheca.html
     		//Adding error to the model
     		redirectAttributes.addFlashAttribute("error", err);	
-    		return "redirect:/homePage"; 	
+    		return "redirect:/homeBacheca"; 	
 			
 		}
 		
 		// Adding default success message
 		redirectAttributes.addFlashAttribute("msg", "Attività aggiunta con successo! Attendi che venga approvata!");	
 		
-		return "redirect:/homePage";
-	}
-
-	private String multipartProcessing(MultipartFile multipartFile, Activity activity) throws IOException {
-		
-		// Generation of filename
-        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-               
-        
-        // Insertion of filename in Acticity entity
-        activity.setPhoto(fileName);
-    
-    
-    	// Saving Activity in DB
-    	String err = activityService.addNewActivity(activity);
-    	
-    	if (err != null) {
-    		
-        	System.out.println(err);
-        	
-        	return err;
-    	}
-    	
-    	// Checks if ROOT_UPLOAD_DIR exist
-    	if (!Files.exists(Paths.get(ROOT_UPLOAD_DIR))) {
-    		Files.createDirectory(Paths.get(ROOT_UPLOAD_DIR));
-    	}
-
-        // Generation of path to the directory where to store the photo 
-        String uploadDir = ROOT_UPLOAD_DIR + activity.getId();
-        
-        Path uploadPath = Paths.get(uploadDir);
-        System.out.println(uploadPath.getFileName());
-        System.out.println(uploadPath.toString());
-        
-        // Checks if folder exist
-        if (!Files.exists(uploadPath)) {
-        	Files.createDirectory(uploadPath);
-        }
-        
-        // Saving file in the correct dir
-        try (InputStream inputStream = multipartFile.getInputStream()) {
-        	
-        	Path filePath = uploadPath.resolve(fileName);
-        	
-        	Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-		
-        } catch (IOException ioe) {
-			throw new IOException("Could not save the file!");
-		}
-        
-        return null;
-		
+		return "redirect:/homeBacheca";
 	}
 	
 	@RequestMapping(path = "/nuovaAttivita/libro", method = RequestMethod.POST)
@@ -197,7 +146,7 @@ public class NewActivityController {
 		
     	if (err != null) {
     		
-    		//Redirect to correct pane of creaAttivita.html
+    		//Redirect to correct pane of nuovaAttivita.html
     		//Adding error to the model
     		redirectAttributes.addFlashAttribute("error", err);	
     		redirectAttributes.addFlashAttribute("panel", "LIBRO");	
@@ -209,6 +158,6 @@ public class NewActivityController {
     	// Adding default success message
 		redirectAttributes.addFlashAttribute("msg", "Attività aggiunta con successo! Attendi che venga approvata!");	
 		
-		return "redirect:/homePage";
+		return "redirect:/homeBacheca";
 	}
 }
