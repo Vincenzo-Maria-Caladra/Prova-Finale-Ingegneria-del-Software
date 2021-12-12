@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-	<title>Home Page</title>
+	<title>Bacheca UniCollege - Home Tutor</title>
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -66,11 +66,7 @@
 						<tr>
 
 							<th scope="col">
-								<p>Nome</p>
-							</th>
-
-							<th scope="col">
-								<p>Cognome</p>
+								<p>Mentee</p>
 							</th>
 
 							<th scope="col">
@@ -88,11 +84,10 @@
 							<tr>
 								<td>
 									<a th:href="@{/homeTutor/dettaglioMentee?mentee=}+${userCredits.user.id}"
-										th:text="${userCredits.user.name}">
+										th:text="${userCredits.user.name} + ' ' + ${userCredits.user.surname}">
 										data
 									</a>
 								</td>
-								<td th:text="${userCredits.user.surname}">Tb data</td>
 
 								<td class="justify-content-center">
 
@@ -150,7 +145,7 @@
 							</th>
 
 							<th scope="col">
-								<p>Action</p>
+								<p>Azione</p>
 							</th>
 
 						</tr>
@@ -164,7 +159,7 @@
 							<tr>
 								<td th:text="${userActivity.activity.title}">data</td>
 								<td th:text="${userActivity.activity.startDate}">data</td>
-								<td th:text="${userActivity.activity.activityCredits}">data</td>
+								<td th:text="${userActivity.activity.getActivityCreditsDouble()}">data</td>
 								<td th:text="${userActivity.organizer}? 'organizer' : '' ">data</td>
 								<td>
 

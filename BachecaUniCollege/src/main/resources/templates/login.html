@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <title>Login Page</title>
+  <title>Bacheca UniCollege - Login Page</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -15,11 +15,12 @@
 <body class="text-center">
   <div class="form-signin text-center d-inline-flex flex-column mt-5">
     <div class="font-weight-bold">
-      <h3>Please Login</h3>
+      <h2>Benvenuto su Bacheca UniCollege</h2>
+      <h5>Effetua il login per accedere al portale</h5>
     </div>
 
     <div th:if="${param.error}">
-      <div class="alert alert-warning" role="alert">Wrong Credentials</div>
+      <div class="alert alert-warning" role="alert">Credenziali errate</div>
     </div>
 
     <form action="login" method="post">
@@ -37,7 +38,7 @@
       <div class="form-floating d-flex flex-column">
 
         <input class="w-100 btn btn-lg btn-primary mr-3" type="submit" value="Log in" />
-        <a th:href="@{/registration}" href="#" class="mt-2 font-weight-light font-size">First time?Click to Sign Up!</a>
+        <a th:href="@{/registration}" href="#" class="mt-2 font-weight-light font-size">Prima volta? Registrati!</a>
 
       </div>
 

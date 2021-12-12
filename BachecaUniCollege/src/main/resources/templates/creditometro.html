@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-	<title>Home Page</title>
+	<title>Bacheca UniCollege - Creditometro</title>
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -115,9 +115,9 @@
 							<tr>
 								<th scope="row">#</th>
 								<td th:text="${userActivity.activity.title}">Tb data</td>
-								<td th:text="${userActivity.activity.activityCredits}">Tb
+								<td th:text="${userActivity.activity.getActivityCreditsDouble()}">Tb
 									data</td>
-								<td th:text="${userActivity.activity.activityType}">Tb data</td>
+								<td th:text="${userActivity.activity.getActivityTypeString()}">Tb data</td>
 								<td th:text="${userActivity.activity.startDate}">Tb data</td>
 								<td th:text="${userActivity.organizer}? 'organizer' : '' ">*</td>
 							</tr>

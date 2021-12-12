@@ -85,9 +85,6 @@ public class DettaglioAttivitaController {
 			if(userActivityOptional.isPresent()) {
 				model.addAttribute("iscritto", Boolean.TRUE);
 				model.addAttribute("msg", "Sei iscritto a questa attività!");
-			} else {
-				model.addAttribute("iscritto", Boolean.FALSE);
-				model.addAttribute("msg", "Non sei iscritto a questa attività!");
 			}
 			
 		}

@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Registration Page</title>
+	<title>Bacheca UniCollege - Registration Page</title>
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -41,17 +41,18 @@
 			<div class="form-group">
 				<label for="email">Email</label>
 				<input type="email" class="form-control" id="email" th:field="*{email}" required>
-				<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
-					else.</small>
+				<small id="emailHelp" class="form-text text-muted">Non comunicheremo la tua mail a nessuno!</small>
 			</div>
 
 			<div class="form-group">
 				<label for="password">Password</label>
 				<input type="password" class="form-control" id="password" th:field="*{password}" required>
+				<small id="passwordHelp" class="form-text text-muted">La password deve contenere almeno 8 caratteri,
+					lettere maiuscole e minuscole, numeri e caratteri spaciali</small>
 			</div>
 
 			<div class="form-group">
-				<label for="password">Confirm Password</label>
+				<label for="password">Conferma Password</label>
 				<input type="password" class="form-control" id="confirmPassword" th:field="*{confirmPassword}" required>
 			</div>
 
@@ -90,17 +91,16 @@
 		function ansValidation(ev) {
 			ev.preventDefault
 
-			var nameValue = "test";
 			var passValue = document.getElementById("password").value
 			var confpassValue = document.getElementById("confirmPassword").value
 			// the typeof operator returns a string.
-			if (typeof nameValue !== "string") {
-				window.alert("Please re-enter your name")
-				// we use strict validation ( !== ) because it's a good practice.
-			} else if (passValue !== confpassValue) {
-				window.alert("Passwords do not match!")
-			} else if (!passValue.match("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})")) {
-				window.alert("The password must contain at least 1 lowercase, 1 uppercase, 1 numeric, 1 special character and must be eight characters or longer!")
+
+			if (passValue !== confpassValue) {
+				window.alert("Le passwords non sono uguali!")
+			} else if (!(passValue.length >= 8)) {
+				window.alert("La password deve contenere almeno 8 caratteri")
+			} else if (passValue.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\!\@\#\$\%\&\*\(\)\_\+\=\|\<\>\?\{\}\\\[\]\~\-])$/)) {
+				window.alert("La password deve contenere almeno una lattera minuscola, una maiuscola, un numero e un carattere speciale!")
 			}
 		}
 	</script>

@@ -57,7 +57,7 @@ public class RegistrationController {
 		}
 		
 		//Adding msg to the model
-		model.addAttribute("msg", "Registration was successful! \n To continue please confirm your email.");	
+		model.addAttribute("msg", "Registrazione avvenuta con successo, ti abbiamo spedito una mail! \n Per continuare conferma la tua mail perfavore.");	
 		
 		return "confirmationPage";
 	}
@@ -78,7 +78,7 @@ public class RegistrationController {
 		}
 		
 		//Adding msg to the model
-		model.addAttribute("msg","Thanks to have confirmed the registration, now you could access to the portal" ); 
+		model.addAttribute("msg","Grazie di aver confermato la tua mail, ora puoi accedere al portale." ); 
 		
 		return "confirmationPage";
     }
