@@ -8,5 +8,9 @@ public enum ActivityType {
 	
 	TERTULIA_A_TEMA,
 	
+	SPORT_LEARNING,
+	
+	GITA,
+	
 	LIBRO;
 }

@@ -151,6 +151,8 @@
 											th:field="*{activityType}">
 											<option value="VOLONTARIATO" selected>VOLONTARIATO</option>
 											<option value="VISITA_CULTURALE">VISITA CULTURALE</option>
+											<option value="SPORT_LEARNING">SPORT LEARNING</option>
+											<option value="GITA">GITA</option>
 										</select>
 									</div>
 								</div>
@@ -164,9 +166,9 @@
 
 
 								<div class="form-group">
-									<label for="fileImage">Foto per bacheca</label> <input class="form-control"
-										id="fileImage" name="fileImage" type="file" accept="image/png, image/jpeg"
-										required></input>
+									<label for="fileImage">Foto per bacheca</label>
+									<input class="form-control" id="fileImage" name="fileImage" type="file"
+										accept="image/png, image/jpeg" required>
 								</div>
 
 								<button type="submit" class="btn btn-primary">Submit</button>
@@ -231,13 +233,13 @@
 									</div>
 
 									<div class="row">
-										<div class="form-group col-6">
+										<div class="form-group col-6" style="display: none;">
 											<select class="form-control" aria-label="Select for credits"
 												th:field="*{activityCredits}" required>
 												<option value="TWO" selected>0,2</option>
 											</select>
 										</div>
-										<div class="form-group col-6">
+										<div class="form-group col-6" style="display: none;">
 											<select class="form-control" aria-label="Select for Activity type"
 												th:field="*{activityType}" required>
 												<option value="TERTULIA_A_TEMA" selected>TERTULIA A
@@ -265,7 +267,7 @@
 						<div class="m-3 w-75">
 
 							<div class="nav">
-								<a class="btn btn-primary mr-2" data-toggle="tab" href="#PROPONINEUNO">
+								<a class="btn btn-primary mr-2 active" data-toggle="tab" href="#PROPONINEUNO">
 									Proponine uno
 								</a>
 
@@ -361,11 +363,13 @@
 												<select class="form-control" aria-label="Select for credits"
 													th:field="*{activityCredits}" required>
 													<option value="FIVE" selected>0,5</option>
+													<option value="THREE" selected>0,3</option>
+													<option value="TWO" selected>0,2</option>
 												</select>
 											</div>
 
 
-											<div class="form-group col-6">
+											<div class="form-group col-6" style="display: none;">
 												<select class="form-control" aria-label="Select for Activity type"
 													th:field="*{activityType}" required>
 													<option value="LIBRO" selected>LIBRO</option>

@@ -13,12 +13,11 @@
 </head>
 
 <body class="text-center">
+  <div class="font-weight-bold">
+    <h2>Benvenuto su Bacheca UniCollege</h2>
+    <h5>Effetua il login per accedere al portale</h5>
+  </div>
   <div class="form-signin text-center d-inline-flex flex-column mt-5">
-    <div class="font-weight-bold">
-      <h2>Benvenuto su Bacheca UniCollege</h2>
-      <h5>Effetua il login per accedere al portale</h5>
-    </div>
-
     <div th:if="${param.error}">
       <div class="alert alert-warning" role="alert">Credenziali errate</div>
     </div>

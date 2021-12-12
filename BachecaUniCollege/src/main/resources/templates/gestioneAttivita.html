@@ -68,23 +68,23 @@
 							</th>
 
 							<th scope="col">
-								<p>Title</p>
+								<p>Titolo</p>
 							</th>
 
 							<th scope="col">
-								<p>Credits</p>
+								<p>Crediti</p>
 							</th>
 
 							<th scope="col">
-								<p>Type</p>
+								<p>Tipo</p>
 							</th>
 
 							<th scope="col">
-								<p>Date</p>
+								<p>Data</p>
 							</th>
 
 							<th scope="col">
-								<p>Actions</p>
+								<p>Azione</p>
 							</th>
 
 						</tr>
@@ -99,8 +99,8 @@
 								<th scope="row">#</th>
 								<td><a th:text="${activity.title}" th:href="@{/dettaglioAttivita?id=}+${activity.id}">Tb
 										data</a></td>
-								<td th:text="${activity.activityCredits}">Tb data</td>
-								<td th:text="${activity.activityType}">Tb data</td>
+								<td th:text="${activity.getActivityCreditsDouble()}">Tb data</td>
+								<td th:text="${activity.getActivityTypeString()}">Tb data</td>
 								<td th:text="${activity.startDate}">Tb data</td>
 
 								<td class="justify-content-center">

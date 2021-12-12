@@ -85,6 +85,8 @@ public class DettaglioAttivitaController {
 			if(userActivityOptional.isPresent()) {
 				model.addAttribute("iscritto", Boolean.TRUE);
 				model.addAttribute("msg", "Sei iscritto a questa attività!");
+			} else {
+				model.addAttribute("iscritto", Boolean.FALSE);
 			}
 			
 		}
@@ -160,7 +162,7 @@ public class DettaglioAttivitaController {
 			redirectAttributes.addFlashAttribute("err", err);
 		}
 		
-		return "redirect:/homePage";
+		return "redirect:/homeBacheca";
 	}
 	
 }

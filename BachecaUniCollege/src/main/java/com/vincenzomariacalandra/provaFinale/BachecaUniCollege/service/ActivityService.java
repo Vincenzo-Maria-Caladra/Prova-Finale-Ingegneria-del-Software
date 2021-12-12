@@ -213,7 +213,7 @@ public class ActivityService {
 				+ "                  <tbody><tr>\n" + "                    <td style=\"padding-left:10px\">\n"
 				+ "                  \n" + "                    </td>\n"
 				+ "                    <td style=\"font-size:28px;line-height:1.315789474;Margin-top:4px;padding-left:10px\">\n"
-				+ "                      <span style=\"font-family:Helvetica,Arial,sans-serif;font-weight:700;color:#ffffff;text-decoration:none;vertical-align:top;display:inline-block\">New Activity!</span>\n"
+				+ "                      <span style=\"font-family:Helvetica,Arial,sans-serif;font-weight:700;color:#ffffff;text-decoration:none;vertical-align:top;display:inline-block\">Nuova attività!</span>\n"
 				+ "                    </td>\n" + "                  </tr>\n" + "                </tbody></table>\n"
 				+ "              </a>\n" + "            </td>\n" + "          </tr>\n" + "        </tbody></table>\n"
 				+ "        \n" + "      </td>\n" + "    </tr>\n" + "  </tbody></table>\n"
@@ -231,14 +231,16 @@ public class ActivityService {
 				+ "      <td width=\"10\" valign=\"middle\"><br></td>\n"
 				+ "      <td style=\"font-family:Helvetica,Arial,sans-serif;font-size:19px;line-height:1.315789474;max-width:560px\">\n"
 				+ "        \n"
-				+ "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hi " + name
-				+ ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">A new activity has been added to the bulletin board!"
-				+ "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Title:"
+				+ "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Ciao " + name
+				+ ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Una nuova attività è stata aggiunta alla bacheca!"
+				+ "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Titoto:"
 				+ activity.getTitle()
-				+ "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Credits:"
-				+ activity.getActivityCredits()
+				+ "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Tipo:"
+				+ activity.getActivityTypeString()
+				+ "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Crediti:"
+				+ activity.getActivityCreditsDouble()
 				+ "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Descrizione:"
-				+ activity.getDescrizione() + "			 <p>See you soon</p>" + "        \n" + "      </td>\n"
+				+ activity.getDescrizione() + "			 <p>A presto!</p>" + "        \n" + "      </td>\n"
 				+ "      <td width=\"10\" valign=\"middle\"><br></td>\n" + "    </tr>\n" + "    <tr>\n"
 				+ "      <td height=\"30\"><br></td>\n" + "    </tr>\n"
 				+ "  </tbody></table><div class=\"yj6qo\"></div><div class=\"adL\">\n" + "\n" + "</div></div>";
