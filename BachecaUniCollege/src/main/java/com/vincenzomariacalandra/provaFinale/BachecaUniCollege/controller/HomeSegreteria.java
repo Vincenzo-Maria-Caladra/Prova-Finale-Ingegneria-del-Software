@@ -82,9 +82,13 @@ public class HomeSegreteria {
 	// Update activity post handler
 	@RequestMapping(path = "/updateTertulia", method = RequestMethod.POST)
 	public String updateTertuliaATema(@ModelAttribute Activity activity, @RequestParam("id") Long id, Model model,
-			HttpServletRequest request) {
+			HttpServletRequest request, RedirectAttributes attributes) {
 		
 		String err = activityService.updateActivity(id, activity.getStartDate(), activity.getStartTime(), activity.getEndTime());
+		
+		if (err != null) {
+			attributes.addFlashAttribute("err", err);
+		}
 		
 		return "redirect:/homeSegreteria";
 	}

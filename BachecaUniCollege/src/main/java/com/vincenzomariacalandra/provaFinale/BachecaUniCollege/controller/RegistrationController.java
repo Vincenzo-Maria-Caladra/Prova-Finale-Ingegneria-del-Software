@@ -46,19 +46,26 @@ public class RegistrationController {
 	@RequestMapping(path = "/registration", method = RequestMethod.POST)
 	public String postRegistrationRequest (@ModelAttribute RegistrationRequest registrationRequest, Model model, RedirectAttributes redirectAttributes) {
 		
-		String err = registrationService.register(registrationRequest);
-		
-		if (err != null) {
+		try {
 			
+			String err = registrationService.register(registrationRequest);
+			
+			if (err != null) {
+				
+				//Adding error to the model
+	    		redirectAttributes.addFlashAttribute("error", err);	
+	    		
+				return "redirect:/registration";
+			}
+			
+		} catch (Exception e) {
 			//Adding error to the model
-    		redirectAttributes.addFlashAttribute("error", err);	
-    		
+    		redirectAttributes.addFlashAttribute("error", e.getMessage());	
 			return "redirect:/registration";
 		}
 		
 		//Adding msg to the model
 		model.addAttribute("msg", "Registrazione avvenuta con successo, ti abbiamo spedito una mail! \n Per continuare conferma la tua mail perfavore.");	
-		
 		return "confirmationPage";
 	}
 	

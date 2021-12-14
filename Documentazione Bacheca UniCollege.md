@@ -4,6 +4,35 @@
 
 <h4 style="text-align: center">Autore: Calandra Vincenzo Maria</h4>
 
+<h5 style="text-align: center">Matricola: 914651</h5>
+
+<h2 id="Indice">Indice</h2>
+
+- <a href="#Contesto">Contesto</a>
+- <a href="#Soluzione">Soluzione</a>
+- <a href="#Risultati">Risultati</a>
+- <a href="#Tecnologie">Tecnologie</a>
+- <a href="#BaseDiDati">Base di dati</a>
+- <a href="#UseCase">Use Case</a>
+- <a href="#DettaglioImplementazioniTecnologiche">Dettaglio Implementazioni Tecnologiche</a>
+  - <a href="#GestioneAutenticazioneAutorizzazione">Gestione Autenticazione Autorizzazione</a>
+    - <a href="#Autorizzazione">Autorizzazione</a>
+    - <a href="#Autenticazione">Autenticazione</a>
+    - <a href="#Registrazione">Registrazione</a>
+    - <a href="#MailService">MailService</a>
+  - <a href="#Web">Web</a>
+    - <a href="#SpringMVC">Spring MVC</a>
+    - <a href="#Templating">Templating</a>
+    - <a href="#SalvataggioImmagini">Salvataggio Immagini</a>
+  - <a href="#Testing">Testing</a>
+  - <a href="#DeployEInstallazione">Installazione e Deploy</a>
+    - <a href="#Maver">Maven</a>
+    - <a href="#Docker">Docker</a>
+  - <a href="#LoggingEMonitoring">Logging E Monitoring</a>
+    - <a href="#Logging">Logging</a>
+    - <a href="#Monitoring">Monitoring</a>
+  - <a href="#ClassDiagram">Class Diagram</a>
+
 
 <h2 id="Contesto">Contesto</h2>
 
@@ -71,6 +100,9 @@ calendario delle tertulie a tema e che visualizzi un report su tutti gli student
 infine che permetta una gestione facilitata di inserimento di tutte le altre attività che maturano
 crediti su una versione innovata del “creditometro”.
 </div>
+<h2 id="Risultati">Risultati</h2>
+
+
 
 <h2 id="Tecnologie">Tecnologie</h2>
 
@@ -95,8 +127,7 @@ Di seguito il database schema e il diagramma ER.
 
 ![RE DB schematic](C:\Users\CalandraVM\Desktop\Prova Finale\RE DB schematic.PNG)
 
-
-<h2 id=" UseCase">Use Case</h2>
+<h2 id="UseCase">Use Case</h2>
 
 ![Use Case Diagram](C:\Users\CalandraVM\Desktop\Prova Finale\Use Case Diagram.drawio.svg)
 
@@ -929,17 +960,218 @@ Di seguito i risultati ottenuti:
 
 I risultati sono il linea rispetto a quanto ci si aspettava, minime differenze tra i browser sono dovute alle differenti condizioni di zoom di default.
 
-Infine sono stati effetuati dei test sull'infrattura cloud per testarne la resistenza minima ad attacchi di tipo DDoS. Il cloud provider, OVH, ha immediatamente provvisto a deviare il traffico sull'infrastruttura di mitigazione notificando l'utente dell'avvenuto attacco.
+Infine sono stati effetuati dei test sull'infrattura cloud per testarne la resistenza minima ad attacchi di tipo *DDoS*. Il cloud provider, *OVH*, ha immediatamente provvisto a deviare il traffico sull'infrastruttura di mitigazione notificando l'utente dell'avvenuto attacco.
 
 ![DDoS](C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\DDoS.PNG)
 
+<h3 id="DeployEInstallazione">Installazione e Deploy</h3>
+
+<h4 id="Maven">Maven</h4>
+
+Per prima cosa occorre effettuare la generazione del file *.jar*, per fare ciò:
+
+- E'  possibbile aprire il progetto con un IDE che abbia l'estensione per *Maven* installa, fare tasto destro sul proggetto e cliccare su *maven install*.
+
+<img src="C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\MavenInstall.png" alt="MavenInstall" style="zoom:50%;" />
+
+- Eseguire direttamente il comando da terminale
+
+  ```bash
+  mvn install
+  ```
+
+Verrà generato il file *.jar* all'interno della cartella *target*.
+
+<h4 id="Docker">Docker</h4>
+
+Come già accennato in precedenza è stato scelto di utilizzare la conteinerizzazione come metologia di deploy. Per fare ciò è stato definito un Dockerfile contenente tutte le informazioni necessarie pe costruire la nostra immagine.
+
+```yaml
+FROM openjdk:11
+COPY target/BachecaUniCollege-0.0.1-SNAPSHOT.jar BachecaUniCollege.jar
+EXPOSE 8080
+VOLUME ["/tmp/activity-photos", "/var/log"]
+ENTRYPOINT ["java","-jar","/BachecaUniCollege.jar"]
+```
+
+Vediamolo nel dettaglio:
+
+- Il primo comando invoca il download dell'immagine *openjdk:11*, tale immagine è predisposta per ospitare applicativi JAVA11.
+- Il secondo comando copia il file *.jar* generato all'interno del container.
+- Il terzo comando espone la porta 8080 del container.
+- Il quarto comando dichiara i volumi che verranno appesi al container.
+- Il quinto comando contiene la sequenza dei comanda da eseguire per avviare il file *.jar*. 
+
+A questo punto non ci resta che scrivere il *docker-compose.yaml*:
+
+```yaml
+version: '3'
+services:
+  bacheca-uni-college:
+    build: .
+    volumes:
+      - BachecaUniCollege-data:/tmp/activity-photos
+      - BachecaUniCollege-log:/var/log
+    ports:
+      - "80:8080"
+    networks:
+      - bacheca-uni-college-mysqldb-network
+    depends_on:
+      - mysqldb
+
+  mysqldb:
+    image: mysql:8
+    networks:
+      - bacheca-uni-college-mysqldb-network
+    environment:
+      - MYSQL_ROOT_PASSWORD=<inserire qui la password>
+      - MYSQL_DATABASE=database
+
+volumes:
+  BachecaUniCollege-data:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /tmp
+  BachecaUniCollege-log:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /var/log/BachecaUniCollege
+
+networks:
+  bacheca-uni-college-mysqldb-network: null
+```
+
+Come possiamo ben vedere abbiamo 3 layers di definizione:
+
+- Il primo layer *services* contiene i servizi veri e propri della nostra web app, ovvero il nostro applicativo SpringBoot e il database MySQL.
+
+  - ```yaml
+      bacheca-uni-college:
+        image: "bacheca-uni-college"
+        volumes:
+          - BachecaUniCollege-data:/tmp/activity-photos
+          - BachecaUniCollege-log:/var/log
+        ports:
+          - "80:8080"
+        networks:
+          - bacheca-uni-college-mysqldb-network
+        depends_on:
+          - mysqldb
+    ```
+
+    Soffermandosi brevemente su tale definizione, sottolineamo alcune parti salienti:
+
+    - *build: .* indica che l'immagine verrà creata con il Dockerfile.
+    - *volumes:* dichiara che le dirs l'elencate sarranno legate ai volumi dichiarati sotto.
+    - *ports: 80:8080* mappa la porta 80 del server con la porta 8080 del container in modo che sia raggiungibile dall'esterno.
+    - *networks:* contiene una lista di reti attraverso cui il container potrà comunicare.
+    - *depends_on*: dichiara che tale service dipende dal *mysqldb*, dunque prima di essere avviato dovrà attendere le tutte le dipenze siano risolte.
+
+- Il secondo layer contiene i volumi che verranno condivisi con il container che contiene la SpringBoot app, in particolare:
+
+  - *BachecaUniCollege-data* conterrà le immagini salvate nel filesystem.
+  - *BachecaUniCollege-log* conterrà le informazioni di log generate dalla web app e dal cotainer. **Occorre che la cartella */var/log/BachecaUniCollege* esista già, altrimenti l'esecuzione fallira.** 
+
+- Il terzo layer contiene la rete che connetterrà i 2 services dichiarati sopra.
+
+A questo punto non resta che effettuare il build e il run:
+
+```bash
+docker-compose up --build
+```
+
+Se si vuole che il processo venga eseguito come demone:
+
+```bash
+docker-compose up -d --build
+```
+
+Per stoppare il tutto:
+
+```bash
+docker-compose down
+```
+
+
 <h3 id="LoggingEMonitoring">Logging e Monitoring</h3>
 
+<h4 id="Logging">Logging</h4>
 
+Per quanto riguarda il logging Spring Boot Starter integra *Apache Commons Logging* e *Logback*, inoltre implemeta un interfaccia che standardizza il loro utilizzo, *slf4j o Simple Logging Facade for Java*. 
 
-<h3 id="DeployEInstallazione">Deploy e Installazione</h4>
+Un esempio di utilizzo lo troviamo nell'*EmailService*:
 
+```java
+@EnableAsync
+@Service
+public class EmailService implements EmailSender {
+	
+	// SetUp Logger for logging email sending operation
+	private final static Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
+	...
+        
+	// Send Email
+	@Override
+	@Async
+	public void send(String to, String email) {
+		
+		try {
+			// Util class to setup mail sender
+            ...
+			
+		} catch (Exception e) {
+			
+			// Else logged the err and then trown a new IllegalStateEx
+			LOGGER.error("Failed to send the email", e);
+			throw new IllegalStateException("Failed to send the email");		
+		}
+		
+	}
+    ...
+```
 
+- Il logger viene instanziato con riferimento alla classe da monitorare con l'aiuto del *LoggerFactory*.
+- Una volta instanziato è possibile selezionare il tipo di messaggio di logging, *es. Error*, assegnare un tag e un messaggio. 
+
+<h4 id="Monitoring">Monitoring</h4>
+
+Per quanto riguarda il monitoring è stato integrato *Spring Actuator*:
+
+```xml
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+</dependencies>
+```
+
+Spring Boot include una serie di funzioni aggiuntive per monitorare e gestire quando la web app viene messa in produzione. E' possibile monitorare l'applicazione usando gli endpoint HTTP alberati sotto */actuator/***.
+
+La configurazione di seguito elencata espone tutti gli endpoint di Spring Actuator tranne quello per lo shutdown dell'applicativo:
+
+```ini
+# Configuration for Spring Actuator tool
+management.endpoints.web.exposure.include=*
+# if you'd like to expose shutdown:
+# management.endpoint.shutdown.enabled=true
+```
+
+Per esempio un endpoint molto utile è */actuator/logfile* che ritorna il contenuto del file di log.
+
+A proposito del file di log, è stato specificato un file di logging per la web app in un apposita cartella:
+
+```ini
+# Logging configurtion
+logging.file.name=/var/log/BachecaUniCollege.log
+server.tomcat.accesslog.enabled=true
+```
+
+Tale cartella è un volume denominato *BachecaUniCollege-log* e montato sul container docker. Tale volume punta al filesystem del server che lo ospita, in questo modo è sempre accessibile, vedi <a href="#DeployEInstallazione">qui</a>.   
 
 <h3 id="ClassDiagram">Class Diagram</h3>
 

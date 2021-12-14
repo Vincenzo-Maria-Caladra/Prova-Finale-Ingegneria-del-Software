@@ -13,24 +13,25 @@
 </head>
 
 <body class="text-center">
+
   <div class="font-weight-bold">
     <h2>Benvenuto su Bacheca UniCollege</h2>
     <h5>Effetua il login per accedere al portale</h5>
   </div>
-  <div class="form-signin text-center d-inline-flex flex-column mt-5">
+  <div class="form-signin text-center d-inline-flex flex-column mt-2">
     <div th:if="${param.error}">
       <div class="alert alert-warning" role="alert">Credenziali errate</div>
     </div>
 
-    <form action="login" method="post">
+    <form action="login" method="post" class="text-left">
       <div class="form-floating">
-        <label for="username"></label>
+        <label for="username">Email</label>
         <input type="text" class="form-control" name="username" id="floatingInput" aria-describedby="emailHelpId"
-          placeholder="your.email@example.com">
+          placeholder="mail@example.com">
       </div>
 
       <div class="form-floating">
-        <label for="password"></label>
+        <label for="password">Password</label>
         <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="password"> <br>
       </div>
 

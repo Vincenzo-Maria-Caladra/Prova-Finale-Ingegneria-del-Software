@@ -1,9 +1,13 @@
 version: '3'
 services:
   bacheca-uni-college:
-    image: "bacheca-uni-college"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: bacheca-uni-college:latest
     volumes:
       - BachecaUniCollege-data:/tmp/activity-photos
+      - BachecaUniCollege-log:/var/log
     ports:
       - "80:8080"
     networks:
@@ -26,6 +30,12 @@ volumes:
       o: bind
       type: none
       device: /tmp
+  BachecaUniCollege-log:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /var/log/BachecaUniCollege
 
 networks:
   bacheca-uni-college-mysqldb-network: null

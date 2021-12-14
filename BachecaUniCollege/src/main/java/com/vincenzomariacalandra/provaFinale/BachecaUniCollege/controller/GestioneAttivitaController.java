@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.entity.Activity;
 import com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service.ActivityService;
@@ -46,19 +47,27 @@ public class GestioneAttivitaController {
 
 	// Accept Activity handler
 	@RequestMapping(path = "/acceptActivity", method = RequestMethod.POST)
-	public String acceptActivity(@RequestParam("id") Long id, Model model, HttpServletRequest request) {
+	public String acceptActivity(@RequestParam("id") Long id, Model model, HttpServletRequest request, RedirectAttributes attributes) {
 
 		String err = activityService.updateActivityState(id);
 
+		if (err != null) {
+			attributes.addFlashAttribute("err", err);
+		}
+		
 		return "redirect:/gestioneAttivita";
 	}
 
 	// Delete Actvity handler
 	@RequestMapping(path = "/deleteActivity", method = RequestMethod.POST)
-	public String deleteActivity(@RequestParam("id") Long id, Model model, HttpServletRequest request) {
+	public String deleteActivity(@RequestParam("id") Long id, Model model, HttpServletRequest request, RedirectAttributes attributes) {
 
-		String error = activityService.deleteActivity(id);
-
+		String err = activityService.deleteActivity(id);
+		
+		if (err != null) {
+			attributes.addFlashAttribute("err", err);
+		}
+		
 		return "redirect:/gestioneAttivita";
 	}
 

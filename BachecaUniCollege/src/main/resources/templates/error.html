@@ -20,7 +20,7 @@
         <div class="col-auto">
             <div class="alert alert-danger  mt-5 d-block" role="alert">
                 <h1 th:text="|${httpStatus} - ${httpStatus.reasonPhrase}|">404</h1>
-                <p th:utext="${errorMessage}">Error java.lang.NullPointerException</p>
+                <p th:text="${errorMessage}">Error java.lang.NullPointerException</p>
             </div>
             <a href="#" th:href="@{/homeBacheca}">Back to Home Page</a>
         </div>

@@ -84,11 +84,7 @@
 										<tr>
 
 											<th scope="col">
-												<p>Nome</p>
-											</th>
-
-											<th scope="col">
-												<p>Cognome</p>
+												<p>Nome e Cognome</p>
 											</th>
 
 											<th scope="col">
@@ -104,8 +100,9 @@
 										<div th:each="userCredits : ${userCreditsList}">
 
 											<tr>
-												<td th:text="${userCredits.user.name}">Tb data</td>
-												<td th:text="${userCredits.user.surname}">Tb data</td>
+												<td
+													th:text="${userCredits.user.name} + ' ' +${userCredits.user.surname} ">
+													Tb data</td>
 
 												<td class="justify-content-center">
 
@@ -239,14 +236,14 @@
 									<div class="row">
 
 										<div class="form-group col-6">
-											<label for="startTime">Ora inizio Attività</label> <input type="time"
+											<label for="startTime">Ora inizio</label> <input type="time"
 												class="form-control" id="startTime" th:field="*{startTime}"
 												placeholder="hh:mm" required>
 
 										</div>
 
 										<div class="form-group col-6">
-											<label for="endTime">Ora fine Attività</label> <input type="time"
+											<label for="endTime">Ora fine</label> <input type="time"
 												class="form-control" id="endTime" th:field="*{endTime}"
 												placeholder="hh:mm" required>
 
@@ -255,7 +252,7 @@
 
 									</div>
 
-									<button type="submit" class="btn btn-primary">Submit</button>
+									<button type="submit" class="btn btn-primary">Invia</button>
 
 
 								</form>

@@ -17,57 +17,60 @@
 
 	<div class="text-center form-group d-inline-flex flex-column mt-5">
 
-		<form action="#" th:action="@{/registration}" th:object="${registrationRequest}" method="post"
-			class="text-left">
+		<div class"font-weight-bold">
+			<h3>Registrazione Bacheca UniCollege</h3>
+		</div>
 
-			<div class"font-weight-bold">
-				<h3>Registrazione Bacheca UniCollege</h3>
-			</div>
+		<div class="container w-75">
+			<form action="#" th:action="@{/registration}" th:object="${registrationRequest}" method="post"
+				class="text-left">
 
-			<div class="form-group">
-				<label for="name">Nome</label>
-				<input type="text" class="form-control" id="name" aria-describedby="emailHelp" th:field="*{name}"
-					required>
+				<div class="form-group">
+					<label for="name">Nome</label>
+					<input type="text" class="form-control" id="name" aria-describedby="emailHelp" th:field="*{name}"
+						required>
 
-			</div>
-
-			<div class="form-group">
-				<label for="surname">Cognome</label>
-				<input type="text" class="form-control" id="surname" aria-describedby="emailHelp" th:field="*{surname}"
-					required>
-
-			</div>
-
-			<div class="form-group">
-				<label for="email">Email</label>
-				<input type="email" class="form-control" id="email" th:field="*{email}" required>
-				<small id="emailHelp" class="form-text text-muted">Non comunicheremo la tua mail a nessuno!</small>
-			</div>
-
-			<div class="form-group">
-				<label for="password">Password</label>
-				<input type="password" class="form-control" id="password" th:field="*{password}" required>
-				<small id="passwordHelp" class="form-text text-muted">La password deve contenere almeno 8 caratteri,
-					lettere maiuscole e minuscole, numeri e caratteri spaciali</small>
-			</div>
-
-			<div class="form-group">
-				<label for="password">Conferma Password</label>
-				<input type="password" class="form-control" id="confirmPassword" th:field="*{confirmPassword}" required>
-			</div>
-
-			<div class="form-group">
-				<div th:if="${error}" class="alert alert-danger d-inline-flex" role="alert">
-					<div th:text="${error}">ERRORE GRAVE</div>
 				</div>
-			</div>
 
-			<div class="form-group  text-right">
-				<button type="submit" onclick="ansValidation(event)" class="btn btn-primary">Registrati</button>
+				<div class="form-group">
+					<label for="surname">Cognome</label>
+					<input type="text" class="form-control" id="surname" aria-describedby="emailHelp"
+						th:field="*{surname}" required>
 
-			</div>
+				</div>
 
-		</form>
+				<div class="form-group">
+					<label for="email">Email</label>
+					<input type="email" class="form-control" id="email" th:field="*{email}" required>
+					<small id="emailHelp" class="form-text text-muted">Non comunicheremo la tua mail a nessuno!</small>
+				</div>
+
+				<div class="form-group">
+					<label for="password">Password</label>
+					<input type="password" class="form-control" id="password" th:field="*{password}" required>
+					<small id="passwordHelp" class="form-text text-muted">La password deve contenere almeno 8
+						caratteri, lettere maiuscole e minuscole, numeri e caratteri spaciali</small>
+				</div>
+
+				<div class="form-group">
+					<label for="password">Conferma Password</label>
+					<input type="password" class="form-control" id="confirmPassword" th:field="*{confirmPassword}"
+						required>
+				</div>
+
+				<div class="form-group">
+					<div th:if="${error}" class="alert alert-danger d-inline-flex" role="alert">
+						<div th:text="${error}">ERRORE GRAVE</div>
+					</div>
+				</div>
+
+				<div class="form-group  text-right">
+					<button type="submit" onclick="ansValidation(event)" class="btn btn-primary">Registrati</button>
+
+				</div>
+
+			</form>
+		</div>
 
 		<p class="mt-5 mb-3 text-muted text-lg-center text-md-center text-sm-center">Powered by Vector
 			Code</p>
