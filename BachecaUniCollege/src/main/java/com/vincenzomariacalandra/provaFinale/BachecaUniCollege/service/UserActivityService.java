@@ -81,7 +81,9 @@ public class UserActivityService {
 		}
 
 		if (activityOptional.get().getActivityType().equals(ActivityType.VISITA_CULTURALE)
-				|| activityOptional.get().getActivityType().equals(ActivityType.VOLONTARIATO)) {
+				|| activityOptional.get().getActivityType().equals(ActivityType.VOLONTARIATO)
+						|| activityOptional.get().getActivityType().equals(ActivityType.SPORT_LEARNING) 
+						|| activityOptional.get().getActivityType().equals(ActivityType.GITA )) {
 
 			// Check the number of partecipant already subscribe to the activity
 

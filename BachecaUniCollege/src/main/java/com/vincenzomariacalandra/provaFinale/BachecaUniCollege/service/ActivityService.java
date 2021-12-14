@@ -76,7 +76,9 @@ public class ActivityService {
 		} else if (activity.getDescrizione() == null || activity.getDescrizione().trim().equals("")) {
 			return "Description should not be empty!";
 		} else if (activity.getActivityType() == ActivityType.VISITA_CULTURALE
-				|| activity.getActivityType() == ActivityType.VOLONTARIATO) {
+				|| activity.getActivityType() == ActivityType.VOLONTARIATO
+				|| activity.getActivityType() == ActivityType.GITA
+				|| activity.getActivityType() == ActivityType.SPORT_LEARNING) {
 
 			if (activity.getStartDate().before(Date.from(Instant.now()))) {
 				return "Start Date should not be before now!";
