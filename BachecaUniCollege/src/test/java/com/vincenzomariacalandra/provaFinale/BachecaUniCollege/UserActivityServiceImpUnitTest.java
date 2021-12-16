@@ -60,13 +60,15 @@ public class UserActivityServiceImpUnitTest {
 		boolean organizer = true;
 		List<UserActivity> list = new ArrayList<>();
 		
+		AppUser appUser = new AppUser();
+		UserActivity userActivity = new UserActivity();
+		userActivity.setUser(appUser);
+		list.add(userActivity);
+		
 		Activity activity = new Activity();
 		activity.setMaxNumberOfPartecipant(0);
 		activity.setUserActivities(list);
 		activity.setActivityType(ActivityType.VISITA_CULTURALE);
-		
-		AppUser appUser = new AppUser();
-		UserActivity userActivity = new UserActivity();
 		
 		assertEquals("Invalid arguments for a new user activity", service.insertNewUserActivity(null, null, null));
 		assertEquals("Invalid arguments for a new user activity", service.insertNewUserActivity(null, idActivity, organizer));

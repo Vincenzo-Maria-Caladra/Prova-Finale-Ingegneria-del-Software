@@ -61,11 +61,11 @@ public class HomeTutorController {
 	
 	// Update Mentee activity state handler
 	@PostMapping
-	public String updateMenteeActivityState(@RequestParam("userActivity")Long userActivityId, Model model) {
+	public String updateMenteeActivityState(@RequestParam("userActivity")Long userActivityId, @RequestParam("userId")Long userId, Model model) {
 		
 		userActivityService.updateUserActivityState(userActivityId);
 		
-		return "redirect:/homeTutor";
+		return "redirect:/homeTutor?mentee=" + userId;
 	}
 	
 }

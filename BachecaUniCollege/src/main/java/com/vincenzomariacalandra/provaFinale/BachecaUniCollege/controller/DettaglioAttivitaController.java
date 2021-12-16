@@ -77,8 +77,10 @@ public class DettaglioAttivitaController {
 			model.addAttribute("userOfActivities", list);
 			
 			// Inserting number of available seats
-			int postiDisponibili = activityOptional.get().getMaxNumberOfPartecipant() - list.size();
-			model.addAttribute("postiDisponibili", postiDisponibili);
+			if (activityOptional.get().getMaxNumberOfPartecipant() != null) {
+				int postiDisponibili = activityOptional.get().getMaxNumberOfPartecipant() - list.size() + 1;
+				model.addAttribute("postiDisponibili", postiDisponibili);
+			}
 			
 			//Checks if the logged AppUser is subcribe to the actvitity
 			//This will be use to show the subscribe and unsubscribe buttons 

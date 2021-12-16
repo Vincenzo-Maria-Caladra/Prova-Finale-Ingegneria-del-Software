@@ -160,10 +160,11 @@
 								<td th:text="${userActivity.activity.title}">data</td>
 								<td th:text="${userActivity.activity.startDate}">data</td>
 								<td th:text="${userActivity.activity.getActivityCreditsDouble()}">data</td>
-								<td th:text="${userActivity.organizer}? 'organizer' : '' ">data</td>
+								<td th:text="${userActivity.organizer}? 'organizzatore' : '' ">data</td>
 								<td>
 
-									<form action="#" th:action="@{/homeTutor?userActivity=}+${userActivity.id}"
+									<form action="#"
+										th:action="@{/homeTutor?userActivity=}+${userActivity.id}+'&userId='+${userActivity.user.id}"
 										method="post">
 										<button type="submit" class="btn btn-warning btn-sm">Approva</button>
 									</form>

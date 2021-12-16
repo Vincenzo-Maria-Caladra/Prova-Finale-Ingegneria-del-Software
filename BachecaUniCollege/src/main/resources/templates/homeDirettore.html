@@ -65,11 +65,7 @@
                         <tr>
 
                             <th scope="col">
-                                <p>Nome</p>
-                            </th>
-
-                            <th scope="col">
-                                <p>Cognome</p>
+                                <p>Nome e Cognome</p>
                             </th>
 
                             <th scope="col">
@@ -93,8 +89,7 @@
                         <div th:each="user : ${listOfUtenti}">
 
                             <tr>
-                                <td th:text="${user.name}">Tb data</td>
-                                <td th:text="${user.surname}">Tb data</td>
+                                <td th:text="${user.name} + ' ' + ${user.surname}">Tb data</td>
                                 <td th:text="${user.userType}">Tb data</td>
 
                                 <td th:text="${user.tutor} ? ${user.tutor.surname} : '*'">*</td>

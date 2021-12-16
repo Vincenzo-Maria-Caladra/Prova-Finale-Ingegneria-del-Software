@@ -88,8 +88,15 @@ public class UserActivityService {
 			// Check the number of partecipant already subscribe to the activity
 
 			if (activityOptional.get().getUserActivities() != null) {
-				Integer count = activityOptional.get().getUserActivities().size();
-				if (count == activityOptional.get().getMaxNumberOfPartecipant()) {
+				
+				// Esclude the userActivity of the organizer
+				Integer count = activityOptional.get().getUserActivities().size() - 1;
+				
+				if (activityOptional.get().getMaxNumberOfPartecipant() == null) {
+					return "We are sorry, the activity doesnt have a max number of users!";
+				}
+				
+				if (count >= activityOptional.get().getMaxNumberOfPartecipant()) {
 					return "We are sorry, max number of users have been reached!";
 				}
 			}

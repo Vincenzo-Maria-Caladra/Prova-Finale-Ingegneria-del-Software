@@ -11,6 +11,16 @@
 - <a href="#Contesto">Contesto</a>
 - <a href="#Soluzione">Soluzione</a>
 - <a href="#Risultati">Risultati</a>
+  - <a href="#LoginPage">Login Page</a>
+  - <a href="#SignUpPage">Sign Up Page</a>
+  - <a href="#HomeBacheca">Home Bacheca</a>
+  - <a href="#DettaglioAttivita">Dettaglio Attivita</a>
+  - <a href="#CreaAttivita">Crea Attivita</a>
+  - <a href="#Creditometro">Creditometro</a>
+  - <a href="#HomeDirettore">Home Direttore</a>
+  - <a href="#GestioneAttivita">Gestione Attivita</a>
+  - <a href="#HomeTutor">Home Tutor</a>
+  - <a href="#HomeSegreteria">Home Segreteria</a>
 - <a href="#Tecnologie">Tecnologie</a>
 - <a href="#BaseDiDati">Base di dati</a>
 - <a href="#UseCase">Use Case</a>
@@ -100,9 +110,129 @@ calendario delle tertulie a tema e che visualizzi un report su tutti gli student
 infine che permetta una gestione facilitata di inserimento di tutte le altre attività che maturano
 crediti su una versione innovata del “creditometro”.
 </div>
+
 <h2 id="Risultati">Risultati</h2>
 
+La soluzione proposta così si presenta:
 
+<h3 id="LoginPage">Login Page</h3>
+
+<img src="C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\LoginPage.PNG" alt="LoginPage" style="zoom:50%;" />
+
+Così si presenta la pagina di accesso alla web app. Essa permettere di accedere alla piattaforma tramite email e passoword o di passara ad una apposita pagina di registrazione. Di default vi è un account con utenza di tipo direttore attraverso cui accedere al portale.
+
+<h3 id="SignUpPage">Sign Up Page</h3>
+
+<img src="C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\RegistrationForm.PNG" alt="RegistrationForm" style="zoom:50%;" />
+
+<div style="text-align: justify">
+    Tale form permette la registrazione sul portale. Esso richiede nome, cognome email e passowrd del nuovo utente da registrare. Ogni campo è obbligatorio e inoltre la email inserita non deve già essere stata utilizzata. Per quanto riguarda la passoword essa deve contenere almeno una lettera, in caps e lower case, almeno un numeri, un simboli speciali e deve avere un minimo di 8 caratteri. Una volta generata una password che specifica la richiesta e necessario reintrodurla nell'apposito input text sottostante, per procedere è necessario che le 2 password coincidano. Una volta cliccato sul pulsante  "Registrati" si verrà reindirizzati su una pagina di conferma e verrà una mail di convalida account alla email specificata.
+</div>
+
+<img src="C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\ConfirmRegistration.PNG" alt="ConfirmRegistration" style="zoom:50%;" />
+
+La mail generata avrà l'aspetto seguente:
+
+![ConfirmationEmail](C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\ConfirmationEmail.png)
+
+Nella mail possiamo trovare un messaggio di benvenuto personalizzato e un link attraverso cui confermare l'iscrizione alla web app. Il link avrà una validità di 15 minuti, dopodichè l'account creato verrà bloccato.
+
+Una volta cliccato sul link, sel non è ancora scaduto si approderà sulla seguente successful page:
+
+<img src="C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\ConfirmEmailMessage.PNG" alt="ConfirmEmailMessage" style="zoom:50%;" />
+
+<h3 id="HomeBacheca">Home Bacheca</h3>
+
+Una volta loggati con succeddo la seguente landing page ci accoglierà sul portale mostrandoci tutte le attività che sono state programmate per i giorni successivi.
+
+In alto troviamo una navigation bar attraverso cui moversi all'interno dell web app e un button attraverso cui chiudere la sessione sulla web app.
+
+![Bacheca](C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\Bacheca.PNG)
+
+Ogni card rappresenta un attività distinta dalle altre e son caratterizzate dagli attributi principali che descrivono un'attività.  Su ogni card troviamo un apposito pulsante attraverso cui è possibile accedere al dettaglio dell'attività.
+
+<h3 id="DettaglioAttivita">Dettaglio Attività</h3>
+
+La pagina dettaglio attività così si presenta:
+
+![DettaglioAttivita](C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\DettaglioAttivita.png)
+
+Come è possibile facilmente constatare, essa contiene l'elenco dei partecipanti e degli organizzatori dell'attività, il numero di posti disponibili, l'immagine di locandina, la descrizione dell'attività e una coppia di bottoni esclusivi tra loro che permettono di iscriversi o cancellarsi dall'attività. 
+
+![](C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\DettaglioAttivita2.png)
+
+<h3 id="CreaAttivita">Crea Attività</h3>
+
+Attraverso la barra di navigazione in alto è possibile raggiungere la pagina dedicata alla creazione delle attività.  E' possibile creare tre tipologie differenti di attività, suddivise per informazioni necessarie per la loro creazione.
+
+![Ce](C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\Ce.PNG)
+
+Cliccando sulle rispettive categorie si apriranno i seguenti tabs:
+
+![NuovaAttivita](C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\NuovaAttivita.PNG)
+
+Tertulia a tema:
+
+![NuovaAttivita2](C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\NuovaAttivita2.PNG)
+
+Libro:
+
+![NuovaAttivita3](C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\NuovaAttivita3.PNG)
+
+I campi sono tutti obbligatori. Una volta cliccato sul pulsante invia l'utente sarà inviato alla pagina principale e sarà mostrato un messaggio di operazione completata con successo.
+
+Per quanto riguarda il tab "Libro" esso permette di scegliere se proporre un nuovo libro oppure se sceglierne uno già approvato.
+
+<h3 id="Creditometro">Creditometro</h3>
+
+Ogni studente avrà accesso al proprio report personale di attività svolte nella seguente pagina:
+
+![CreditometroAttivitaDaApprovare](C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\CreditometroAttivitaDaApprovare.PNG)
+
+Come possiamo vedere troviamo 2 sezioni sostanziali. Una sezione contenente le barre di stato indicanti il numero dei crediti già approvati, in blu, e non approvati, in giallo, e una seconda sezione contenente il dettaglio delle attività svolte.
+
+<h3 id="HomeDirettore">Home Direttore</h3>
+
+Il direttore ha accesso ad una pagina di gestione degli utenti della web app:
+
+![](C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\HomeDirettore.PNG)
+
+Da tale pagina è possibile cambiare il ruolo all'interno della web app dei singoli account tra i seguenti tipi: STUDENTE, TUTOR, SEGRETERIA E DIRETTORE. Inoltre è anche possibile settare il tutor dello user selezionato oppure eliminare un account.
+
+<h3 id="GestioneAttivita">Gestione Attività</h3>
+
+Il direttore ha anche accesso ad una pagina di gestione attività:
+
+![](C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\AttivitaDaApprovare.PNG)
+
+All'interno vengono visualizzate tutte le attività da approvare tranne i libri che vengono gestiti direttamente dai singoli tutor. Il direttore può scegliere se approvare o rifiutare un attività oppure vederne il dettaglio cliccando sul titolo. Quando un attività viene approvata vengono notificati tutti gli utenti dell'app.
+
+<h3 id="HomeTutor">Home Tutor</h3>
+
+Per quanto riguarda i tutor, essi avranno a disposizione una pagina dedicata attraverso cui approvare i crediti dei propri mentee.
+
+![ApprovazioneCrediti](C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\ApprovazioneCrediti.PNG)
+
+Sulla destra troviamo la lista dei mentee con relativa percentuale di crediti approvati, in blue, e crediti non approvati, in giallo. Cliccando sui rispettivi nomi è possibile aprire una seconda table attraverso cui approvare le attività svolte dal mentee selezionato.
+
+<h3 id="HomeSegreteria">Home Segreteria</h3>
+
+La segreteria ha accesso ad un area riservata alla gestione degli studenti, in cui può visualizzarne le informazioni essenziali, e  una pagina dedicata alla gestione delle tertulie a tema, vediamola nel dettaglio.
+
+![TertulieATema](C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\TertulieATema.PNG)
+
+Cliccando su aggiorna verrà mostrato un secondo menù di modifica attività oppure è possibile accettare o rifiutare l'attività. Quando una tertulia viene accettata vengono notificati tutti gli utenti dell'app.
+
+
+<h2 id=" BaseDiDati"> Base di dati</h2>
+
+Di seguito il diagramma ER della base di dati.
+
+<img src="C:\Users\CalandraVM\Desktop\Prova Finale\ER_DB_Diagram.drawio.svg" alt="RE DB schematic" style="zoom: 150%;" />
+
+<h2 id="UseCase">Use Case</h2>
+
+![Use Case Diagram](C:\Users\CalandraVM\Desktop\Prova Finale\Use Case Diagram.drawio.svg)
 
 <h2 id="Tecnologie">Tecnologie</h2>
 
@@ -120,17 +250,6 @@ A tal proposito si è scelto di adottare Spring Boot come framework per lo svilu
 
 <div style="text-align: justify">
 	Infine si è scelto di effettuare il deploy dell'applicativo utilizzando la containerizzazione piuttosto che la virtualizzazione. La conteinerizzazione permette maggiore scalabilità e gestione delle risorse rispetto alla virtualizzazione, in questo modo ogni applicativo viene eseguito in processi che consumano il minimo delle risorse e che sono isolati tra loro. Inoltre la conteinerizzazione permette di impacchettare il software con tutte le sue dependencies e distribuirlo da un computing env ad un altro senza alcun problema di compatibilità. L'implementazione scelta, nonchè la più famosa e quella su cui si è poi basato lo standard di mercato,"containerd" della CNCF, è Docker. Docker Engine ha un piano di utilizzo gratuito ad uso personale o commerciale regolato dalla licenza Apache 2.0. </div>
-
-<h2 id=" BaseDiDati"> Base di dati</h2>
-
-Di seguito il database schema e il diagramma ER.
-
-![RE DB schematic](C:\Users\CalandraVM\Desktop\Prova Finale\RE DB schematic.PNG)
-
-<h2 id="UseCase">Use Case</h2>
-
-![Use Case Diagram](C:\Users\CalandraVM\Desktop\Prova Finale\Use Case Diagram.drawio.svg)
-
 
 <h2 id="DettaglioImplementazioniTecnologiche"> Dettaglio implementazioni tecnologiche</h2>
 
@@ -230,7 +349,7 @@ Tutti gli altri accessi al portale sono vincolati alla sola autenticazione trami
 
 ```java
 .anyRequest().authenticated()
-.and().formLogin().loginPage("/login").defaultSuccessUrl("/homePage",true)
+.and().formLogin().loginPage("/login").defaultSuccessUrl("/homeBacheca",true)
 ```
 
 Da notare che l'ordine degli elementi contrassegnati da *antMatchers()* è significativo, le regole più specifiche sono poste prima di quelle generali. 
@@ -467,7 +586,7 @@ Più precisamente:
 - Il *controller* layer si occupa di legare dati e template in modo che possano essere poi elaborati dal *view resolver*. 
 - Le *view* forniscono la rappresentazione grafica finale dei dati attraverso cui lo user può interagire.  
 
-![SpringMVC](C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\SpringMVC.webp)
+<img src="C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\SpringMVC.webp" alt="SpringMVC"/>
 
 Ancora una volta, tale integrazione è possibile grazie alla seguente Spring Boot dependencies, esplicitata all'interno del file *pom.xml*:
 
@@ -974,7 +1093,7 @@ Per prima cosa occorre effettuare la generazione del file *.jar*, per fare ciò:
 
 <img src="C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\MavenInstall.png" alt="MavenInstall" style="zoom:50%;" />
 
-- Eseguire direttamente il comando da terminale
+- Eseguire direttamente il comando da terminale all'interno della root directory del proggetto.
 
   ```bash
   mvn install
@@ -1008,7 +1127,10 @@ A questo punto non ci resta che scrivere il *docker-compose.yaml*:
 version: '3'
 services:
   bacheca-uni-college:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: bacheca-uni-college:latest
     volumes:
       - BachecaUniCollege-data:/tmp/activity-photos
       - BachecaUniCollege-log:/var/log
@@ -1024,7 +1146,7 @@ services:
     networks:
       - bacheca-uni-college-mysqldb-network
     environment:
-      - MYSQL_ROOT_PASSWORD=<inserire qui la password>
+      - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=database
 
 volumes:
@@ -1050,21 +1172,24 @@ Come possiamo ben vedere abbiamo 3 layers di definizione:
 - Il primo layer *services* contiene i servizi veri e propri della nostra web app, ovvero il nostro applicativo SpringBoot e il database MySQL.
 
   - ```yaml
-      bacheca-uni-college:
-        image: "bacheca-uni-college"
-        volumes:
-          - BachecaUniCollege-data:/tmp/activity-photos
-          - BachecaUniCollege-log:/var/log
-        ports:
-          - "80:8080"
-        networks:
+        bacheca-uni-college:
+          build:
+            context: .
+            dockerfile: Dockerfile
+          image: bacheca-uni-college:latest
+          volumes:
+            - BachecaUniCollege-data:/tmp/activity-photos
+            - BachecaUniCollege-log:/var/log
+          ports:
+            - "80:8080"
+          networks:
           - bacheca-uni-college-mysqldb-network
         depends_on:
           - mysqldb
     ```
-
+    
     Soffermandosi brevemente su tale definizione, sottolineamo alcune parti salienti:
-
+    
     - *build: .* indica che l'immagine verrà creata con il Dockerfile.
     - *volumes:* dichiara che le dirs l'elencate sarranno legate ai volumi dichiarati sotto.
     - *ports: 80:8080* mappa la porta 80 del server con la porta 8080 del container in modo che sia raggiungibile dall'esterno.
