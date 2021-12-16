@@ -119,15 +119,16 @@ La soluzione proposta così si presenta:
 
 <img src="C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\LoginPage.PNG" alt="LoginPage" style="zoom:50%;" />
 
-Così si presenta la pagina di accesso alla web app. Essa permettere di accedere alla piattaforma tramite email e passoword o di passara ad una apposita pagina di registrazione. Di default vi è un account con utenza di tipo direttore attraverso cui accedere al portale.
+Così si presenta la pagina di accesso alla web app. Essa permettere di accedere alla piattaforma tramite email e password o di passare ad una apposita pagina di registrazione. Di default vi è un account con utenza di tipo direttore attraverso cui accedere al portale. Tale utenza è identificata con email residenza.elis.bacheca@gmail.com e password *elis1928*.
 
 <h3 id="SignUpPage">Sign Up Page</h3>
 
 <img src="C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\RegistrationForm.PNG" alt="RegistrationForm" style="zoom:50%;" />
 
 <div style="text-align: justify">
-    Tale form permette la registrazione sul portale. Esso richiede nome, cognome email e passowrd del nuovo utente da registrare. Ogni campo è obbligatorio e inoltre la email inserita non deve già essere stata utilizzata. Per quanto riguarda la passoword essa deve contenere almeno una lettera, in caps e lower case, almeno un numeri, un simboli speciali e deve avere un minimo di 8 caratteri. Una volta generata una password che specifica la richiesta e necessario reintrodurla nell'apposito input text sottostante, per procedere è necessario che le 2 password coincidano. Una volta cliccato sul pulsante  "Registrati" si verrà reindirizzati su una pagina di conferma e verrà una mail di convalida account alla email specificata.
+    Tale form permette la registrazione sul portale. Esso richiede nome, cognome email e passoword del nuovo utente da registrare. Ogni campo è obbligatorio e inoltre la email inserita non deve già essere stata utilizzata. Per quanto riguarda la passoword essa deve contenere almeno una lettera, in caps e lower case, almeno un numero, un simbolo speciale e deve avere un minimo di 8 caratteri. Una volta generata una password che specifica la richiesta è necessario reintrodurla nell'apposito input text sottostante, per procedere è necessario che le 2 password coincidano. Una volta cliccato sul pulsante  "Registrati" si verrà reindirizzati su una pagina di conferma e verrà mandata una mail di convalida account alla email specificata.
 </div>
+
 
 <img src="C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\ConfirmRegistration.PNG" alt="ConfirmRegistration" style="zoom:50%;" />
 
@@ -143,7 +144,7 @@ Una volta cliccato sul link, sel non è ancora scaduto si approderà sulla segue
 
 <h3 id="HomeBacheca">Home Bacheca</h3>
 
-Una volta loggati con succeddo la seguente landing page ci accoglierà sul portale mostrandoci tutte le attività che sono state programmate per i giorni successivi.
+Una volta loggati con successo la seguente landing page ci accoglierà sul portale mostrandoci tutte le attività che sono state programmate per i giorni successivi.
 
 In alto troviamo una navigation bar attraverso cui moversi all'interno dell web app e un button attraverso cui chiudere la sessione sulla web app.
 
@@ -165,9 +166,13 @@ Come è possibile facilmente constatare, essa contiene l'elenco dei partecipanti
 
 Attraverso la barra di navigazione in alto è possibile raggiungere la pagina dedicata alla creazione delle attività.  E' possibile creare tre tipologie differenti di attività, suddivise per informazioni necessarie per la loro creazione.
 
-![Ce](C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\Ce.PNG)
 
-Cliccando sulle rispettive categorie si apriranno i seguenti tabs:
+
+<img src="C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\Ce.PNG" alt="Ce" style="zoom:50%;" />
+
+
+
+Cliccando sulle rispettive categorie si apriranno i seguenti tabs, il primo è attività generica:
 
 ![NuovaAttivita](C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\NuovaAttivita.PNG)
 
@@ -182,6 +187,8 @@ Libro:
 I campi sono tutti obbligatori. Una volta cliccato sul pulsante invia l'utente sarà inviato alla pagina principale e sarà mostrato un messaggio di operazione completata con successo.
 
 Per quanto riguarda il tab "Libro" esso permette di scegliere se proporre un nuovo libro oppure se sceglierne uno già approvato.
+
+![](C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\LibroConsigliato.PNG)
 
 <h3 id="Creditometro">Creditometro</h3>
 
@@ -205,7 +212,7 @@ Il direttore ha anche accesso ad una pagina di gestione attività:
 
 ![](C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\AttivitaDaApprovare.PNG)
 
-All'interno vengono visualizzate tutte le attività da approvare tranne i libri che vengono gestiti direttamente dai singoli tutor. Il direttore può scegliere se approvare o rifiutare un attività oppure vederne il dettaglio cliccando sul titolo. Quando un attività viene approvata vengono notificati tutti gli utenti dell'app.
+All'interno vengono visualizzate tutte le attività da approvare tranne i libri, che vengono gestiti direttamente dai singoli tutor. Il direttore può scegliere se approvare o rifiutare un attività oppure vederne il dettaglio cliccando sul titolo. Quando un attività viene approvata vengono notificati tutti gli utenti dell'app.
 
 <h3 id="HomeTutor">Home Tutor</h3>
 
@@ -213,7 +220,7 @@ Per quanto riguarda i tutor, essi avranno a disposizione una pagina dedicata att
 
 ![ApprovazioneCrediti](C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\ApprovazioneCrediti.PNG)
 
-Sulla destra troviamo la lista dei mentee con relativa percentuale di crediti approvati, in blue, e crediti non approvati, in giallo. Cliccando sui rispettivi nomi è possibile aprire una seconda table attraverso cui approvare le attività svolte dal mentee selezionato.
+Sulla sinistra troviamo la lista dei mentee con relativa percentuale di crediti approvati, in blue, e crediti non approvati, in giallo. Cliccando sui rispettivi nomi è possibile aprire una seconda table attraverso cui approvare le attività svolte dal mentee selezionato.
 
 <h3 id="HomeSegreteria">Home Segreteria</h3>
 
@@ -221,12 +228,12 @@ La segreteria ha accesso ad un area riservata alla gestione degli studenti, in c
 
 ![TertulieATema](C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\TertulieATema.PNG)
 
-Cliccando su aggiorna verrà mostrato un secondo menù di modifica attività oppure è possibile accettare o rifiutare l'attività. Quando una tertulia viene accettata vengono notificati tutti gli utenti dell'app.
+Cliccando su aggiorna verrà mostrato un secondo menù di modifica attività oppure è possibile accettare o rifiutare direttamente l'attività. Quando una tertulia viene accettata vengono notificati tutti gli utenti dell'app.
 
 
 <h2 id=" BaseDiDati"> Base di dati</h2>
 
-Di seguito il diagramma ER della base di dati.
+Di seguito il diagramma della base di dati.
 
 <img src="C:\Users\CalandraVM\Desktop\Prova Finale\ER_DB_Diagram.drawio.svg" alt="RE DB schematic" style="zoom: 150%;" />
 
@@ -237,25 +244,26 @@ Di seguito il diagramma ER della base di dati.
 <h2 id="Tecnologie">Tecnologie</h2>
 
 <div style="text-align: justify">
-Per il conseguimento di tali obiettivi è stato scelto come linguaggio di programmazione JAVA 11, ad oggi esiste un numero notevole di applicazioni e siti web che fanno uso di questo linguaggio. <br><br>Infatti JAVA  è un linguaggio ad alto livello orientato agli ogetti con una forte tipizzazione statica che si appoggia sulla omonima piattaforma, JVM, per questo motivo JAVA, che è linguaggio sia compilato che interpretato, riesce a girare su un numero considerevole di dispositivi differenti con prestazioni mediocri in termini di tempo di esecuzione e prestazioni.<br><br>
-Grazie a queste sue caratteristiche JAVA, nelle sue varie versioni, ha creato intorno a se nel corso degli anni un forte interesse da parte delle comunity di sviluppatori che hanno creato innumerevoli librerie e framework per questo linguaggio.<br><br>
-A tal proposito si è scelto di adottare Spring Boot come framework per lo sviluppo web della applicativo. Spring Boot è un evoluzione del già noto Spring, il framework di JAVA più utilizzato. Spring permette di programmare in maniera facile, veloce e sicura grazie ad una serie di librerie native che implementano le best practice per il soddisfacimento di vari use-case in termini di sicurezza e performance in grado di collabborare tra loro permettendo così allo sviluppatore di poter concentrare i propri sforzi non sulla tecnologia ma sulla logica di busisness che dovrà animare l'appliccativo sviluppato. <br><br>Spring Boot introduce un livello di astrazione ancora superiore, esso infatti implementa una gestione facilitata delle configurazioni delle singole librerie del framework grazie ad un file di configurazione globale e una gestione automatica delle compatibilità delle versioni tra le varie librerie del framework. L'uso commerciale di Spring è regolato dalla licenza Apache 2.0.
+Per il conseguimento di tali obiettivi è stato scelto come linguaggio di programmazione JAVA 11, a oggi esiste un numero notevole di applicazioni e siti web che fanno uso di questo linguaggio. <br><br>Infatti JAVA  è un linguaggio ad alto livello orientato agli oggetti con una forte tipizzazione statica che si appoggia sulla omonima piattaforma, JVM, per questo motivo JAVA, che è linguaggio sia compilato che interpretato, riesce a girare su un numero considerevole di dispositivi differenti con prestazioni mediocri in termini di tempo di esecuzione e prestazioni.<br><br>
+Grazie a queste sue caratteristiche JAVA, nelle sue varie versioni, ha creato intorno a se nel corso degli anni un forte interesse da parte delle community di sviluppatori che hanno creato innumerevoli librerie e framework per questo linguaggio.<br><br>
+A tal proposito si è scelto di adottare Spring Boot come framework per lo sviluppo web della applicativo. Spring Boot è un evoluzione del già noto Spring, il framework di JAVA più utilizzato. Spring permette di programmare in maniera facile, veloce e sicura grazie ad una serie di librerie native che implementano le best practice per il soddisfacimento di vari use-case in termini di sicurezza e performance in grado di collaborare tra loro permettendo così allo sviluppatore di poter concentrare i propri sforzi non sulla tecnologia ma sulla logica di business che dovrà animare l'applicativo sviluppato. <br><br>Spring Boot introduce un livello di astrazione ancora superiore, esso infatti implementa una gestione facilitata delle configurazioni delle singole librerie del framework grazie ad un file di configurazione globale e una gestione automatica delle compatibilità delle versioni tra le varie librerie del framework. L'uso commerciale di Spring è regolato dalla licenza Apache 2.0.
 <div style="text-align: justify">
     Per quanto riguarda la gestione del processo di build del progetto è stato scelto Maven. Maven è un framework dichiarativo di gestione del progetto che segue specifiche convenzioni per quanto riguarda la struttura dello stesso. Maven fa il build di un progetto usando il suo Project Object Model (POM) file e un insieme di plugin. Una volta che si familiarizza con un progetto Maven si è in grado di conoscere qualsiasi progetto Maven e ciò fa risparmiare molto tempo allo sviluppatore. In questo progetto sono state utilizzate principalmente le funzioni di gestione delle dependencies usate nel progetto, di build, di unit testing report e coverage. 
 </div>
 
+
 <div style="text-align: justify">
     Per quanto riguarda la persistenza dei dati la scelta è ricaduta su una database SQL di largo utilizzo, MySQL. Tale tecnologia permette alte prestazioni e scalabilità su Online Transaction Processing (OLTP) application ed è transaction safe, in quanto supporta pienamente operazioni ACID. Inoltre è molto semplice da utilizzare ed è distribuito in una versione Community con licenza GPL, General Public License. <br> <br>I software che vengono distribuiti con tale licenza possono essere utilizzati per tutti gli scopi, inclusi scopi commerciali e persino come strumento per la creazione di software proprietario.
 </div>
-
 <div style="text-align: justify">
-	Infine si è scelto di effettuare il deploy dell'applicativo utilizzando la containerizzazione piuttosto che la virtualizzazione. La conteinerizzazione permette maggiore scalabilità e gestione delle risorse rispetto alla virtualizzazione, in questo modo ogni applicativo viene eseguito in processi che consumano il minimo delle risorse e che sono isolati tra loro. Inoltre la conteinerizzazione permette di impacchettare il software con tutte le sue dependencies e distribuirlo da un computing env ad un altro senza alcun problema di compatibilità. L'implementazione scelta, nonchè la più famosa e quella su cui si è poi basato lo standard di mercato,"containerd" della CNCF, è Docker. Docker Engine ha un piano di utilizzo gratuito ad uso personale o commerciale regolato dalla licenza Apache 2.0. </div>
+	Infine si è scelto di effettuare il deploy dell'applicativo utilizzando la containerizzazione piuttosto che la virtualizzazione. La conteinerizzazione permette maggiore scalabilità e gestione delle risorse rispetto alla virtualizzazione, in questo modo ogni applicativo viene eseguito in processi che consumano il minimo delle risorse e che sono isolati tra loro. Inoltre la conteinerizzazione permette d'impacchettare il software con tutte le sue dependencies e distribuirlo da un computing env ad un altro senza alcun problema di compatibilità. L'implementazione scelta, nonchè la più famosa e quella su cui si è poi basato lo standard di mercato,"containerd" della CNCF, è Docker. Docker Engine ha un piano di utilizzo gratuito a uso personale o commerciale regolato dalla licenza Apache 2.0. </div>
+
 
 <h2 id="DettaglioImplementazioniTecnologiche"> Dettaglio implementazioni tecnologiche</h2>
 
 <h3 id="GestioneAutenticazioneAutorizzazione">Gestione Autenticazione e Autorizzazione</h3>
 
-Le esigenze di procetto hanno rivelato la necessità dell'implementazione di un layer di security nella web application, in particolar modo è venuto fuori dalle analisi che:
+Le esigenze di progetto hanno rivelato la necessità dell'implementazione di un layer di security nella web application, in particolar modo è venuto fuori dalle analisi che:
 
 - Occorre permettere l'accesso al portale solo ad utenti registrati, per tenere traccia dei fruitori del portale e per permettere future implementazioni correlate.
 - Evitare che gli studenti abbiano accesso ad aree del portale riservate alla segreteria, alla direzione e ai tutor.
@@ -307,7 +315,7 @@ public class PasswordEncoder {
 
 Tale password encoder è poi inglobato nella configurazione globale di Spring Security grazie all'annotation *@Bean*.
 
-BCrypt negli ultimi anni è diventato uno standard nell'hashing delle password, è basato sull'agoritmo blowfish ed aggiunge un salt ed un fattore di costo all'hashing, in questo modo è resistente ad attacchi di tipo *rainbow table*. Inoltre è una funzione adattiva, cioè la sua complessità aumenta con il numero di iterazione, per tale motivo è anche resistente ad attacchi di tipo *brute force*. Da una serie di crypto-analisi è venuto fuori che BCrypt è molto più complesso da "crakkare" rispetto a SHA-512, in quanto quest'ultimo è messo a dura prova dal calcolo parallelizzato e dall'utilizzo di GPU sempre più potenti a differenza di BCrypt che non subisce tali fattori.
+BCrypt negli ultimi anni è diventato uno standard nell'hashing delle password, è basato sull'agoritmo blowfish ed aggiunge un salt ed un fattore di costo all'hashing, in questo modo è resistente ad attacchi di tipo *rainbow table*. Inoltre è una funzione adattiva, cioè la sua complessità aumenta con il numero di iterazione, per tale motivo è anche resistente ad attacchi di tipo *brute force*. Da una serie di crypto-analisi è poi emerso che BCrypt è molto più complesso da "crakkare" rispetto a SHA-512, in quanto quest'ultimo è messo a dura prova dal calcolo parallelizzato e dall'utilizzo di GPU sempre più potenti a differenza di BCrypt che non subisce tali fattori.
 
 <h4 id="Autorizzazione">Autorizzazione</h4>
 
@@ -363,7 +371,7 @@ Di seguito sono riportate le configurazioni di logout:
 .invalidateHttpSession(true);
 ```
 
-Da notare che sono stati cambiati tutti i valori di default degli endpoint, questa buona pressi evita che il framework sia facilmente identificabile dall'esterno, evitando così attacchi mirati.
+Da notare inoltre che sono stati cambiati tutti i valori di default degli endpoint, questa buona pressi evita che il framework sia facilmente identificabile dall'esterno, evitando così attacchi mirati.
 
 Il login form di Spring deve contenere i seguenti attributi:
 
@@ -413,7 +421,7 @@ public DaoAuthenticationProvider daoAuthenticationProvider() {
 }
 ```
 
-In questo caso viene detto al provider che l'autenticazione va effettuata usando il bcryptPasswordEncoder dichiarato precedentemente e lo user *userService*, una classe che si occupa esclusivamente di interagire con la entity *AppUser* e che implementa l'interfaccia *UserDetailService* che richiede di implementare il seguente metodo:
+In questo caso viene detto al provider che l'autenticazione va effettuata usando il bcryptPasswordEncoder dichiarato precedentemente e lo *userService*, una classe che si occupa esclusivamente di interagire con la entity *AppUser* e che implementa l'interfaccia *UserDetailService* che richiede di implementare il seguente metodo:
 
 ```java
 @Service
@@ -446,19 +454,19 @@ Grazie a tale  override è possibile effettuare il login alla web app usando com
 
 Per quanto riguardo la registrazione si è adottato un meccanismo di verifica a 2 passaggi, di seguito sono elecanti i punti principali:
 
-- Registrazione su apposita pagina raggiugibile tramite endpoint "/registration" o tramite opportuna page di login.
+- Registrazione su apposita pagina raggiungibile tramite endpoint "/registration" o tramite opportuna page di login.
 
   <img src="C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\RegistrationForm.PNG" alt="RegistrationForm" style="zoom:50%;" />
 
-- Confema dell'avvenuta registrazione correttamete o incorrettamente.
+- Conferma dell'avvenuta registrazione correttamente o incorrettamente.
 
   <img src="C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\ErrorInRegistrationForm.PNG" alt="ErrorInRegistrationForm" style="zoom:50%;" />
 
-  Or:
+  Oppure:
 
   <img src="C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\ConfirmRegistration.PNG" alt="ConfirmRegistration" style="zoom:50%;" />
 
-- Ricevimento della mail contenente il token nella url di conferma.
+- Ricevimento della mail contenente il token nella URL di conferma.
 
   ![ConfirmationEmail](C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\ConfirmationEmail.png)
 
@@ -470,11 +478,11 @@ Per quanto riguardo la registrazione si è adottato un meccanismo di verifica a 
 
   <img src="C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\ConfirmEmailMessage.PNG" alt="ConfirmEmailMessage" style="zoom:50%;" />
 
-Il processo di registrazione segue dunque un percoso un po' più articolato rispetto all'autenticazione, per tale motivo si è provvisto a creare una rappresentazione grafica opportuna tramite sequece diagram.
+Il processo di registrazione segue dunque un percorso un po' più articolato rispetto all'autenticazione, per tale motivo si è provvisto a creare una rappresentazione grafica opportuna tramite sequence diagram.
 
 ![RegistrationSequenceiagram](C:\Users\CalandraVM\Desktop\Prova Finale\RegistrationSequenceiagram.svg)
 
-In questo modo è possibile avere una visione di insieme del processo di registrazione. Come si può notare i nomi dei processi sono stati  scelti in modo da poter essere auto esplicativi nella compresione di tale meccanismo. Unica nota che occorre fare è relativa agli ultimi step del processo.
+In questo modo è possibile avere una visione di insieme del processo di registrazione. Come si può notare i nomi dei processi sono stati  scelti in modo da poter essere auto esplicativi nella comprensione di tale meccanismo. Unica nota che occorre fare è relativa agli ultimi step del processo, di seguito approfonditi.
 
 <h4 id="MailService">Mail Service</h4>
 
@@ -487,9 +495,9 @@ Come si può ben notare negli ultimi passi del processo di registrazione viene f
 </dependency>
 ```
 
-Le interfaccie e le classi per tale supporto sono organizzate in questo modo:
+Le interfacce le classi per tale supporto sono organizzate in questo modo:
 
-- **EmailSender interface**: è l'interfaccia di primo livello che integra le funionalità base per l'invio di emails. 
+- **EmailSender interface**: è l'interfaccia di primo livello che integra le funzionalità base per l'invio di email. 
 - **JavaMailSender interface**: è la subinterface di *MailSender*. Supporta MIME messages ed è usata in congiunzione con la classe *MimeMessageHelper* per la creazione di un *MimeMessage*.
 - **MailSender class** è l'implementazione dell'interfaccia  *JavaMailSender*.
 - **SimpleMailMessage class**: viene utilizzata per creare email usuali, con campi di to, from, cc, oggetto e testo.
@@ -574,15 +582,16 @@ Da notare che il metodo è stato etichettato con l'annotation @Async, in questo 
 
 <h4 id="SpringMVC">Spring MVC</h4>
 <div style="text-align: justify">
-    Spring MVC è il framework di Spring per lo sviluppo di web app. Proprio come suggerisce il suo nome segue il design pattern MVC e fa uso del <i>DispatcherServlet</i>. Il <i>DispatcherServlet</i> è una classe che agisce da front controller nell'architettura web, essa riceve le richieste in entratrata, converte i payload delle richieste con le rappresentazioni dei dati interne alla web app, manda le rappresentazioni dei dati ai model per successivi riprocessamenti e infine effettua il rendering delle view con i dati processati.
+    Spring MVC è il framework di Spring per lo sviluppo di web app. Proprio come suggerisce il suo nome segue il design pattern MVC e fa uso del <i>DispatcherServlet</i>. Il <i>DispatcherServlet</i> è una classe che agisce da front controller nell'architettura web, essa riceve le richieste in entrata, converte i payload delle richieste con le rappresentazioni dei dati interne alla web app, manda le rappresentazioni dei dati ai model per successivi riprocessamenti e infine effettua il rendering delle view con i dati processati.
 </div>
+
 
 
 ![The-Spring-MVC-architecture](C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\The-Spring-MVC-architecture.png)
 
 Più precisamente:
 
-- Il *model* layer si occupa delle strutture dati e della busisness logic della web app implementata nelle entities, nei repository e nei services.
+- Il *model* layer si occupa delle strutture dati e della business logic della web app implementata nelle entities, nei repository e nei services.
 - Il *controller* layer si occupa di legare dati e template in modo che possano essere poi elaborati dal *view resolver*. 
 - Le *view* forniscono la rappresentazione grafica finale dei dati attraverso cui lo user può interagire.  
 
@@ -628,8 +637,9 @@ public class MvcConfig implements WebMvcConfigurer {
 }
 ```
 <div style="text-align: justify">
-    E' stata inserita una directory nel file system dove effettuare lo store delle immagini della bacheca ed è stata registrata come custom registry resource location. In questo modo Spring MVC può caricare da questa location le risorse e comporre correttamente le views. Notasi che la classe è stata etichettata con l'annotation <i>@Configuration</i>, in questo modo Spring Boot è in grado di riconoscere la configurazione ed effettuarne il bind con l'env. globale. Tale configurazione poteva essere fatta anche tramite file <i>application.properties</i> ma per maggiore chiarezza si è preferito procedere in manira classica.
+    E' stata inserita una directory nel file system dove effettuare lo store delle immagini della bacheca ed è stata registrata come custom registry resource location. In questo modo Spring MVC può caricare da questa location le risorse e comporre correttamente le views. Notasi che la classe è stata etichettata con l'annotation <i>@Configuration</i>, in questo modo Spring Boot è in grado di riconoscere la configurazione ed effettuarne il bind con l'env. globale. Tale configurazione poteva essere fatta anche tramite file <i>application.properties</i> ma per maggiore chiarezza si è preferito procedere in maniera classica.
 </div>
+
 
 <div style="text-align: justify">
 A questo punto possiamo passere al layer Controller, esso viene sviluppato all'interno del package <i>com.vincenzomariacalandra.provaFinale.BachecaUniCollege.controller</i>. Ogni classe al suo interno è una classe controller che mappa un apposito template contenuto all'interno della cartella <i>/BachecaUniCollege/src/main/resources/templates</i>. Per maggior rigore si è scelto chiamare di chiamare ogni template con lo stesso nome della corrispettiva classe controller.
@@ -718,7 +728,7 @@ spring.thymeleaf.prefix=classpath:/templates/
 spring.thymeleaf.suffix=.html
 ```
 
-Per attivare l'integrazione occore importare i namespace nel seguente modo:
+Per attivare l'integrazione occorre importare i namespace nel seguente modo:
 
 ```html
 <!doctype html>
@@ -743,7 +753,7 @@ Un banale utilizzo che ne è stato fatto nel progetto è il seguente:
 
 Altri tag utilizzati sono stati:
 
-- <i>th:text=""</i> permette la sostituzione del testo "Example..." con quello contenuto all'interno della varibile <i>"${msg}"</i>.
+- <i>th:text=""</i> permette la sostituzione del testo "Example..." con quello contenuto all'interno della variabile <i>"${msg}"</i>.
 
 ```html
 <p th:text="${msg}">Example text for confirmation page</p>
@@ -762,8 +772,6 @@ Per una totale comprensione dei tag introdotti si rimanda alla documentazione uf
 <div style="text-align: justify">
 Come già visto in precedenza si è provvisto a creare un apposita configurazione per permettere alla classe <i>NuovaAttivitaController</i> di salvare i file img in un apposita directory nel file system e successivamente permettere così alle view di poterle renderizzare. 
 </div>
-
-
 Il processo di salvataggio delle immagini avviene in 3 fasi:
 
 - Caricamento del file tramite apposito field nel form di creazione attività. 
@@ -784,7 +792,7 @@ Il processo di salvataggio delle immagini avviene in 3 fasi:
 
 Viene specificato che l'encoding sarà di tipo *multipart* e *form-data* e che il file caricato dovrà essere con estensione *png* o *jpg*.
 
-- Il file viene recepito dal'apposito controller che procede alla validazione dell'activity.
+- Il file viene recepito dall'apposito controller che procede alla validazione dell'activity.
 
 ```java
 @RequestMapping(path = "/nuovaAttivita", method = RequestMethod.POST)
@@ -886,8 +894,9 @@ spring.servlet.multipart.enabled=true
 
 <h3 id="Testing">Testing</h3>
 <div style="text-align: justify">
-Il testing è stato un punto chiave nello sviluppo della web app, infatti si è evoluto con essa. In origine, quando ancora l'interfaccia grafica non era stata sviluppata e l'app comunica con l'esterno tramite un RESTController, la metologia di testing principale è stata relegata all'utilizzo di software come Postman.
+Il testing è stato un punto chiave nello sviluppo della web app, infatti si è evoluto con essa. In origine, quando ancora l'interfaccia grafica non era stata sviluppata e l'app comunica con l'esterno tramite un RESTController, la metodologia di testing principale è stata relegata all'utilizzo di software come Postman.
 </div>
+
 
 <div style="text-align: justify">
 Postman è una piattaforma API per la costruzione e l'utilizzo di API. Postman semplifica ogni fase del ciclo di vita delle API e snellisce la collaborazione in modo da poter creare API migliori, più velocemente. 
@@ -996,11 +1005,11 @@ public class ActivityServiceImplUnitTest {
 
 Il nome della classe fa riferimento alla classe "bersaglio" dello unit test.
 
-La classe é etichettata con l'annotation <i>@ExtendWith(MockitoExtension.class)</i>, utilizzata per abilitare Mockito, e opzionalmente con l'annotation <i>@RunWith(JUnitPlatform.class)</i> utilizzata per runnare la classe di unit test singorlamente.
+La classe é etichettata con l'annotation <i>@ExtendWith(MockitoExtension.class)</i>, utilizzata per abilitare Mockito, e opzionalmente con l'annotation <i>@RunWith(JUnitPlatform.class)</i> utilizzata per runnare la classe di unit test singolarmente.
 
-Ogni attributo della classe di test echittato con l'annotation <i>@Mock</i> verrà fatto diventare una classe fantoccio che restituira <i>null</i> ogni volta che verrà chiamato un suo metodo dalla classe che subisce il test salvo particolari casi in cui chi scrive il test richiede che tale comportamento venga sovrascritto da un altro.
+Ogni attributo della classe di test etichettato con l'annotation <i>@Mock</i> verrà fatto diventare una classe fantoccio che restituirà <i>null</i> ogni volta che verrà chiamato un suo metodo dalla classe che subisce il test salvo particolari casi in cui chi scrive il test richiede che tale comportamento venga sovrascritto da un altro.
 
-Il metodo etichetta con l'annotation <i>@BeforeEach</i> verrà chiamato prima di ogni metodo etichetta con l'annotation <i>@Test</i>, quest ultimi contengono appunto i test che verrano svolti sul metodo della classe bersaglio.
+Il metodo etichetta con l'annotation <i>@BeforeEach</i> verrà chiamato prima di ogni metodo etichetta con l'annotation <i>@Test</i>, questi ultimi contengono appunto i test che verranno svolti sul metodo della classe bersaglio.
 
  ```java
  @Test
@@ -1029,7 +1038,7 @@ I punti salienti sono i seguenti:
 
 - Il metodo <i>reset(activityRepository)</i> si occupa resettare il mock da eventuali override di comportamenti precedenti e di azzerarne il numero di istanze.
 - Il metodo <i>lenient().when(activityRepository.findById(id)).thenReturn(optional);</i> si occupa di fare appunto l'override del comportamento del metodo findById(...) della classe fantoccio.
-- Infine, ma non per ultimo, il metodo <i>assertNull(service.deleteActivity(id));</i> si occupa di effetuare il test sul metodo della classe bersaglio, in questo caso verifica se ritorna valore nullo.
+- Infine, ma non per ultimo, il metodo <i>assertNull(service.deleteActivity(id));</i> si occupa di effettuare il test sul metodo della classe bersaglio, in questo caso verifica se ritorna valore nullo.
 - Il metodo <i>verify(activityRepository, VerificationModeFactory.times(1)).findById(id);</i> verifica che il metodo sia stato chiamato correttamente.
 
 I risultati ottenuti grazie a questa strategia di testing sono valutabili in termini di velocità di verifica e destrezza, infatti hanno permesso di velocizzare lo sviluppo e la risoluzione di errori prima che l'utente finale possa averli potuti sperimentare durante l'utilizzo del prodotto causando così disagio e insoddisfazione. 
@@ -1050,7 +1059,7 @@ Si è poi passati ai test di **usabilità**. I test di usabilità sono una parte
 - Testata la navigazione del sito: Menu, pulsanti o link a diverse pagine del tuo sito dovrebbero essere facilmente visibili e coerenti su tutte le pagine web.
 -  Testato il contenuto: Il contenuto dovrebbe essere leggibile senza errori di ortografia o grammatica.    Le immagini, se presenti, dovrebbero contenere un testo "alt".
 
-Il risultato di tale test, effettuato su 1/3 della popolazione finale che utilizzerà l'app, ha permesso la risoluzione di svariati problemi inosservabili all'occhio dello sviluppatore emigliorando così la qualità del prodotto finale.
+Il risultato di tale test, effettuato su 1/3 della popolazione finale che utilizzerà l'app, ha permesso la risoluzione di svariati problemi inosservabili all'occhio dello sviluppatore e migliorando così la qualità del prodotto finale.
 
 Continuando, si è passati ai test di **compatibilità**. I test di compatibilità assicurano che la web app venga visualizzata correttamente su diversi dispositivi. Questo include: 
 
@@ -1079,7 +1088,7 @@ Di seguito i risultati ottenuti:
 
 I risultati sono il linea rispetto a quanto ci si aspettava, minime differenze tra i browser sono dovute alle differenti condizioni di zoom di default.
 
-Infine sono stati effetuati dei test sull'infrattura cloud per testarne la resistenza minima ad attacchi di tipo *DDoS*. Il cloud provider, *OVH*, ha immediatamente provvisto a deviare il traffico sull'infrastruttura di mitigazione notificando l'utente dell'avvenuto attacco.
+Infine sono stati effettuati dei test sull'infrastruttura cloud per testarne la resistenza minima ad attacchi di tipo *DDoS*. Il cloud provider, *OVH*, ha immediatamente provvisto a deviare il traffico sull'infrastruttura di mitigazione notificando l'utente dell'avvenuto attacco.
 
 ![DDoS](C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\DDoS.PNG)
 
@@ -1089,11 +1098,11 @@ Infine sono stati effetuati dei test sull'infrattura cloud per testarne la resis
 
 Per prima cosa occorre effettuare la generazione del file *.jar*, per fare ciò:
 
-- E'  possibbile aprire il progetto con un IDE che abbia l'estensione per *Maven* installa, fare tasto destro sul proggetto e cliccare su *maven install*.
+- E'  possibile aprire il progetto con un IDE che abbia l'estensione per *Maven* installa, fare tasto destro sul progetto e cliccare su *maven install*.
 
 <img src="C:\Users\CalandraVM\Desktop\Prova Finale\Screen-BachecaUniCollege\MavenInstall.png" alt="MavenInstall" style="zoom:50%;" />
 
-- Eseguire direttamente il comando da terminale all'interno della root directory del proggetto.
+- Eseguire direttamente il comando da terminale all'interno della root directory del progetto.
 
   ```bash
   mvn install
@@ -1103,7 +1112,7 @@ Verrà generato il file *.jar* all'interno della cartella *target*.
 
 <h4 id="Docker">Docker</h4>
 
-Come già accennato in precedenza è stato scelto di utilizzare la conteinerizzazione come metologia di deploy. Per fare ciò è stato definito un Dockerfile contenente tutte le informazioni necessarie pe costruire la nostra immagine.
+Come già accennato in precedenza è stato scelto di utilizzare la containerizzazione come metodologia di deploy. Per fare ciò è stato definito un Dockerfile contenente tutte le informazioni necessarie pe costruire la nostra immagine.
 
 ```yaml
 FROM openjdk:11
@@ -1191,17 +1200,17 @@ Come possiamo ben vedere abbiamo 3 layers di definizione:
     Soffermandosi brevemente su tale definizione, sottolineamo alcune parti salienti:
     
     - *build: .* indica che l'immagine verrà creata con il Dockerfile.
-    - *volumes:* dichiara che le dirs l'elencate sarranno legate ai volumi dichiarati sotto.
+    - *volumes:* dichiara che le dirs l'elencate saranno legate ai volumi dichiarati sotto.
     - *ports: 80:8080* mappa la porta 80 del server con la porta 8080 del container in modo che sia raggiungibile dall'esterno.
     - *networks:* contiene una lista di reti attraverso cui il container potrà comunicare.
-    - *depends_on*: dichiara che tale service dipende dal *mysqldb*, dunque prima di essere avviato dovrà attendere le tutte le dipenze siano risolte.
+    - *depends_on*: dichiara che tale service dipende dal *mysqldb*, dunque prima di essere avviato dovrà attendere le tutte le dipendenze siano risolte.
 
 - Il secondo layer contiene i volumi che verranno condivisi con il container che contiene la SpringBoot app, in particolare:
 
   - *BachecaUniCollege-data* conterrà le immagini salvate nel filesystem.
   - *BachecaUniCollege-log* conterrà le informazioni di log generate dalla web app e dal cotainer. **Occorre che la cartella */var/log/BachecaUniCollege* esista già, altrimenti l'esecuzione fallira.** 
 
-- Il terzo layer contiene la rete che connetterrà i 2 services dichiarati sopra.
+- Il terzo layer contiene la rete che connetterà i 2 services dichiarati sopra.
 
 A questo punto non resta che effettuare il build e il run:
 
@@ -1226,7 +1235,7 @@ docker-compose down
 
 <h4 id="Logging">Logging</h4>
 
-Per quanto riguarda il logging Spring Boot Starter integra *Apache Commons Logging* e *Logback*, inoltre implemeta un interfaccia che standardizza il loro utilizzo, *slf4j o Simple Logging Facade for Java*. 
+Per quanto riguarda il logging Spring Boot Starter integra *Apache Commons Logging* e *Logback*, inoltre implementa un interfaccia che standardizza il loro utilizzo, *slf4j o Simple Logging Facade for Java*. 
 
 Un esempio di utilizzo lo troviamo nell'*EmailService*:
 
@@ -1259,8 +1268,8 @@ public class EmailService implements EmailSender {
     ...
 ```
 
-- Il logger viene instanziato con riferimento alla classe da monitorare con l'aiuto del *LoggerFactory*.
-- Una volta instanziato è possibile selezionare il tipo di messaggio di logging, *es. Error*, assegnare un tag e un messaggio. 
+- Il logger viene istanziato con riferimento alla classe da monitorare con l'aiuto del *LoggerFactory*.
+- Una volta istanziato è possibile selezionare il tipo di messaggio di logging, *es. Error*, assegnare un tag e un messaggio. 
 
 <h4 id="Monitoring">Monitoring</h4>
 
