@@ -16,8 +16,6 @@ import java.util.Random;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.internal.verification.VerificationModeFactory;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -41,24 +39,24 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 @ExtendWith(MockitoExtension.class)
 public class ActivityServiceImplUnitTest {
-    
-    @Mock
+
+	@Mock
 	private ActivityRepository activityRepository;
 
-    @Mock
+	@Mock
 	private UserService userService;
 
-    @Mock
+	@Mock
 	private EmailSender emailSender;
 
-    private ActivityService service;
-    
-    @BeforeEach
-    public void setUp() {
-    	
-    	service = new ActivityService(activityRepository, emailSender, userService);
-    	
-    }
+	private ActivityService service;
+
+	@BeforeEach
+	public void setUp() {
+
+		service = new ActivityService(activityRepository, emailSender, userService);
+
+	}
 
 	@Test
 	public void contextLoads() throws Exception {
@@ -70,14 +68,13 @@ public class ActivityServiceImplUnitTest {
 
 		Random rand = new Random();
 		Long id = rand.nextLong();
-		
+
 		assertNull(service.findActivityById(null));
-		
-		
+
 		reset(activityRepository);
 		Activity activity = new Activity();
-    	lenient().when(activityRepository.findById(id)).thenReturn(Optional.of(activity));
-    	
+		lenient().when(activityRepository.findById(id)).thenReturn(Optional.of(activity));
+
 		assertTrue(service.findActivityById(id).isPresent());
 		verifyFindByIdIsCalledOnce(id);
 
@@ -88,7 +85,7 @@ public class ActivityServiceImplUnitTest {
 	public void addNewActivityTest() {
 
 		Activity activity = null;
-		assertEquals("Invalid activity!" , service.addNewActivity(activity));
+		assertEquals("Invalid activity!", service.addNewActivity(activity));
 
 		TemporalUnit day = ChronoUnit.DAYS;
 		TemporalUnit hour = ChronoUnit.HOURS;
@@ -118,29 +115,29 @@ public class ActivityServiceImplUnitTest {
 		assertEquals("Title should not be empty!", service.addNewActivity(activity));
 
 		activity.setTitle("012345678901234567890123456");
-		assertEquals( "Title length should be less then 26 character!", service.addNewActivity(activity));
+		assertEquals("Title length should be less then 26 character!", service.addNewActivity(activity));
 
 		activity.setTitle("Title");
 		activity.setDescrizione(null);
-		assertEquals( "Description should not be empty!", service.addNewActivity(activity));
+		assertEquals("Description should not be empty!", service.addNewActivity(activity));
 
 		activity.setDescrizione("");
-		assertEquals( "Description should not be empty!", service.addNewActivity(activity));
+		assertEquals("Description should not be empty!", service.addNewActivity(activity));
 
 		TemporalUnit tu = ChronoUnit.DAYS;
 		activity.setDescrizione("Descrizione");
 
 		activity.setActivityType(ActivityType.VISITA_CULTURALE);
 		activity.setStartDate(Date.from(Instant.now().minus(1, tu)));
-		assertEquals( "Start Date should not be before now!", service.addNewActivity(activity));
+		assertEquals("Start Date should not be before now!", service.addNewActivity(activity));
 
 		activity.setActivityType(ActivityType.VOLONTARIATO);
 		activity.setStartDate(Date.from(Instant.now().minus(1, tu)));
-		assertEquals( "Start Date should not be before now!", service.addNewActivity(activity));
+		assertEquals("Start Date should not be before now!", service.addNewActivity(activity));
 
 		activity.setStartDate(Date.from(Instant.now().plus(1, tu)));
 		activity.setEndDate(Date.from(Instant.now()));
-		assertEquals( "Start date should not be after end date!", service.addNewActivity(activity));
+		assertEquals("Start date should not be after end date!", service.addNewActivity(activity));
 
 		activity.setStartDate(Date.from(Instant.now().plus(1, tu)));
 		activity.setEndDate(Date.from(Instant.now().plus(1, tu)));
@@ -148,12 +145,12 @@ public class ActivityServiceImplUnitTest {
 
 		activity.setStartTime(Date.from(Instant.now().plus(1, tu)));
 		activity.setEndTime(Date.from(Instant.now()));
-		assertEquals( "Start time should not be after end time!", service.addNewActivity(activity));
+		assertEquals("Start time should not be after end time!", service.addNewActivity(activity));
 
 		tu = ChronoUnit.DAYS;
 		activity.setActivityType(ActivityType.TERTULIA_A_TEMA);
 		activity.setStartDate(Date.from(Instant.now().minus(1, tu)));
-		assertEquals( "Start Date should not be before now!", service.addNewActivity(activity));
+		assertEquals("Start Date should not be before now!", service.addNewActivity(activity));
 
 		activity.setActivityType(ActivityType.TERTULIA_A_TEMA);
 		activity.setStartDate(Date.from(Instant.now().plus(1, tu)));
@@ -161,7 +158,7 @@ public class ActivityServiceImplUnitTest {
 
 		activity.setStartTime(Date.from(Instant.now().plus(1, tu)));
 		activity.setEndTime(Date.from(Instant.now()));
-		assertEquals( "Start time should not be after end time!", service.addNewActivity(activity));
+		assertEquals("Start time should not be after end time!", service.addNewActivity(activity));
 
 		tu = ChronoUnit.DAYS;
 		activity.setStartDate(Date.from(Instant.now().plus(1, tu)));
@@ -175,124 +172,125 @@ public class ActivityServiceImplUnitTest {
 
 	@Test
 	public void deleteActivityTest() {
-		
+
 		Random rand = new Random();
 		Long id = rand.nextLong();
-		
-	    Activity activity = new Activity();
-	    Optional<Activity> optional = Optional.of(activity);
-	    
-	    reset(activityRepository);
-	    
-	    lenient().when(activityRepository.findById(id)).thenReturn(optional);
-			    
+
+		Activity activity = new Activity();
+		Optional<Activity> optional = Optional.of(activity);
+
+		reset(activityRepository);
+
+		lenient().when(activityRepository.findById(id)).thenReturn(optional);
+
 		assertNull(service.deleteActivity(id));
 		verifyFindByIdIsCalledOnce(id);
-	    
+
 		reset(activityRepository);
 		lenient().when(activityRepository.findById(null)).thenReturn(optional);
 		assertEquals("Activity id could not be null!", service.deleteActivity(null));
 	}
-	
+
 	@Test
 	public void updateActivityTest() {
-		
+
 		TemporalUnit tuD = ChronoUnit.DAYS;
 		TemporalUnit tuH = ChronoUnit.HOURS;
 		Date startDate = Date.from(Instant.now().plus(1, tuD));
 		Date startTime = Date.from(Instant.now().plus(1, tuH));
 		Date endTime = Date.from(Instant.now().plus(2, tuH));
-		
+
 		Random rand = new Random();
 		Long id = rand.nextLong();
-		
-	    Activity activity = new Activity();
-	    activity.setTitle("Title");
-	    activity.setDescrizione("Description");
-	    activity.setStartDate(Date.from(Instant.now().plus(1, tuD)));
-	    activity.setEndDate(Date.from(Instant.now().plus(1, tuD)));
-	    activity.setStartTime(Date.from(Instant.now().plus(1, tuH)));
-	    activity.setEndTime(Date.from(Instant.now().plus(1, tuH)));
-	    
-	    reset(activityRepository);
-	    lenient().when(activityRepository.findById(id)).thenReturn(Optional.ofNullable(null));
-	    assertEquals("Activity not found!", service.updateActivity(id, startDate, startTime, endTime));
-	    
-	    reset(activityRepository);
-	    lenient().when(activityRepository.findById(id)).thenReturn(Optional.of(activity));
-	    assertNull(service.updateActivity(id, startDate, startTime, endTime));
-	    verifyFindByIdIsCalledOnce(id);
+
+		Activity activity = new Activity();
+		activity.setTitle("Title");
+		activity.setDescrizione("Description");
+		activity.setStartDate(Date.from(Instant.now().plus(1, tuD)));
+		activity.setEndDate(Date.from(Instant.now().plus(1, tuD)));
+		activity.setStartTime(Date.from(Instant.now().plus(1, tuH)));
+		activity.setEndTime(Date.from(Instant.now().plus(1, tuH)));
+
+		reset(activityRepository);
+		lenient().when(activityRepository.findById(id)).thenReturn(Optional.ofNullable(null));
+		assertEquals("Activity not found!", service.updateActivity(id, startDate, startTime, endTime));
+
+		reset(activityRepository);
+		lenient().when(activityRepository.findById(id)).thenReturn(Optional.of(activity));
+		assertNull(service.updateActivity(id, startDate, startTime, endTime));
+		verifyFindByIdIsCalledOnce(id);
 	}
-	
+
 	@Test
 	public void updateActivityStateTest() {
-		
+
 		Random rand = new Random();
 		Long id = rand.nextLong();
-		
-	    Activity activity = new Activity();
-	    
+
+		Activity activity = new Activity();
+
 		assertEquals("Activity id could not be null!", service.updateActivityState(null));
-	    
+
 		reset(activityRepository);
 		lenient().when(activityRepository.findById(id)).thenReturn(Optional.ofNullable(null));
 		assertEquals("Activity not found!", service.updateActivityState(id));
 		verifyFindByIdIsCalledOnce(id);
-		
+
 		reset(activityRepository);
 		lenient().when(activityRepository.findById(id)).thenReturn(Optional.of(activity));
 		assertNull(service.updateActivityState(id));
 		verifyFindByIdIsCalledOnce(id);
 	}
-	
+
 	@Test
 	public void getActivitiesToApproveTest() {
 		Date date = Date.from(Instant.now());
-		List<Activity> list = List.of(new Activity(), new Activity(), new Activity());
-		
+
 		reset(activityRepository);
-		lenient().when(activityRepository.findAllByStartDateGreaterThanAndStateAndActivityTypeNot(date,
-				false, ActivityType.LIBRO)).thenReturn(list);
-		assertEquals(list, service.getActivitiesToApprove());
-		verifyFindAllByStartDateGreaterThanAndStateAndActivityTypeNotIsCalledOnce(date, false, ActivityType.LIBRO);
+		assertEquals(List.of(), service.getActivitiesToApprove());
+		verifyFindAllByStartDateGreaterThanAndStateAndActivityTypeNotIsCalledOnce(date, false,
+				List.of(ActivityType.LIBRO, ActivityType.TERTULIA_A_TEMA));
 	}
-	
-//	@Test
-//	public void getActivitiesApprovedTest() {
-//		Date date = Date.from(Instant.now());
-//		List<Activity> list = List.of(new Activity(), new Activity(), new Activity());
-//		
-//		reset(activityRepository);
-//		lenient().when(activityRepository.findAllByStartDateGreaterThanAndStateAndActivityTypeNot(date,
-//				true, ActivityType.LIBRO)).thenReturn(list);
-//		assertEquals(list, service.getActivitiesToApprove());
-//		verifyFindAllByStartDateGreaterThanAndStateAndActivityTypeNotIsCalledOnce(date, true, ActivityType.LIBRO);
-//	}
-	
+
+	// @Test
+	// public void getActivitiesApprovedTest() {
+	// Date date = Date.from(Instant.now());
+	// List<Activity> list = List.of(new Activity(), new Activity(), new
+	// Activity());
+	//
+	// reset(activityRepository);
+	// lenient().when(activityRepository.findAllByStartDateGreaterThanAndStateAndActivityTypeNot(date,
+	// true, ActivityType.LIBRO)).thenReturn(list);
+	// assertEquals(list, service.getActivitiesToApprove());
+	// verifyFindAllByStartDateGreaterThanAndStateAndActivityTypeNotIsCalledOnce(date,
+	// true, ActivityType.LIBRO);
+	// }
+
 	@Test
 	public void getAllTertulieToBeApprovedTest() {
-		
+
 		ActivityType aT = ActivityType.TERTULIA_A_TEMA;
 		Boolean state = false;
 		List<Activity> list1 = List.of(new Activity(), new Activity(), new Activity());
-		
+
 		reset(activityRepository);
 		lenient().when(activityRepository.findAllByActivityTypeAndState(aT, state)).thenReturn(list1);
 		assertEquals(list1, service.getAllTertulieToBeApproved());
 		verifyFindAllByActivityTypeAndStateIsCalledOnce(aT, state);
 	}
-	
+
 	@Test
-	public void buildEmailTest () {
-		
+	public void buildEmailTest() {
+
 		String name = "name";
 		Activity activity = new Activity();
 		activity.setTitle("Title");
 		activity.setDescrizione("Descrizione");
 		activity.setActivityType(ActivityType.VISITA_CULTURALE);
 		activity.setActivityCredits(ActivityCredits.THREE);
-		
-		String email = "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" + "\n"
+
+		String email = "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n"
+				+ "\n"
 				+ "<span style=\"display:none;font-size:1px;color:#fff;max-height:0\"></span>\n" + "\n"
 				+ "  <table role=\"presentation\" width=\"100%\" style=\"border-collapse:collapse;min-width:100%;width:100%!important\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n"
 				+ "    <tbody><tr>\n" + "      <td width=\"100%\" height=\"53\" bgcolor=\"#0b0c0c\">\n" + "        \n"
@@ -320,7 +318,8 @@ public class ActivityServiceImplUnitTest {
 				+ "      <td width=\"10\" valign=\"middle\"><br></td>\n"
 				+ "      <td style=\"font-family:Helvetica,Arial,sans-serif;font-size:19px;line-height:1.315789474;max-width:560px\">\n"
 				+ "        \n"
-				+ "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Ciao " + name
+				+ "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Ciao "
+				+ name
 				+ ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Una nuova attività è stata aggiunta alla bacheca!"
 				+ "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Titoto:"
 				+ activity.getTitle()
@@ -333,37 +332,39 @@ public class ActivityServiceImplUnitTest {
 				+ "      <td width=\"10\" valign=\"middle\"><br></td>\n" + "    </tr>\n" + "    <tr>\n"
 				+ "      <td height=\"30\"><br></td>\n" + "    </tr>\n"
 				+ "  </tbody></table><div class=\"yj6qo\"></div><div class=\"adL\">\n" + "\n" + "</div></div>";
-	
+
 		assertEquals(email, service.buildEmail(name, activity));
 	}
-	
+
 	@Test
 	private void getAllBooksTest() {
-		
+
 		ActivityType aT = ActivityType.LIBRO;
 		Boolean state = true;
 		List<Activity> list1 = List.of(new Activity(), new Activity(), new Activity());
-		
+
 		reset(activityRepository);
 		lenient().when(activityRepository.findAllByActivityTypeAndState(aT, state)).thenReturn(list1);
 		assertEquals(list1, service.getAllBooks());
 		verify(activityRepository, atLeastOnce()).findAllByActivityTypeAndState(aT, state);
-		
+
 	}
-	
-    private void verifyFindByIdIsCalledOnce(Long id) {
-        verify(activityRepository, VerificationModeFactory.times(1)).findById(id);
-        reset(activityRepository);
-    }
-    
-    private void verifyFindAllByStartDateGreaterThanAndStateAndActivityTypeNotIsCalledOnce(Date date, boolean state, ActivityType activityType) {
-        verify(activityRepository, VerificationModeFactory.times(1)).findAllByStartDateGreaterThanAndStateAndActivityTypeNot(date,
-        		state, activityType);
-        reset(activityRepository);
-    }
-    
-    private void verifyFindAllByActivityTypeAndStateIsCalledOnce(ActivityType aT, Boolean state) {
-    	verify(activityRepository, VerificationModeFactory.times(1)).findAllByActivityTypeAndState(aT, state);
-    }
+
+	private void verifyFindByIdIsCalledOnce(Long id) {
+		verify(activityRepository, VerificationModeFactory.times(1)).findById(id);
+		reset(activityRepository);
+	}
+
+	private void verifyFindAllByStartDateGreaterThanAndStateAndActivityTypeNotIsCalledOnce(Date date, boolean state,
+			List<ActivityType> activityType) {
+		verify(activityRepository, VerificationModeFactory.times(1))
+				.findAllByStartDateGreaterThanAndStateAndActivityTypeNotIn(date,
+						state, activityType);
+		reset(activityRepository);
+	}
+
+	private void verifyFindAllByActivityTypeAndStateIsCalledOnce(ActivityType aT, Boolean state) {
+		verify(activityRepository, VerificationModeFactory.times(1)).findAllByActivityTypeAndState(aT, state);
+	}
 
 }

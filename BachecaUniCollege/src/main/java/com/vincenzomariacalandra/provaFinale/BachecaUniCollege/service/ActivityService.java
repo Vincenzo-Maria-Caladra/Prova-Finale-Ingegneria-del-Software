@@ -1,6 +1,7 @@
 package com.vincenzomariacalandra.provaFinale.BachecaUniCollege.service;
 
 import java.time.Instant;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -130,7 +131,7 @@ public class ActivityService {
 		if (activityId == null) {
 			return "Activity id could not be null!";
 		}
-		
+
 		Optional<Activity> activityOptional = activityRepository.findById(activityId);
 
 		if (activityOptional.isEmpty()) {
@@ -155,7 +156,7 @@ public class ActivityService {
 	// Update activity state function
 	@Transactional
 	public String updateActivityState(Long id) {
-		
+
 		if (id == null) {
 			return "Activity id could not be null!";
 		}
@@ -186,15 +187,15 @@ public class ActivityService {
 	// Return a list activities to be approved, without book
 	public List<Activity> getActivitiesToApprove() {
 
-		return activityRepository.findAllByStartDateGreaterThanAndStateAndActivityTypeNot(Date.from(Instant.now()),
-				Boolean.FALSE, ActivityType.LIBRO);
+		return activityRepository.findAllByStartDateGreaterThanAndStateAndActivityTypeNotIn(Date.from(Instant.now()),
+				Boolean.FALSE, List.of(ActivityType.LIBRO, ActivityType.TERTULIA_A_TEMA));
 	}
 
 	// Return a list activities approved, without book
 	public List<Activity> getActivitiesApproved() {
 
-		return activityRepository.findAllByStartDateGreaterThanAndStateAndActivityTypeNot(Date.from(Instant.now()),
-				Boolean.TRUE, ActivityType.LIBRO);
+		return activityRepository.findAllByStartDateGreaterThanAndStateAndActivityTypeNotIn(Date.from(Instant.now()),
+				Boolean.TRUE, List.of(ActivityType.LIBRO));
 	}
 
 	// Return a list of tertulie a tema to be approved
@@ -233,7 +234,8 @@ public class ActivityService {
 				+ "      <td width=\"10\" valign=\"middle\"><br></td>\n"
 				+ "      <td style=\"font-family:Helvetica,Arial,sans-serif;font-size:19px;line-height:1.315789474;max-width:560px\">\n"
 				+ "        \n"
-				+ "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Ciao " + name
+				+ "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Ciao "
+				+ name
 				+ ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Una nuova attività è stata aggiunta alla bacheca!"
 				+ "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Titoto:"
 				+ activity.getTitle()
@@ -250,7 +252,7 @@ public class ActivityService {
 
 	// Return a list of approved book activity
 	public List<Activity> getAllBooks() {
-		
+
 		return activityRepository.findAllByActivityTypeAndState(ActivityType.LIBRO, true);
 	}
 

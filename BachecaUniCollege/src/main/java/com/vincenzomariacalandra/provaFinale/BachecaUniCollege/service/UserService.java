@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -34,7 +33,6 @@ public class UserService implements UserDetailsService {
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	private final ConfirmationTokenService confirmationTokenService;
 
-	
 	public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder,
 			ConfirmationTokenService confirmationTokenService, UserActivityService userActivityService) {
 		super();
@@ -56,7 +54,7 @@ public class UserService implements UserDetailsService {
 		if (userId == null) {
 			return "User id must not be null!";
 		}
-		
+
 		Optional<AppUser> userOptional = userRepository.findById(userId);
 
 		if (userOptional.isPresent()) {
@@ -71,13 +69,13 @@ public class UserService implements UserDetailsService {
 	// Login a user by username (email)
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		
+
 		if (email == null || email.isEmpty() || email.isBlank()) {
 			throw new UsernameNotFoundException("Email could not be null!");
 		}
-		
+
 		Optional<AppUser> useOptional = userRepository.findByEmail(email);
-		
+
 		if (useOptional.isPresent()) {
 			return useOptional.get();
 		} else {
@@ -89,7 +87,7 @@ public class UserService implements UserDetailsService {
 	public String signUpUser(AppUser user) throws IllegalStateException {
 
 		String email = user.getEmail();
-		
+
 		// Check if user already exist
 		Optional<AppUser> optionalUser = userRepository.findByEmail(email);
 
@@ -117,9 +115,9 @@ public class UserService implements UserDetailsService {
 				confirmationTokenService.saveConfirmationToken(token);
 
 				return tokenString;
-				
+
 			} else {
-				
+
 				throw new IllegalStateException("Email already in use! " + user.getEmail());
 
 			}
@@ -175,12 +173,12 @@ public class UserService implements UserDetailsService {
 	public List<StudentCredits> getAllUsersCredits() {
 		return computeUserCredits(getAllAppUserStudenti());
 	}
-	
+
 	// Return a list of tutor's mentee
 	public List<AppUser> getAllMenteeByTutor(AppUser tutor) {
 		return userRepository.findAllByTutor(tutor);
 	}
-	
+
 	// Return a list of tutor's mentee credits
 	public List<StudentCredits> getAllMenteeCreditsByTutor(AppUser tutor) {
 		return computeUserCredits(getAllMenteeByTutor(tutor));
@@ -238,7 +236,7 @@ public class UserService implements UserDetailsService {
 
 			usersCreditsList.add(studentCredits);
 		}
-		
+
 		return usersCreditsList;
 	}
 

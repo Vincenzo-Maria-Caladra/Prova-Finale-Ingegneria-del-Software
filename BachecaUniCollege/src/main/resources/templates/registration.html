@@ -42,14 +42,21 @@
 				<div class="form-group">
 					<label for="email">Email</label>
 					<input type="email" class="form-control" id="email" th:field="*{email}" required>
-					<small id="emailHelp" class="form-text text-muted">Non comunicheremo la tua mail a nessuno!</small>
+					<small id="emailHelp" class="form-text text-muted">La tua email verrà usata per accedere al
+						portale.</small>
 				</div>
 
 				<div class="form-group">
 					<label for="password">Password</label>
 					<input type="password" class="form-control" id="password" th:field="*{password}" required>
-					<small id="passwordHelp" class="form-text text-muted">La password deve contenere almeno 8
-						caratteri, lettere maiuscole e minuscole, numeri e caratteri spaciali</small>
+					<small id="passwordHelp" class="form-text text-muted">La password deve contenere:
+						<ul>
+							<li>Almeno 8
+								caratteri.</li>
+							<li>Lettere maiuscole e minuscole.</li>
+							<li>Numeri e caratteri speciali.</li>
+						</ul>
+					</small>
 				</div>
 
 				<div class="form-group">

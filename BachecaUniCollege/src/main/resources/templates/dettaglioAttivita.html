@@ -19,7 +19,7 @@
         <div class="container">
             <ul class="nav nav-pills flex-column flex-sm-row">
 
-                <li class="nav-item"><a class="nav-link" href="/homeBacheca">Bacheca</a></li>
+                <li class="nav-item"><a class="nav-link active" href="/homeBacheca">Bacheca</a></li>
                 <li class="nav-item"><a class="nav-link" href="/nuovaAttivita">Crea
                         Attività</a></li>
                 <li th:if="${#authentication.getPrincipal().isStudente()}" class="nav-item"><a class="nav-link"
@@ -143,7 +143,7 @@
                                 </th>
 
                                 <th scope="col">
-                                    <p>Organizzatore</p>
+                                    <p></p>
                                 </th>
                             </tr>
 
@@ -155,7 +155,7 @@
 
                                 <tr>
                                     <th scope="row">#</th>
-                                    <td th:text="${userActivity.user.name} + '' + ${userActivity.user.surname}">Tb data
+                                    <td th:text="${userActivity.user.name} + ' ' + ${userActivity.user.surname}">Tb data
                                     </td>
                                     <td th:text="${userActivity.organizer}? 'organizzatore' : '' ">*</td>
 

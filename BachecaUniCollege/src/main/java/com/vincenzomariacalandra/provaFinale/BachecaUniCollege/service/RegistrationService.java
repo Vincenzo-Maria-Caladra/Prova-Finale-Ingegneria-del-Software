@@ -6,7 +6,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.validator.routines.EmailValidator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -67,7 +66,7 @@ public class RegistrationService {
         if (registrationRequest.getPassword() == null || registrationRequest.getPassword().isBlank()) {
             return "Password could not be empty!";
         } else if (!registrationRequest.getPassword().equals(registrationRequest.getConfirmPassword())) {
-        	return "Passwords are not the same!";
+            return "Passwords are not the same!";
         } else if (!passwordValidation(registrationRequest.getPassword())) {
             return "Password must contains letters, numbers and special characters!";
         }
@@ -90,7 +89,7 @@ public class RegistrationService {
 
         // Sending the confirmation email
         emailSender.send(registrationRequest.getEmail(), buildEmail(registrationRequest.getName(), link));
-        
+
         return null;
     }
 
@@ -227,7 +226,7 @@ public class RegistrationService {
             Matcher hasLetter = letter.matcher(password);
             Matcher hasDigit = digit.matcher(password);
             Matcher hasSpecial = special.matcher(password);
-            
+
             return hasLetter.find() && hasDigit.find() && hasSpecial.find();
 
         } else
