@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<title>Bacheca UniCollege - Nuova Attività</title>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+		crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+	<div class="container-fluid">
+
+		<div class="container">
+			<ul class="nav nav-pills flex-column flex-sm-row">
+
+				<li class="nav-item"><a class="nav-link" href="/homeBacheca">Bacheca</a></li>
+				<li class="nav-item"><a class="nav-link active" href="/nuovaAttivita">Crea
+						Attività</a></li>
+				<li th:if="${#authentication.getPrincipal().isStudente()}" class="nav-item"><a class="nav-link"
+						href="/creditometro">Creditometro</a>
+				</li>
+
+				<li th:if="${#authentication.getPrincipal().isDirettore()}" class=" nav-item"><a class="nav-link"
+						href="/gestioneAttivita">Gestione
+						Attività</a></li>
+
+				<li th:if="${#authentication.getPrincipal().isSegreteria()}" class=" nav-item"><a class="nav-link"
+						href="/homeSegreteria">Home
+						Segreteria</a></li>
+
+				<li th:if="${#authentication.getPrincipal().isTutor()}" class=" nav-item"><a class="nav-link"
+						href="/homeTutor">Home
+						Tutor</a></li>
+
+				<li th:if="${#authentication.getPrincipal().isDirettore()}" class=" nav-item"><a class="nav-link"
+						href="/homeDirettore">Home Direttore</a></li>
+
+				<li class="nav-item">
+					<div>
+						<a class="nav-link col-12" href="#"
+							th:text="${#authentication.principal.name} +' '+${#authentication.principal.surname}">Utente</a>
+					</div>
+				</li>
+
+				<li class="nav-item ml-lg-auto ml-2">
+					<a class="btn btn-danger" href="/perform_logout">Logout</a>
+				</li>
+
+			</ul>
+		</div>
+
+		<div class="container">
+
+			<div class="text-left d-inline-flex flex-column mt-5 w-100">
+
+				<div class="font-weight-bold">
+					<h3>Nuova Attività</h3>
+				</div>
+
+				<ul class="nav nav-tabs">
+					<li class="m-2"><a data-toggle="tab" href="#ATTIVITA_GENERICA">Attività
+							Generica</a></li>
+					<li class="m-2"><a data-toggle="tab" href="#TERTULIA_A_TEMA">Tertulia
+							a tema</a></li>
+					<li class="m-2"><a data-toggle="tab" href="#LIBRO">Libro</a></li>
+				</ul>
+
+				<div class="tab-content">
+
+					<div th:if="${error}" class="alert alert-danger w-75 m-3" role="alert">
+						<div th:text="${error}">ERRORE GRAVE</div>
+					</div>
+
+					<div id="ATTIVITA_GENERICA" class="tab-pane fade"
+						th:classappend="${panel == 'ATTIVITA_GENERICA'} ? 'show active'">
+
+						<div class="m-3 w-75">
+							<form action="#" th:action="@{/nuovaAttivita}" th:object="${activity}" method="post"
+								enctype="multipart/form-data">
+								<div class="font-weight-bold">
+									<h5>Attività Generica</h5>
+								</div>
+
+								<div class="form-group">
+									<label for="title">Titolo Attività</label> <input type="text" class="form-control"
+										id="title" th:field="*{title}" placeholder="Titolo Attività" required>
+
+								</div>
+
+								<div class="form-group">
+									<label for="descrizione">Descrizione Attività</label>
+									<textarea class="form-control" id="descrizione" th:field="*{descrizione}"
+										placeholder="Breve Descrizione" rows="3" required></textarea>
+
+								</div>
+
+
+								<div class="row">
+									<div class="form-group col-6">
+										<label for="startDate">Data inizio</label> <input type="date"
+											class="form-control" id="startDate" th:field="*{startDate}"
+											placeholder="YYYY-MM-DD" required>
+
+									</div>
+
+									<div class="form-group col-6">
+										<label for="endDate">Data fine</label> <input type="date" class="form-control"
+											id="startDate" th:field="*{endDate}" placeholder="YYYY-MM-DD" required>
+
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="form-group col-6">
+										<label for="startTime">Ora inizio</label> <input type="time"
+											class="form-control" id="startTime" th:field="*{startTime}"
+											placeholder="hh:mm" required>
+
+									</div>
+
+									<div class="form-group col-6">
+										<label for="endTime">Ora fine</label> <input type="time" class="form-control"
+											id="endTime" th:field="*{endTime}" placeholder="hh:mm" required>
+
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="form-group col-6">
+										<select class="form-control" aria-label="Select for credits"
+											th:field="*{activityCredits}">
+											<option value="TWO" selected>0,2</option>
+											<option value="THREE">0,3</option>
+											<option value="FIVE">0,5</option>
+										</select>
+									</div>
+
+									<div class="form-group col-6">
+										<select class="form-control" aria-label="Select for Activity type"
+											th:field="*{activityType}">
+											<option value="VOLONTARIATO" selected>VOLONTARIATO</option>
+											<option value="VISITA_CULTURALE">VISITA CULTURALE</option>
+											<option value="SPORT_LEARNING">SPORT LEARNING</option>
+											<option value="GITA">GITA</option>
+										</select>
+									</div>
+								</div>
+
+
+								<div class="form-group">
+									<label for="maxNumberOfPartecipant">N. max di partecipanti</label>
+									<input type="number" id="maxNumberOfPartecipant" class="form-control"
+										th:field="*{maxNumberOfPartecipant}" min="1" max="100" required>
+								</div>
+
+
+								<div class="form-group">
+									<label for="fileImage">Foto per bacheca</label>
+									<input class="form-control" id="fileImage" name="fileImage" type="file"
+										accept="image/png, image/jpeg" required>
+								</div>
+
+								<button type="submit" class="btn btn-primary">Invia</button>
+							</form>
+						</div>
+					</div>
+
+					<div id="TERTULIA_A_TEMA" class="tab-pane fade"
+						th:classappend="${panel == 'TERTULIA_A_TEMA'} ? 'show active'">
+
+						<div class="m-3 w-75">
+							<form action="#" th:action="@{/nuovaAttivita}" th:object="${activity}" method="post"
+								enctype="multipart/form-data">
+								<div class="font-weight-bold">
+									<h5>Tertulia a tema</h5>
+								</div>
+
+								<div class="form-group">
+									<label for="title">Titolo Attività</label> <input type="text" class="form-control"
+										id="title" th:field="*{title}" placeholder="Titolo Attività" required>
+
+								</div>
+
+								<div class="form-group">
+									<label for="descrizione">Descrizione Tema</label>
+									<textarea class="form-control" id="descrizione" th:field="*{descrizione}"
+										placeholder="Breve Descrizione" rows="3" required></textarea>
+
+								</div>
+
+
+								<div class="form-group">
+									<div class="form-group">
+										<p class="alert alert-warning " role="alert">Attenzione,
+											data e ora sono suscettibili a cambiamento!</p>
+									</div>
+
+									<div class="row">
+										<div class="form-group col-6">
+											<label for="startDate">Data inizio</label> <input type="date"
+												class="form-control" id="startDate" th:field="*{startDate}"
+												placeholder="YYYY-MM-DD" required>
+
+										</div>
+									</div>
+
+									<div class="row">
+
+										<div class="form-group col-6">
+											<label for="startTime">Ora inizio</label> <input type="time"
+												class="form-control" id="startTime" th:field="*{startTime}"
+												placeholder="hh:mm" required>
+
+										</div>
+
+										<div class="form-group col-6">
+											<label for="endTime">Ora fine</label> <input type="time"
+												class="form-control" id="endTime" th:field="*{endTime}"
+												placeholder="hh:mm" required>
+
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="form-group col-6" style="display: none;">
+											<select class="form-control" aria-label="Select for credits"
+												th:field="*{activityCredits}" required>
+												<option value="TWO" selected>0,2</option>
+											</select>
+										</div>
+										<div class="form-group col-6" style="display: none;">
+											<select class="form-control" aria-label="Select for Activity type"
+												th:field="*{activityType}" required>
+												<option value="TERTULIA_A_TEMA" selected>TERTULIA A
+													TEMA</option>
+											</select>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="fileImage">Foto per bacheca</label> <input class="form-control"
+											id="fileImage" name="fileImage" type="file" accept="image/png, image/jpeg"
+											required></input>
+									</div>
+
+									<button type="submit" class="btn btn-primary">Invia</button>
+								</div>
+
+							</form>
+
+						</div>
+					</div>
+
+					<div id="LIBRO" class="tab-pane fade" th:classappend="${panel == 'LIBRO'} ? 'show active' : ''">
+
+						<div class="m-3 w-75">
+
+							<div class="nav">
+								<a class="btn btn-primary mr-2 active" data-toggle="tab" href="#PROPONINEUNO">
+									Proponine uno
+								</a>
+
+								<a class="btn btn-primary" data-toggle="tab" href="#LASCIATICONSIGLIARE">
+									Lasciati consigliare
+								</a>
+							</div>
+
+							<div class="tab-content mt-3">
+
+								<div class="tab-pane fade" id="LASCIATICONSIGLIARE">
+									<div class="text-center table-responsive-sm">
+										<table class="table table-striped table-hover col-12">
+
+											<caption>Lista Attività</caption>
+
+											<thead style="background-color: #0069d9; color: white;">
+
+												<tr>
+													<th scope="col">
+														<p>#</p>
+													</th>
+
+													<th scope="col">
+														<p>Titolo</p>
+													</th>
+
+													<th scope="col">
+														<p>Descrizione</p>
+													</th>
+
+													<th scope="col">
+														<p>Crediti</p>
+													</th>
+
+													<th scope="col">
+														<p>Azione</p>
+													</th>
+
+												</tr>
+
+											</thead>
+
+
+											<tbody>
+												<div th:each="book : ${books}">
+
+													<tr>
+														<th scope="row">#</th>
+														<td th:text="${book.title}">Tb data</td>
+														<td th:text="${book.descrizione}">Tb data</td>
+														<td th:text="${book.getActivityCreditsDouble()}">Tb data</td>
+
+														<td>
+															<form class="m-2" action="#"
+																th:action="@{/nuovaAttivita/libro?id=} + ${book.id}"
+																method="post">
+																<button type="submit"
+																	class="btn btn-success">Scegli</button>
+															</form>
+														</td>
+
+													</tr>
+
+												</div>
+											</tbody>
+
+										</table>
+									</div>
+
+								</div>
+
+								<div class="tab-pane fade show active" id="PROPONINEUNO">
+									<form action="#" th:action="@{/nuovaAttivita}" th:object="${activity}" method="post"
+										class="mr-3">
+
+										<div class="form-group">
+											<label for="title">Titolo Libro</label> <input type="text"
+												class="form-control" id="title" th:field="*{title}"
+												placeholder="Titolo Attività" required>
+
+										</div>
+
+										<div class="form-group">
+											<label for="descrizione">Descrizione Tema</label>
+											<textarea class="form-control" id="descrizione" th:field="*{descrizione}"
+												placeholder="Breve Descrizione" rows="3" required></textarea>
+
+										</div>
+
+										<div class="row">
+											<div class="form-group col-6">
+												<select class="form-control" aria-label="Select for credits"
+													th:field="*{activityCredits}" required>
+													<option value="FIVE" selected>0,5</option>
+													<option value="THREE" selected>0,3</option>
+													<option value="TWO" selected>0,2</option>
+												</select>
+											</div>
+
+
+											<div class="form-group col-6" style="display: none;">
+												<select class="form-control" aria-label="Select for Activity type"
+													th:field="*{activityType}" required>
+													<option value="LIBRO" selected>LIBRO</option>
+												</select>
+											</div>
+										</div>
+
+										<button type="submit" class="btn btn-primary">Invia</button>
+
+									</form>
+
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- Optional JavaScript -->
+
+		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+			integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+			crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+			integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+			crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+			integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+			crossorigin="anonymous"></script>
+</body>
+
+</html>

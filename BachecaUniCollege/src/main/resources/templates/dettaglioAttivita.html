@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Bacheca UniCollege - Dettaglio Attività</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div class="container-fluid">
+
+        <div class="container">
+            <ul class="nav nav-pills flex-column flex-sm-row">
+
+                <li class="nav-item"><a class="nav-link active" href="/homeBacheca">Bacheca</a></li>
+                <li class="nav-item"><a class="nav-link" href="/nuovaAttivita">Crea
+                        Attività</a></li>
+                <li th:if="${#authentication.getPrincipal().isStudente()}" class="nav-item"><a class="nav-link"
+                        href="/creditometro">Creditometro</a>
+                </li>
+
+                <li th:if="${#authentication.getPrincipal().isDirettore()}" class=" nav-item"><a class="nav-link"
+                        href="/gestioneAttivita">Gestione
+                        Attività</a></li>
+
+                <li th:if="${#authentication.getPrincipal().isSegreteria()}" class=" nav-item"><a class="nav-link"
+                        href="/homeSegreteria">Home
+                        Segreteria</a></li>
+
+                <li th:if="${#authentication.getPrincipal().isTutor()}" class=" nav-item"><a class="nav-link"
+                        href="/homeTutor">Home
+                        Tutor</a></li>
+
+                <li th:if="${#authentication.getPrincipal().isDirettore()}" class=" nav-item"><a class="nav-link"
+                        href="/homeDirettore">Home Direttore</a></li>
+
+                <li class="nav-item">
+                    <div>
+                        <a class="nav-link col-12" href="#"
+                            th:text="${#authentication.principal.name} +' '+${#authentication.principal.surname}">Utente</a>
+                    </div>
+                </li>
+
+                <li class="nav-item ml-lg-auto ml-2">
+                    <a class="btn btn-danger" href="/perform_logout">Logout</a>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm col-md-5 col-lg-5 ml-3">
+                    <h2>Dettaglio Attività</h2>
+                </div>
+            </div>
+
+            <div class="container row d-flex flex-column">
+
+                <div class="col-sm col-md-5 col-lg-5" th:if="${msg1 != null}">
+                    <p class="blockquote" th:text="${msg1}">Sei l'Organizzatore!</p>
+                </div>
+
+            </div>
+
+
+            <div class="container row d-lg-flex flex-lg-row d-md-flex flex-md-row d-sm-flex flex-sm-column">
+
+                <div class="col-sm col-md-6 col-lg-6 d-flex align-items-center">
+                    <img th:src="${activity.photosImagePath}"
+                        style="width: 100%; height: 15rem !important; object-fit: cover;" alt="...">
+                </div>
+
+                <div class="col-sm col-md-5 col-lg-5 m-1">
+
+                    <h4>Descrizione</h4>
+
+                    <div th:text="${activity.descrizione}" class="text-justify">
+                        Lorem ipsum dolor sit amet consectetur
+                        adipisicing
+                        elit. Esse incidunt cumque nostrum dolorum saepe? Aliquid dignissimos, similique hic
+                        assumenda
+                        corporis,
+                        quibusdam maiores nulla eligendi beatae optio aut perferendis provident possimus.
+                    </div>
+
+                    <div class="d-flex flex-row mt-2">
+                        <form class="mr-1" action="#" th:if="${iscriviti}"
+                            th:action="@{/dettaglioAttivita/subscribe?id=}+${activity.id}" method="post">
+                            <button type="submit" class="btn btn-primary">Iscriviti</button>
+                        </form>
+
+                        <form class="mr-1" action="#" th:if="${cancellati}"
+                            th:action="@{/dettaglioAttivita/unsubscribe?id=}+${activity.id}" method="post">
+                            <button type="submit" class="btn btn-primary">Cancellati</button>
+                        </form>
+
+                        <form class="mr-1" action="#" th:if="${organizer}"
+                            th:action="@{/dettaglioAttivita/deleteActivity?id=}+${activity.id}" method="post">
+                            <button type="submit" class="btn btn-danger">Cancella Attività</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="container row mt-1">
+
+                <div class="col-sm col-md-6 col-lg-6 mt-2">
+                    <div class="alert alert-success" role="alert" th:if="${msg != null}">
+                        <span th:text="${msg}">Example text for confirmation page</span>
+                    </div>
+
+                    <div class="alert alert-danger" role="alert" th:if="${err != null}">
+                        <span th:text="${err}">Example text for error msg</span>
+                    </div>
+
+                    <div th:if="${postiDisponibili != null}">
+                        <div th:text="'Posti disponibili: ' + ${postiDisponibili}" class="text-monospace">
+                            Posti disponibili: 45
+                        </div>
+                    </div>
+
+                    <table class="table table-striped table-hover text-center" style="width: 100%;">
+
+                        <caption>Lista Iscritti</caption>
+
+                        <thead style="background-color: #0069d9; color: white;">
+                            <tr>
+                                <th scope="col">
+                                    <p>#</p>
+                                </th>
+
+                                <th scope="col">
+                                    <p>Nome e Cognome</p>
+                                </th>
+
+                                <th scope="col">
+                                    <p></p>
+                                </th>
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+                            <div th:each="userActivity : ${userOfActivities}">
+
+                                <tr>
+                                    <th scope="row">#</th>
+                                    <td th:text="${userActivity.user.name} + ' ' + ${userActivity.user.surname}">Tb data
+                                    </td>
+                                    <td th:text="${userActivity.organizer}? 'organizzatore' : '' ">*</td>
+
+                                </tr>
+
+                            </div>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

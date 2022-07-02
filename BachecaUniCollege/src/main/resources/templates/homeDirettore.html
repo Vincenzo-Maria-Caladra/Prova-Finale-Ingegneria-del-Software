@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title>Bacheca UniCollege - Home Direttore</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <div class="container">
+            <ul class="nav nav-pills flex-column flex-sm-row">
+
+                <li class="nav-item"><a class="nav-link" href="/homeBacheca">Bacheca</a></li>
+                <li class="nav-item"><a class="nav-link" href="/nuovaAttivita">Crea
+                        Attività</a></li>
+                <li th:if="${#authentication.getPrincipal().isStudente()}" class="nav-item"><a class="nav-link"
+                        href="/creditometro">Creditometro</a>
+                </li>
+
+                <li th:if="${#authentication.getPrincipal().isDirettore()}" class=" nav-item"><a class="nav-link"
+                        href="/gestioneAttivita">Gestione
+                        Attività</a></li>
+
+                <li th:if="${#authentication.getPrincipal().isSegreteria()}" class=" nav-item"><a class="nav-link"
+                        href="/homeSegreteria">Home
+                        Segreteria</a></li>
+
+                <li th:if="${#authentication.getPrincipal().isTutor()}" class=" nav-item"><a class="nav-link"
+                        href="/homeTutor">Home
+                        Tutor</a></li>
+
+                <li th:if="${#authentication.getPrincipal().isDirettore()}" class=" nav-item"><a class="nav-link active"
+                        href="/homeDirettore">Home Direttore</a></li>
+
+                <li class="nav-item">
+                    <div>
+                        <a class="nav-link col-12" href="#"
+                            th:text="${#authentication.principal.name} +' '+${#authentication.principal.surname}">Utente</a>
+                    </div>
+                </li>
+
+                <li class="nav-item ml-lg-auto ml-2">
+                    <a class="btn btn-danger" href="/perform_logout">Logout</a>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="container">
+            <div class="table-responsive-sm">
+                <table class="table table-striped table-hover text-center m-3">
+
+                    <caption>Lista Utenti</caption>
+
+                    <thead style="background-color: #0069d9; color: white;">
+
+                        <tr>
+
+                            <th scope="col">
+                                <p>Nome e Cognome</p>
+                            </th>
+
+                            <th scope="col">
+                                <p>Tipo</p>
+                            </th>
+
+                            <th scope="col">
+                                <p>Tutor</p>
+                            </th>
+
+                            <th scope="col">
+                                <p>Azione</p>
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+                        <div th:each="user : ${listOfUtenti}">
+
+                            <tr>
+                                <td th:text="${user.name} + ' ' + ${user.surname}">Tb data</td>
+                                <td th:text="${user.userType}">Tb data</td>
+
+                                <td th:text="${user.tutor} ? ${user.tutor.surname} : '*'">*</td>
+
+                                <td class="justify-content-center d-inline-block">
+
+                                    <div class="m-3">
+
+                                        <form class="m-2" action="#"
+                                            th:action="@{/homeDirettore/deleteUser?userId=}+${user.id}" method="post">
+                                            <button type="submit" class="btn btn-danger btn-block">Rimuovi
+                                                Utente</button>
+                                        </form>
+
+                                        <form class="m-2" action="#"
+                                            th:action="@{/homeDirettore/updateTutor?userId=}+${user.id}" method="post">
+
+                                            <div class="form-group d-flex">
+                                                <select class="form-control" id="tutor" name="tutor"
+                                                    style="width: 180px;" required>
+
+                                                    <option value="">Assegna Tutor</option>
+
+                                                    <div th:each="tutor : ${listOfTutor}">
+                                                        <option th:value="${tutor.id}"
+                                                            th:text="${tutor.name} + ' ' + ${tutor.surname}">tutor
+                                                        </option>
+                                                    </div>
+
+                                                </select>
+                                                <button type="submit" class="btn btn-warning btn-sm">Assegna</button>
+                                            </div>
+                                        </form>
+
+                                        <form class="m-2" action="#"
+                                            th:action="@{/homeDirettore/updateUserType?userId=}+${user.id}"
+                                            method="post">
+
+                                            <div class="form-group d-flex">
+
+                                                <select class="form-control" id="type" name="type" style="width: 180px;"
+                                                    required>
+                                                    <option value="">Assegna Ruolo</option>
+                                                    <option value="STUDENTE">Studente</option>
+                                                    <option value="SEGRETERIA">Segreteria</option>
+                                                    <option value="TUTOR">Tutor</option>
+                                                    <option value="DIRETTORE">Direttore</option>
+
+                                                </select>
+
+                                                <button type="submit" class="btn btn-warning btn-sm">Assegna</button>
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                </td>
+                            </tr>
+                        </div>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+version: '3'
+services:
+  bacheca-uni-college:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: bacheca-uni-college:latest
+    volumes:
+      - BachecaUniCollege-data:/tmp/activity-photos
+      - BachecaUniCollege-log:/var/log
+    ports:
+      - "80:8080"
+    networks:
+      - bacheca-uni-college-mysqldb-network
+    depends_on:
+      - mysqldb
+
+  mysqldb:
+    image: mysql:8
+    networks:
+      - bacheca-uni-college-mysqldb-network
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=database
+
+volumes:
+  BachecaUniCollege-data:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /tmp
+  BachecaUniCollege-log:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /var/log/BachecaUniCollege
+
+networks:
+  bacheca-uni-college-mysqldb-network: null
+
